@@ -1,0 +1,237 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\David\\ScheduSquad\\ScheduSquad.Web\\ScheduSquad.Web.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\David\\ScheduSquad\\ScheduSquad.DataAccess\\ScheduSquad.DataAccess.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\David\\ScheduSquad\\ScheduSquad.DataAccess\\ScheduSquad.DataAccess.csproj",
+        "projectName": "ScheduSquad.DataAccess",
+        "projectPath": "C:\\Users\\David\\ScheduSquad\\ScheduSquad.DataAccess\\ScheduSquad.DataAccess.csproj",
+        "packagesPath": "C:\\Users\\David\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\David\\ScheduSquad\\ScheduSquad.DataAccess\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\David\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\David\\ScheduSquad\\ScheduSquad.Models\\ScheduSquad.Models.csproj": {
+                "projectPath": "C:\\Users\\David\\ScheduSquad\\ScheduSquad.Models\\ScheduSquad.Models.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.128\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\David\\ScheduSquad\\ScheduSquad.Models\\ScheduSquad.Models.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\David\\ScheduSquad\\ScheduSquad.Models\\ScheduSquad.Models.csproj",
+        "projectName": "ScheduSquad.Models",
+        "projectPath": "C:\\Users\\David\\ScheduSquad\\ScheduSquad.Models\\ScheduSquad.Models.csproj",
+        "packagesPath": "C:\\Users\\David\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\David\\ScheduSquad\\ScheduSquad.Models\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\David\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.128\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\David\\ScheduSquad\\ScheduSquad.Service\\ScheduSquad.Service.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\David\\ScheduSquad\\ScheduSquad.Service\\ScheduSquad.Service.csproj",
+        "projectName": "ScheduSquad.Service",
+        "projectPath": "C:\\Users\\David\\ScheduSquad\\ScheduSquad.Service\\ScheduSquad.Service.csproj",
+        "packagesPath": "C:\\Users\\David\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\David\\ScheduSquad\\ScheduSquad.Service\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\David\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\David\\ScheduSquad\\ScheduSquad.DataAccess\\ScheduSquad.DataAccess.csproj": {
+                "projectPath": "C:\\Users\\David\\ScheduSquad\\ScheduSquad.DataAccess\\ScheduSquad.DataAccess.csproj"
+              },
+              "C:\\Users\\David\\ScheduSquad\\ScheduSquad.Models\\ScheduSquad.Models.csproj": {
+                "projectPath": "C:\\Users\\David\\ScheduSquad\\ScheduSquad.Models\\ScheduSquad.Models.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.128\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\David\\ScheduSquad\\ScheduSquad.Web\\ScheduSquad.Web.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\David\\ScheduSquad\\ScheduSquad.Web\\ScheduSquad.Web.csproj",
+        "projectName": "ScheduSquad.Web",
+        "projectPath": "C:\\Users\\David\\ScheduSquad\\ScheduSquad.Web\\ScheduSquad.Web.csproj",
+        "packagesPath": "C:\\Users\\David\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\David\\ScheduSquad\\ScheduSquad.Web\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\David\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\David\\ScheduSquad\\ScheduSquad.Models\\ScheduSquad.Models.csproj": {
+                "projectPath": "C:\\Users\\David\\ScheduSquad\\ScheduSquad.Models\\ScheduSquad.Models.csproj"
+              },
+              "C:\\Users\\David\\ScheduSquad\\ScheduSquad.Service\\ScheduSquad.Service.csproj": {
+                "projectPath": "C:\\Users\\David\\ScheduSquad\\ScheduSquad.Service\\ScheduSquad.Service.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.128\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

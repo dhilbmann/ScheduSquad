@@ -1,0 +1,12 @@
+C:\Users\David\ScheduSquad\ScheduSquad.Models\bin\Debug\net6.0\ScheduSquad.Models.deps.json
+C:\Users\David\ScheduSquad\ScheduSquad.Models\bin\Debug\net6.0\ScheduSquad.Models.dll
+C:\Users\David\ScheduSquad\ScheduSquad.Models\bin\Debug\net6.0\ref\ScheduSquad.Models.dll
+C:\Users\David\ScheduSquad\ScheduSquad.Models\bin\Debug\net6.0\ScheduSquad.Models.pdb
+C:\Users\David\ScheduSquad\ScheduSquad.Models\obj\Debug\net6.0\ScheduSquad.Models.csproj.AssemblyReference.cache
+C:\Users\David\ScheduSquad\ScheduSquad.Models\obj\Debug\net6.0\ScheduSquad.Models.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\David\ScheduSquad\ScheduSquad.Models\obj\Debug\net6.0\ScheduSquad.Models.AssemblyInfoInputs.cache
+C:\Users\David\ScheduSquad\ScheduSquad.Models\obj\Debug\net6.0\ScheduSquad.Models.AssemblyInfo.cs
+C:\Users\David\ScheduSquad\ScheduSquad.Models\obj\Debug\net6.0\ScheduSquad.Models.csproj.CoreCompileInputs.cache
+C:\Users\David\ScheduSquad\ScheduSquad.Models\obj\Debug\net6.0\ScheduSquad.Models.dll
+C:\Users\David\ScheduSquad\ScheduSquad.Models\obj\Debug\net6.0\ref\ScheduSquad.Models.dll
+C:\Users\David\ScheduSquad\ScheduSquad.Models\obj\Debug\net6.0\ScheduSquad.Models.pdb
