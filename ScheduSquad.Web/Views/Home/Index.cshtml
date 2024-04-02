@@ -1,4 +1,6 @@
-﻿@{
+﻿@model HomeViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -6,3 +8,14 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+@foreach(ScheduSquad.Models.User u in Model.Squad.Users)
+{
+    <p>@u.FirstName @u.LastName Availability</p>
+    <p>
+    @foreach(int i in u.GetAllAvailabilityCodes())
+    {
+        <span>@i</span>
+    }
+    </p>
+}

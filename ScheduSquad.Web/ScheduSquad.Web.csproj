@@ -4,7 +4,9 @@
     <ProjectReference Include="..\ScheduSquad.Service\ScheduSquad.Service.csproj" />
     <ProjectReference Include="..\ScheduSquad.Models\ScheduSquad.Models.csproj" />
   </ItemGroup>
-
+  <ItemGroup>
+    <PackageReference Include="netstandard-System.Data.Linq" Version="*"/>
+  </ItemGroup>
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
