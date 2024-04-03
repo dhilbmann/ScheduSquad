@@ -36,6 +36,7 @@ ScheduSquad.Service/obj/
 ScheduSquad.Service/TestResults/
 ScheduSquad.Web/bin/
 ScheduSquad.Web/obj/
+ScheduSquad.Web/wwwroot/
 ScheduSquad.Web/TestResults/
 ###################
 # Web publish log #
@@ -85,9 +86,9 @@ _[Ss]cripts
 *.nupkg
 *.ncrunchsolution
 *.dot[Cc]over
+
 ScheduSquad.Service/obj/Debug/net6.0/ScheduSquad.Service.assets.cache
 ScheduSquad.DataAccess/bin/Debug/net6.0/ScheduSquad.DataAccess.deps.json
-
 ScheduSquad.Service/bin/Debug/net6.0/ScheduSquad.DataAccess.dll
 ScheduSquad.Service/bin/Debug/net6.0/ScheduSquad.DataAccess.pdb
 ScheduSquad.Service/bin/Debug/net6.0/ScheduSquad.Models.dll
