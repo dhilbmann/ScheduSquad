@@ -1,0 +1,20 @@
+@startuml Sequence
+
+skin rose
+
+class Models.PersistedEntityBase {
+    {public} Guid Id
+    public Guid IsDeleted
+}
+
+class Models.Availability {
+    public Guid Id
+    public DayOfWeek DayOfWeek
+    public TimeSpan StartTime
+    public TimeSpan EndTime
+    public Availability
+}
+
+Models.Availability <|- Models.PersistedEntityBase
+
+@enduml

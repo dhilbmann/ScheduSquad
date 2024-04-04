@@ -9,7 +9,7 @@
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
-@foreach(ScheduSquad.Models.User u in Model.Squad.Users)
+@foreach(ScheduSquad.Models.Member u in Model.Squad.Members)
 {
     <p>@u.FirstName @u.LastName Availability</p>
     <p>
