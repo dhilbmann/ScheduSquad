@@ -1,43 +1,67 @@
 using ScheduSquad.Models;
 using System.Configuration.Assemblies;
+using System.Dynamic;
 using System.Security.Cryptography.X509Certificates;
 
 
 namespace ScheduSquad.Models
 {
-    public class Squad
+    public class Squad : PersisitedEntityBase
     {
-        private List<User> _users;
-        public List<User> Users { get { return _users; } }
+        
+        public List<Member> Members { get; set; }
 
-        public Squad(List<User> users)
+        private string _name;
+        public string Name { get { return _name; } }
+
+        private string _description;
+        public string Description { get { return _description; } }
+
+        private string _location;
+        public string Location { get { return _location; } }
+
+        private Member _squadMaster;
+        public Member SquadMaster { get { return _squadMaster; } }
+
+
+        public Squad() {
+            _name = String.Empty;
+            _description = String.Empty;
+            _location = String.Empty;
+            _squadMaster = new Member();
+            Members = new List<Member>();
+
+        }
+        public Squad(Guid id, Member squadMaster, string name, string description, string location) 
         {
-            _users = users;
+            base.Id = id;
+            _squadMaster = squadMaster;
+            _name = name;
+            _description = description;
+            _location = location;
+            Members = new List<Member>();
         }
 
-        public Squad()
-        {
-            _users = new List<User>();
-        }
-
+        public Squad(Member squadMaster, string name, string description, string location) : this(Guid.NewGuid(), squadMaster, name, description, location) {}
+               
         public List<string> GetAllAvailabilityDescriptions()
         {
             return new List<string>();
         }
 
-        public void AddUser(User user)
+        public void AddMember(Member member)
         {
-            // check to see if the user exists; if they don't, add user, else throw an exception
-            if (!_users.Exists(x => x.Id == user.Id)) _users.Add(user);
+            // check to see if the member exists; if they don't, add member, else throw an exception
+            if (!Members.Exists(x => x.Id == member.Id)) Members.Add(member);
             else
-                throw new Exception("Unable to add.  User already exists in the squad.");
+                throw new Exception("Unable to add.  Member already exists in the squad.");
         }
 
-        public void RemoveUser(User user)
+        public void RemoveMember(Member member)
         {
-            if (_users.Exists(x => x.Id == user.Id)) _users.Remove(user);
+            if (Members.Exists(x => x.Id == member.Id)) Members.Remove(member);
             else
-                throw new Exception("Unable to remove.  User doesn't exist in the squad.");
+                throw new Exception("Unable to remove.  Member doesn't exist in the squad.");
         }
     }
 }

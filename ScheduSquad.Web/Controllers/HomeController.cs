@@ -18,25 +18,25 @@ public class HomeController : Controller
     {
         HomeViewModel vm = new HomeViewModel();
 
-        User user_david = new User(Guid.NewGuid(), "David", "Hilbmann", "david@gmail.com", "password", new List<Availability>());
+        Member user_david = new Member(Guid.NewGuid(), "David", "Hilbmann", "david@gmail.com", "password", new List<Availability>());
         user_david.Availabilities.Add(new Availability(DayOfWeek.Monday, new TimeSpan(4, 15, 00), new TimeSpan(5, 30, 00)));
         user_david.Availabilities.Add(new Availability(DayOfWeek.Monday, new TimeSpan(7, 30, 00), new TimeSpan(13, 30, 00)));
         user_david.Availabilities.Add(new Availability(DayOfWeek.Monday, new TimeSpan(8, 00, 00), new TimeSpan(9, 00, 00)));
         user_david.Availabilities.Add(new Availability(DayOfWeek.Monday, new TimeSpan(16, 45, 00), new TimeSpan(18, 30, 00))); 
-        vm.Squad.AddUser(user_david);
+        vm.Squad.AddMember(user_david);
 
-        User user_cara = new User(Guid.NewGuid(), "Cara", "Perez", "cara@gmail.com", "password", new List<Availability>());
+        Member user_cara = new Member(Guid.NewGuid(), "Cara", "Perez", "cara@gmail.com", "password", new List<Availability>());
         user_cara.Availabilities.Add(new Availability(DayOfWeek.Sunday, new TimeSpan(8, 00, 00), new TimeSpan(9, 00, 00)));
         user_cara.Availabilities.Add(new Availability(DayOfWeek.Sunday, new TimeSpan(16, 45, 00), new TimeSpan(18, 30, 00)));
         user_cara.Availabilities.Add(new Availability(DayOfWeek.Monday, new TimeSpan(8, 00, 00), new TimeSpan(9, 00, 00)));
         user_cara.Availabilities.Add(new Availability(DayOfWeek.Monday, new TimeSpan(16, 45, 00), new TimeSpan(18, 30, 00)));
         user_cara.Availabilities.Add(new Availability(DayOfWeek.Tuesday, new TimeSpan(16, 45, 00), new TimeSpan(18, 30, 00))); 
-        vm.Squad.AddUser(user_cara);
+        vm.Squad.AddMember(user_cara);
 
-        User user_duncan = new User(Guid.NewGuid(), "Duncan", "Clark", "duncan@gmail.com", "password", new List<Availability>());
+        Member user_duncan = new Member(Guid.NewGuid(), "Duncan", "Clark", "duncan@gmail.com", "password", new List<Availability>());
         user_duncan.Availabilities.Add(new Availability(DayOfWeek.Monday, new TimeSpan(8, 00, 00), new TimeSpan(9, 00, 00)));
         user_duncan.Availabilities.Add(new Availability(DayOfWeek.Monday, new TimeSpan(16, 45, 00), new TimeSpan(18, 30, 00))); 
-        vm.Squad.AddUser(user_duncan);
+        vm.Squad.AddMember(user_duncan);
 
         return View(vm);
     }
