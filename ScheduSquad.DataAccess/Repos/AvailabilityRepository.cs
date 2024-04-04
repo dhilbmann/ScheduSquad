@@ -24,6 +24,13 @@ public class AvailabilityRepository<T> : IRepository<T> where T : class
 
     public T GetById(Guid id)
     {
+        // Set paramater
+        // Build command object = query
+        // Execute Command object = 
+        // Get results
+        // Put results on Availability Object
+        // Return object
+
         throw new NotImplementedException();
     }
 

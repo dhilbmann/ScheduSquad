@@ -1,0 +1,35 @@
+@startuml Sequence
+
+skin rose
+
+class Models.PersistedEntityBase {
+    +Id
+    +IsDeleted
+}
+
+class Models.Availability {
+    +DayOfWeek
+    +StartTime
+    +EndTime
+    +Availability
+}
+
+class Models.Squad {
+    +Members
+    +Name
+    +Description
+    +Location
+    +SquadMaster
+
+    +Squad()
+    +Squad(id, squadMaster, name, description, location)
+    +Squad(member, name, description, location)
+    +GetAllAvailabilityDescriptions()
+    +AddMember(member)
+    +RemoveMember(member)
+}
+
+Models.Availability --|> Models.PersistedEntityBase
+Models.Squad --|> Models.PersistedEntityBase
+
+@enduml

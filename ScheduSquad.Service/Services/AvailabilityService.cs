@@ -7,10 +7,12 @@ namespace ScheduSquad.Service
     {
 
         private readonly IRepository<Availability> _availabilityRepository;
+        private readonly IRepository<Member> _memberRepository;
 
-        public AvailabilityService(IRepository<Availability> availabilityRepo)
+        public AvailabilityService(IRepository<Availability> availabilityRepo, IRepository<Member> memberRepo)
         {
             _availabilityRepository = availabilityRepo;
+            _memberRepository = memberRepo;
         }
 
         public Availability GetAvailabilityById(Guid availabilityId)
