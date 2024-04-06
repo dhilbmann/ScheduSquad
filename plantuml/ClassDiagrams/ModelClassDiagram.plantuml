@@ -1,0 +1,56 @@
+@startuml ModelClassDiagram
+
+skin rose
+
+class Models.PersistedEntityBase {
+    +Id
+    +IsDeleted
+}
+
+class Models.Member {
+    +FirstName
+    +LastName
+    +Email
+    +Password
+    +Availabilities
+
+    +Member() : void
+    +Member(id : Guid, firstName : string, lastName : string, email : string, password: string, availabilities : List<Availability>) : void
+    +Member(id : Guid, firstName : string, lastName : string, email : string, password: string) : void
+    +Member(firstName : string, lastName : string, email : string, password: string) : void
+    +GetAllAvailabilityCodes() : List<int>
+}
+
+class Models.Availability {
+    +DayOfWeek
+    +StartTime
+    +EndTime
+    +Availability
+
+    +Availability() : void
+    +Availability(dayOfWeek : DayOfWeek, startTime : TimeSpan, endTime : TimeSpan) : void
+    +Availability(id : Guid, dayOfWeek : DayOfWeek, startTime : TimeSpan, endTime : TimeSpan) : void
+    +GetAvailabilityCodes() : List<string>
+    +AreMinutesValid(time : TimeSpan) : bool
+}
+
+class Models.Squad {
+    +Members
+    +Name
+    +Description
+    +Location
+    +SquadMaster
+
+    +Squad() : void
+    +Squad(id : Guid, squadMaster : Member, name : string, description : string, location : string) : void
+    +Squad(member : Member, name : string, description : string, location : string) : void
+    +GetAllAvailabilityDescriptions() : List<string>
+    +AddMember(member : Member) : void
+    +RemoveMember(member : Member) : void
+}
+
+Models.PersistedEntityBase <|-- Models.Availability
+Models.PersistedEntityBase <|-- Models.Squad
+Models.PersistedEntityBase <|-- Models.Member
+
+@enduml
