@@ -1,0 +1,20 @@
+@startuml View Squad Availability
+actor user
+participant ScheduSquad as app
+database Database as db
+
+note over user
+Prerequisite:
+User is logged in.
+end note
+
+user -> app : Select Hamburger Icon
+app -> db : Request List of User's Squads
+db --> app : Return List of User's Squads
+app --> user : Display User Squad Menu
+user -> app : Select a Squad from the User Squad Menu
+app -> db : Request Selected Squad's Member List and Availabilities
+db --> app : Return Selected Squad's Details
+app --> user : Load Selected Squad's Squad Screen
+
+@enduml

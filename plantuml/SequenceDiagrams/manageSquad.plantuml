@@ -1,0 +1,42 @@
+@startuml Manage Squad
+actor user
+participant ScheduSquad as app
+database Database as db
+
+note over user
+Prerequisite:
+User is logged in.
+User IS the
+Squadmaster of the
+Squad they are managing.
+end note
+
+user -> app : Select Hamburger Icon
+app -> db : Request List of User's Squads
+db --> app : Return List of User's Squads
+app --> user : Display User Squad Menu
+user -> app : Select a Squad from the User Squad Menu
+app -> db : Request Selected Squad's Member List and Availabilities
+db --> app : Return Selected Squad's Details
+app --> user : Load Selected Squad's Squad Screen
+user -> app : Select The "Manage Members" Button
+app --> app : Remove "Manage Members" Button
+app --> app : Display "Back to SQUADNAME" Button
+
+loop until user selects "Back to SQUADNAME" Button
+    app -> db : Request List of Selected Squad's Members
+    db --> app : Return List of Selected Squad's Members
+    app -> db : Request List of All Users, Excluding Members of Selected Squad
+    db --> app : Return List of All Users, Excluding Members of Selected Squad
+    app -> user : Displays Squad Members With Remove Option
+    app -> user : Displays Other Users with Add Option
+
+    alt user selects remove squad member
+        user -> app : Selects "Remove" Next to a Squad Member
+        app -> db : Removes Member From Selected Squad
+    else user selects add outside user
+        user -> app : Selects "Add" Next to an Outside User
+        app -> db : Adds the Selected User to the Selected Squad
+    end
+end
+@enduml

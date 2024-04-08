@@ -1,0 +1,73 @@
+@startuml Update Availability
+actor user
+participant ScheduSquad as app
+database Database as db
+
+note over user
+Prerequisite: User is
+logged in.
+end note
+
+user -> app : Select User Icon
+app --> user : Open User Menu
+user -> app : Select "Update Availability"
+
+loop until user leaves screen
+    app -> db : Request Current User Availability
+    db --> app : Return Current User Availability
+    app --> user : Load User Availability Screen
+
+    alt add new availability
+        user -> app : Select "Add New Availability Span"
+        app --> app : Remove "Add New Availability Span" Button
+        app -> user : Display New Availability Line
+        user --> app : Select Available Day and Span
+
+        alt cancel
+            user -> app : Select "Cancel"
+            app --> app : Remove New Availability Span
+        else save
+            user -> app : Select "Save"
+            app --> app : Validate New Availability
+            alt end before start
+                app -> user : Error Message "End Time must be after Start Time."
+                user --> app : Select Available Day and Span
+                note right
+                Resume flow from
+                "Select Available Day
+                and Span" above.
+                end note
+            else valid entry
+                app -> db : Add New Availability
+            end
+        end
+    else edit existing availability
+        alt edit existing availability
+            user -> app : Select Edit Button
+            app --> user : Selected Row Accepts New Input
+            user -> app : Selects New Availability Span
+            alt cancel
+                user -> app : Selects Undo Arrow
+                app --> app : Restores User Availability Screen
+            else save
+                user -> app : Selects Floppy Disk save Button
+                app --> app: Validates New Availability
+                alt end before start
+                    app -> user : Error Message "End Time must be after Start Time."
+                    user --> app : Select Available Day and Span
+                    note right
+                    Resume flow from
+                    "Select Available Day
+                    and Span" above.
+                    end note
+                else valid entry
+                    app -> db : Edit Selected Availability Span
+                end
+            end
+        else delete availability
+            user -> app : Select Delete Button
+            app -> db : Delete Logged In User's Selected Availability
+        end
+    end
+end
+@enduml

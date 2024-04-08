@@ -1,0 +1,28 @@
+@startuml Registration
+actor user
+participant ScheduSquad as app
+database Database as db
+
+note over user
+Prerequisite: Navigate 
+to registration screen
+end note
+
+app -> user : Request New Account Information
+user --> app : Provide New Account Information
+app -> app : Validate Inputs
+
+alt valid credentials
+    app -> db : Store New User Credentials
+    app -> user : Load Login Screen
+else invalid credentials
+    app -> user : Display Error Message
+    app -> user : Reload Registration Screen
+    user -> app : Proide Different Credentials
+    note right
+    Resume flow from
+    "Validate Inputs"
+    above.
+    end note
+end
+@enduml
