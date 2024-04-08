@@ -1,0 +1,14 @@
+@startuml ApplicationLayersDiagram
+
+skin rose
+
+database SqlExpressDB
+User <.> [ScheduSquad.Web] : HttpRequest/Response
+[ScheduSquad.Web] <.> [ScheduSquad.Service]
+[ScheduSquad.Service] <.> [ScheduSquad.Repository]
+[ScheduSquad.Repository] <.> SqlExpressDB
+[ScheduSquad.Models] ..> [ScheduSquad.Repository]
+[ScheduSquad.Models] ..> [ScheduSquad.Web]
+[ScheduSquad.Models] ..> [ScheduSquad.Service]
+
+@enduml

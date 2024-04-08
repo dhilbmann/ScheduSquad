@@ -1,0 +1,42 @@
+@startuml ServiceClassDiagram
+
+skin rose
+
+class Service.AccountService {
+    ~_memberRepository
+    +AccountService(memberRepo : IRepository<Member>)
+    +GetMemberById(memberId : Guid) : Member
+    +GetAllMembers() : List<Member>
+    +GetAllMembersNotInSquad(squadId : Guid) List<Member>
+    +AddMember(member : Member) : void
+    +UpdateMember(member : Member) : void
+    +DeleteMember(member : Member) : void
+}
+
+class Service.AvailabilityService {
+    ~_availabilityRepository
+    +AvailabilityService(availabilityRepo : IRepository<Availability>)
+    +GetAvailabilityById(memberId : Guid) : Availability
+    +GetAllAvailabilities() : List<Availability>
+    +GetAllAvailabilitiesBelongingToMember(memberId : Guid) List<Availability>
+    +AddAvailability(member : Availability) : void
+    +UpdateAvailability(member : Availability) : void
+    +DeleteAvailability(member : Availability) : void
+    +GetCommonAvailabilityCodes(squad : Squad) : List<int>
+    +GetCommonAvailabilityCodes(lists : List<List<int>>) : List<int>
+}
+
+class Service.SquadService {
+    ~_squadRepository
+    +AvailabilityService(squadRepo : IRepository<Squad>)
+    +GetSquadById(squadId : Guid) : Squad
+    +GetAllSquads() : List<Squad>
+    +GetAllSquadsBelongingToMember(memberId : Guid) List<Squad>
+    +AddSquad(squad : Squad) : void
+    +UpdateSquad(squad : Squad) : void
+    +DeleteSquad(squad : Squad) : void
+    +AddMemberToSquad(member: Member, squad : Squad) : void
+    +RemoveMemberFromSquad(member: Member, squad : Squad) : void
+}
+
+@enduml

@@ -1,0 +1,45 @@
+@startuml RepositoryClassDiagram
+
+skin rose
+
+interface DataAccess.IRepository<T> {
+    +GetById(id : Guid) : T
+    +GetAll() : IEnumerable<T>
+    +GetAllByParentId(id : Guid) : IEnumerable<T>
+    +Add(entity : T) : void
+    +Update(entity : T) : void
+    +Delete(entity : T) : void
+}
+
+class DataAccess.AvailabilityRepository<T> {
+    +GetById(id : Guid) : T
+    +GetAll() : IEnumerable<T>
+    +GetAllByParentId(id : Guid) : IEnumerable<T>
+    +Add(entity : T) : void
+    +Update(entity : T) : void
+    +Delete(entity : T) : void
+}
+
+class DataAccess.MemberRepository<T> {
+    +GetById(id : Guid) : T
+    +GetAll() : IEnumerable<T>
+    +GetAllByParentId(id : Guid) : IEnumerable<T>
+    +Add(entity : T) : void
+    +Update(entity : T) : void
+    +Delete(entity : T) : void
+}
+
+class DataAccess.SquadRepository<T> {
+    +GetById(id : Guid) : T
+    +GetAll() : IEnumerable<T>
+    +GetAllByParentId(id : Guid) : IEnumerable<T>
+    +Add(entity : T) : void
+    +Update(entity : T) : void
+    +Delete(entity : T) : void
+}
+
+DataAccess.IRepository <|-- DataAccess.SquadRepository
+DataAccess.IRepository <|-- DataAccess.MemberRepository
+DataAccess.IRepository <|-- DataAccess.AvailabilityRepository
+
+@enduml
