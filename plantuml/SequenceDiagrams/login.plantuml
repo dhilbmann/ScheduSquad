@@ -1,6 +1,26 @@
 @startuml Login
-actor User
-participant Application as app
+actor user
+participant ScheduSquad as app
 database Database as db
 
+app -> user : Login Request
+user --> app : Provide Credentials
+app -> db : Authenticate User
+db --> app : Authentication Response
+
+alt success
+    app -> user : Display Availability Screen
+else credentials invalid
+    app -> user : Login Request
+    alt another login attempt
+        user -->  app : Provide Different Credentials
+        note right
+        Resume flow from 
+        "Authenticate User"
+        above.
+        end note
+    else user registration
+        user -> app : Register New Account
+    end
+end
 @enduml

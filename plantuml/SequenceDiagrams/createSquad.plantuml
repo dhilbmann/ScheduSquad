@@ -1,6 +1,29 @@
 @startuml Create Squad
-actor User
-participant Application as app
+actor user
+participant ScheduSquad as app
 database Database as db
 
+note over user
+Prerequisite: 
+User is logged in.
+end note
+
+user -> app : Select Hamburger Icon
+app --> user : Display User Squad Menu
+user -> app : Select "Create New Squad" Button
+app --> user : Load Squad Creation Screen
+
+loop until user provides valid new squad information
+    app -> user : Request New Squad Information
+    user --> app : Submits New Squad Information
+    app -> app : Validates New Squad Information
+
+    alt validation fails
+        app -> user : Display error message
+    else validation succeeds
+        app -> db : Store New Squad Information in Database
+        db --> app : Returns New Squad ID
+        app -> user : Load New Squad's Member Management Screen
+    end
+end
 @enduml

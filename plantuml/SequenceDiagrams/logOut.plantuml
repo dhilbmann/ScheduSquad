@@ -1,6 +1,14 @@
 @startuml Log Out
-actor User
-participant Application as app
-database Database as db
+actor user
+participant ScheduSquad as app
 
+note over user
+Prerequisite: User is
+logged in.
+end note
+
+user -> app : Select User Icon
+app --> user : Open User Menu
+user -> app : Select "Logout"
+app --> user : Load Login Screen
 @enduml
