@@ -1,0 +1,6 @@
+@startuml Create Squad
+actor User
+participant Application as app
+database Database as db
+
+@enduml
