@@ -20,7 +20,7 @@ class Models.Member {
     +Member(firstName : string, lastName : string, email : string, password: string) : void
     +GetAllAvailabilityCodes() : List<int>
 }
-
+top to bottom direction
 class Models.Availability {
     +DayOfWeek
     +StartTime
@@ -33,7 +33,7 @@ class Models.Availability {
     +GetAvailabilityCodes() : List<string>
     +AreMinutesValid(time : TimeSpan) : bool
 }
-
+Models.PersistedEntityBase <|-- Models.Squad
 class Models.Squad {
     +Members
     +Name
@@ -49,8 +49,8 @@ class Models.Squad {
     +RemoveMember(member : Member) : void
 }
 
-Models.PersistedEntityBase <|-- Models.Availability
+Models.PersistedEntityBase <|-up- Models.Availability
 Models.PersistedEntityBase <|-- Models.Squad
-Models.PersistedEntityBase <|-- Models.Member
+Models.PersistedEntityBase <|-left- Models.Member
 
 @enduml
