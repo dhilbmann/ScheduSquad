@@ -1,40 +1,42 @@
-﻿
+﻿using System.Data.SqlClient;
+using ScheduSquad.Models;
+
 namespace ScheduSquad.DataAccess;
-public class AvailabilityRepository<T> : IRepository<T> where T : class
+public class AvailabilityRepository : IRepository<Availability>
 {
-    public void Add(T entity)
+    
+
+    public AvailabilityRepository()
+    {
+      
+    }
+
+    public void Add(Availability entity)
     {
         throw new NotImplementedException();
     }
 
-    public void Delete(T entity)
+    public void Delete(Availability entity)
     {
         throw new NotImplementedException();
     }
 
-    public IEnumerable<T> GetAll()
+    public IEnumerable<Availability> GetAll()
     {
         throw new NotImplementedException();
     }
 
-    public IEnumerable<T> GetAllByParentId(Guid id)
+    public IEnumerable<Availability> GetAllByParentId(Guid id)
     {
         throw new NotImplementedException();
     }
 
-    public T GetById(Guid id)
+    public Availability GetById(Guid id)
     {
-        // Set paramater
-        // Build command object = query
-        // Execute Command object = 
-        // Get results
-        // Put results on Availability Object
-        // Return object
-
         throw new NotImplementedException();
     }
 
-    public void Update(T entity)
+    public void Update(Availability entity)
     {
         throw new NotImplementedException();
     }

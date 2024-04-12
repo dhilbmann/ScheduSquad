@@ -6,9 +6,10 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace ScheduSquad.Models
 {
-    public class Squad : PersisitedEntityBase
+    public class Squad : IPersisitedEntityBase
     {
-        
+        public Guid Id { get; set; }
+        public bool IsDeleted { get; set; }
         public List<Member> Members { get; set; }
 
         private string _name;
@@ -34,7 +35,7 @@ namespace ScheduSquad.Models
         }
         public Squad(Guid id, Member squadMaster, string name, string description, string location) 
         {
-            base.Id = id;
+            Id = id;
             _squadMaster = squadMaster;
             _name = name;
             _description = description;

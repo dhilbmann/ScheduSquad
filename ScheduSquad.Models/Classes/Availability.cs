@@ -2,8 +2,10 @@ using ScheduSquad.Models;
 
 namespace ScheduSquad.Models
 {
-    public class Availability : PersisitedEntityBase
+    public class Availability : IPersisitedEntityBase
     {
+        public Guid Id { get; set; }
+        public bool IsDeleted { get; set; }
         public DayOfWeek DayOfWeek { get; set; }
         private TimeSpan _startTime;
         public TimeSpan StartTime
@@ -39,6 +41,8 @@ namespace ScheduSquad.Models
                 }
             }
         }
+
+
 
         /// <summary>
         /// 

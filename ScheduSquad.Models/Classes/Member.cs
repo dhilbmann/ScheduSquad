@@ -2,9 +2,10 @@ using ScheduSquad.Models;
 
 namespace ScheduSquad.Models
 {
-    public class Member : PersisitedEntityBase
+    public class Member : IPersisitedEntityBase
     {
-
+        public Guid Id { get; set; }
+        public bool IsDeleted { get; set; }
         private string _firstName;
         public string FirstName { get { return _firstName; } }
 
@@ -29,7 +30,7 @@ namespace ScheduSquad.Models
 
         public Member(Guid id, string firstName, string lastName, string email, string password, List<Availability> availabilities)
         {
-            base.Id = id;
+            Id = id;
             _firstName = firstName;
             _lastName = lastName;
             _email = email;
@@ -39,7 +40,7 @@ namespace ScheduSquad.Models
 
         public Member(Guid id, string firstName, string lastName, string email, string password)
         {
-            base.Id = id;
+            Id = id;
             _firstName = firstName;
             _lastName = lastName;
             _email = email;

@@ -1,34 +1,38 @@
-﻿
+﻿using System.Data.SqlClient;
+using ScheduSquad.Models;
+
 namespace ScheduSquad.DataAccess;
-public class MemberRepository<T> : IRepository<T> where T : class
+public class MemberRepository : IRepository<Member>
 {
-    public void Add(T entity)
+    public void Add(Member entity)
     {
         throw new NotImplementedException();
     }
 
-    public void Delete(T entity)
+    public void Delete(Member entity)
     {
         throw new NotImplementedException();
     }
 
-    public IEnumerable<T> GetAll()
+    public IEnumerable<Member> GetAll()
     {
         throw new NotImplementedException();
     }
 
-    public IEnumerable<T> GetAllByParentId(Guid id)
+    public IEnumerable<Member> GetAllByParentId(Guid id)
     {
         throw new NotImplementedException();
     }
 
-    public T GetById(Guid id)
+    public Member GetById(Guid id)
     {
         throw new NotImplementedException();
     }
 
-    public void Update(T entity)
+    public void Update(Member entity)
     {
         throw new NotImplementedException();
     }
 }
+   
+

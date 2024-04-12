@@ -3,7 +3,7 @@ using ScheduSquad.Models;
 namespace ScheduSquad.Service
 {
 
-    public class AvailabilityService
+    public class AvailabilityService 
     {
 
         private readonly IRepository<Availability> _availabilityRepository;
@@ -96,6 +96,7 @@ namespace ScheduSquad.Service
 
             return commonValues;
         }
+
     }
 
 }
