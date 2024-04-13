@@ -15,7 +15,7 @@ CREATE PROCEDURE Add_Squad
 AS
 BEGIN
 
-DECLARE @AlreadyExists bit = (SELECT SquadPK from Squads WHERE SquadPK = @Id)
+DECLARE @AlreadyExists bit = (SELECT COUNT(1) from Squads WHERE SquadPK = @Id)
 
 IF @AlreadyExists = 1
 	BEGIN

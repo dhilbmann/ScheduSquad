@@ -7,7 +7,7 @@
 
 
 CREATE PROCEDURE Add_Availability
-	@AvailabilityId uniqueidentifier,
+	@Id uniqueidentifier,
 	@UserId uniqueidentifier,
 	@DayEnum int,
 	@StartTime datetime2,
@@ -16,11 +16,15 @@ CREATE PROCEDURE Add_Availability
 AS
 BEGIN
 
-DECLARE @AlreadyExists bit = (SELECT @AvailabilityId 
-							  FROM UserAvailability 
-							  WHERE AvailabilityPK = @AvailabilityId)
+DECLARE @IdAlreadyExists bit = (SELECT COUNT(1)
+							  FROM UserAvailability u
+							  WHERE AvailabilityPK = @Id)
+DECLARE @UserExists bit = (SELECT COUNT(1) 
+							FROM Users 
+							WHERE UserPk = @UserId)
 
-IF @AlreadyExists = 1
+-- Checks if the Availability ID already exists or if the user does not exist
+IF @IdAlreadyExists = 1 OR @UserExists = 0
 	BEGIN
 		RETURN 0;
 	END
@@ -32,7 +36,7 @@ ELSE
 									  StartTime,
 									  EndTime)
 		VALUES (
-				@AvailabilityId,
+				@Id,
 				@UserId,
 				@DayEnum,
 				@StartTime,
