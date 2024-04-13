@@ -9,6 +9,21 @@
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
+<p>
+    <ul>
+        <li>
+            Availability -  @Model.AvailabilityServiceTest
+        </li>
+        <li>
+            Member -  @Model.MemberServiceTest
+        </li>
+        <li>
+            Squad -  @Model.SquadServiceTest
+        </li>
+    </ul>
+</p>
+<br />
+<br />
 @foreach(ScheduSquad.Models.Member u in Model.Squad.Members)
 {
     <p>@u.FirstName @u.LastName Availability</p>

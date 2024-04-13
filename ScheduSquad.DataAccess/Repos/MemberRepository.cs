@@ -4,6 +4,16 @@ using ScheduSquad.Models;
 namespace ScheduSquad.DataAccess;
 public class MemberRepository : IRepository<Member>
 {
+    private IDbConfiguration _dbConfiguration;
+
+    public MemberRepository(IDbConfiguration dbConfiguration) {
+        _dbConfiguration = dbConfiguration;
+    }
+
+   public string Test() {
+        return "MemberRepository.Test Return String";
+    }
+    
     public void Add(Member entity)
     {
         throw new NotImplementedException();
@@ -33,6 +43,8 @@ public class MemberRepository : IRepository<Member>
     {
         throw new NotImplementedException();
     }
+
+ 
 }
    
 

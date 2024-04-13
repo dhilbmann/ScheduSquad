@@ -4,11 +4,14 @@ using ScheduSquad.Models;
 namespace ScheduSquad.DataAccess;
 public class AvailabilityRepository : IRepository<Availability>
 {
+    private IDbConfiguration _dbConfiguration;
     
+    public AvailabilityRepository(IDbConfiguration dbConfiguration) {
+        _dbConfiguration = dbConfiguration;
+    }
 
-    public AvailabilityRepository()
-    {
-      
+    public string Test() {
+        return "AvailabilityRepository.Test Return String";
     }
 
     public void Add(Availability entity)
@@ -40,4 +43,6 @@ public class AvailabilityRepository : IRepository<Availability>
     {
         throw new NotImplementedException();
     }
+
+  
 }

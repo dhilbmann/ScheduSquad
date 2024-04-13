@@ -2,12 +2,16 @@ using ScheduSquad.Models;
 
 namespace ScheduSquad.Service
 {
-    public class SquadService
+    public class SquadService : ISquadService
     {
         private readonly IRepository<Squad> _squadRepository;
 
         public SquadService(IRepository<Squad> squadRepo) {
             _squadRepository = squadRepo;
+        }
+
+        public string Test() {
+            return _squadRepository.Test();
         }
 
         public Squad GetSquadById(Guid squadId) {
@@ -43,6 +47,8 @@ namespace ScheduSquad.Service
         {
             throw new NotImplementedException();
         }
+
+  
     }
 }
 

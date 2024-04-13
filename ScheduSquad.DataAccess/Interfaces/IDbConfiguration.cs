@@ -1,6 +1,13 @@
 using System.Data.SqlClient;
 
 public interface IDbConfiguration {
-    SqlConnection getConnectionFactory();
+    SqlConnection GetConnection();
+    SqlCommand GetCommand();
 
 }
+
+
+
+
+
+
