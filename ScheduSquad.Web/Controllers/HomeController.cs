@@ -2,21 +2,32 @@
 using Microsoft.AspNetCore.Mvc;
 using ScheduSquad.Web.Models;
 using ScheduSquad.Models;
+using ScheduSquad.Service;
 
 namespace ScheduSquad.Web.Controllers;
 
-public class MenuController : Controller
+public class HomeController : Controller
 {
-    private readonly ILogger<MenuController> _logger;
+    private readonly ILogger<HomeController> _logger;
+    private readonly IAvailabilityService _availabilityService;
+    private readonly ISquadService _squadService;
+    private readonly IMemberService _memberService;
 
-    public MenuController(ILogger<MenuController> logger)
+    public HomeController(ILogger<HomeController> logger, IAvailabilityService availabilityService, ISquadService squadService, IMemberService memberService)
     {
+        _availabilityService = availabilityService;
+        _squadService = squadService;
+        _memberService = memberService;
         _logger = logger;
     }
 
     public IActionResult Index()
     {
         HomeViewModel vm = new HomeViewModel();
+    
+        vm.AvailabilityServiceTest = _availabilityService.Test();
+        vm.SquadServiceTest = _squadService.Test();
+        vm.MemberServiceTest = _memberService.Test();
 
         Member user_david = new Member(Guid.NewGuid(), "David", "Hilbmann", "david@gmail.com", "password", new List<Availability>());
         user_david.Availabilities.Add(new Availability(DayOfWeek.Monday, new TimeSpan(4, 15, 00), new TimeSpan(5, 30, 00)));

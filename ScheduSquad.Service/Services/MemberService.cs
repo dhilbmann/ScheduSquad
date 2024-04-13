@@ -2,14 +2,18 @@ using ScheduSquad.Models;
 
 namespace ScheduSquad.Service {
     
-    public class AccountService
+    public class MemberService : IMemberService 
     {
 
         private readonly IRepository<Member> _memberRepository;
 
-        public AccountService(IRepository<Member> memberRepo)
+        public MemberService(IRepository<Member> memberRepo)
         {
             _memberRepository = memberRepo;
+        }
+
+        public string Test() {
+            return _memberRepository.Test();
         }
 
         public Member GetMemberById(Guid memberId)
@@ -40,6 +44,8 @@ namespace ScheduSquad.Service {
         {
             _memberRepository.Delete(member);
         }
+
+
 
     }
 

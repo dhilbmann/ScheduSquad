@@ -10,6 +10,10 @@ public class SquadRepository : IRepository<Squad>
         _dbConfiguration = dbConfiguration;
     }
 
+    public string Test() {
+        return "SquadRepository.Test Return String";
+    }
+
     public void Add(Squad entity)
     {
         throw new NotImplementedException();
@@ -39,4 +43,6 @@ public class SquadRepository : IRepository<Squad>
     {
         throw new NotImplementedException();
     }
+
+
 }
