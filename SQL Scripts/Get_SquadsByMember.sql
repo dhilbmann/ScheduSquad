@@ -1,18 +1,18 @@
 -- ================================================
 -- 
--- This procedure will return details for an 
--- individual squad or all squads if no Id is given
+-- This procedure will return details for  
+-- all squads a member is a part of
 -- 
 -- ================================================
 
 
 CREATE PROCEDURE Get_SquadsByMember
-	@SquadMemberId uniqueidentifier
+	@Id uniqueidentifier
 
 AS
 BEGIN
 
-IF @SquadMemberId IS NOT NULL
+IF @Id IS NOT NULL
 	BEGIN
 		RETURN 0;
 	END
@@ -25,7 +25,7 @@ ELSE
 		FROM Squads s
 		INNER JOIN SquadMembers sm ON sm.SquadFK = s.SquadPK
 		WHERE s.IsDeleted = 0
-			AND sm.UserFK = @SquadMemberId
+			AND sm.UserFK = @Id
 
 	END
 END

@@ -41,8 +41,20 @@ namespace ScheduSquad.Models
                 }
             }
         }
-
-
+ 
+ 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="dayOfWeek"></param>
+        /// <param name="endTime"></param>
+        public Availability(){
+            Id = Guid.NewGuid();
+            DayOfWeek = default(DayOfWeek);
+            StartTime = new TimeSpan();
+            EndTime = new TimeSpan();
+        }
 
         /// <summary>
         /// 

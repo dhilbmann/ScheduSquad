@@ -18,9 +18,9 @@ public class SquadRepository : IRepository<Squad>
     {
         SqlCommand cmd = new SqlCommand("Add_Squad");
         cmd.Parameters.Add("@Id", System.Data.SqlDbType.UniqueIdentifier).Value = entity.Id;
-        cmd.Parameters.Add("@FirstName", System.Data.SqlDbType.VarChar).Value = entity.Name;
-        cmd.Parameters.Add("@LastName", System.Data.SqlDbType.VarChar).Value = entity.Description;
-        cmd.Parameters.Add("@Email", System.Data.SqlDbType.VarChar).Value = entity.Location;
+        cmd.Parameters.Add("@SquadName", System.Data.SqlDbType.VarChar).Value = entity.Name;
+        cmd.Parameters.Add("@SquadDesc", System.Data.SqlDbType.VarChar).Value = entity.Description;
+        cmd.Parameters.Add("@SquadLocation", System.Data.SqlDbType.VarChar).Value = entity.Location;
         ExecuteLogic(cmd);
     }
 
@@ -64,8 +64,6 @@ public class SquadRepository : IRepository<Squad>
         ExecuteLogic(cmd);
     }
 
-
-
     public void ExecuteLogic(SqlCommand cmd) 
     {
         using (SqlConnection con = new SqlConnection(_dbConfiguration.ToString()))
@@ -85,7 +83,7 @@ public class SquadRepository : IRepository<Squad>
 
         var squad = new Squad();
 
-        using (SqlConnection con = new SqlConnection(cs))
+        using (SqlConnection con = new SqlConnection(_dbConfiguration.ToString()))
         {  
             
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -108,7 +106,7 @@ public class SquadRepository : IRepository<Squad>
     {
         IEnumerable<Squad> squadList = new List<Squad>();
         
-        using (SqlConnection con = new SqlConnection(cs))
+        using (SqlConnection con = new SqlConnection(_dbConfiguration.ToString()))
         {  
             
             cmd.CommandType = System.Data.CommandType.StoredProcedure;

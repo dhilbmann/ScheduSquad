@@ -1,7 +1,4 @@
 
-DECLARE @COMMIT bit = 1
-BEGIN TRANSACTION A
-
 DECLARE @Id uniqueidentifier = NEWID()
 exec Add_Member @Id, 'Cara', 'Perez', 'cara.c.perez@gmail.com', '$2y$10$ez7OOiHD9IR60EFHYDVXJusRea/jiGYmUQhflb4h8GoaS6yZ5GQ6q', '$2y$10$ez7OOiHD9IR60EFHYDVXJusRea/jiGYmUQhflb4h8GoaS6yZ5GQ6q'
 SET  @Id = NEWID()
@@ -76,14 +73,4 @@ exec Add_Availability @Id, @UserId, 4, '09:15:00','14:00:00'
 SET  @Id = NEWID()
 exec Add_Availability @Id, @UserId, 7, '11:30:00','17:30:00'
 
-IF @COMMIT = 1
-	BEGIN
-		COMMIT TRANSACTION A
-		SELECT 'COMMIT'
-	END
-ELSE
-	BEGIN
-		ROLLBACK TRANSACTION A
-		SELECT 'ROLLBACK'
-	END
 

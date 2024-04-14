@@ -12,6 +12,8 @@ public class AvailabilityRepository : IRepository<Availability>
        _dbConfiguration = dbConfiguration;
     }
 
+    public void Add(Availability entity){}
+
     public void Add(Availability entity, Guid userId)
     {
         SqlCommand cmd = new SqlCommand("Add_Availability");
@@ -46,12 +48,19 @@ public class AvailabilityRepository : IRepository<Availability>
 
     public Availability GetById(Guid id)
     {
-        throw new NotImplementedException();
+        SqlCommand cmd = new SqlCommand("Get_Availability");
+        cmd.Parameters.Add("@Id", System.Data.SqlDbType.UniqueIdentifier).Value = id;
+        return ExecuteGetAvailability(cmd);
     }
 
     public void Update(Availability entity)
     {
-        throw new NotImplementedException();
+        SqlCommand cmd = new SqlCommand("Update_Availability");
+        cmd.Parameters.Add("@Id", System.Data.SqlDbType.UniqueIdentifier).Value = entity.Id;
+        cmd.Parameters.Add("@DayEnum", System.Data.SqlDbType.VarChar).Value = entity.DayOfWeek;
+        cmd.Parameters.Add("@StartTime", System.Data.SqlDbType.VarChar).Value = entity.StartTime;
+        cmd.Parameters.Add("@EndTime", System.Data.SqlDbType.VarChar).Value = entity.EndTime;
+        ExecuteLogic(cmd);
     }
 
     public void ExecuteLogic(SqlCommand cmd) 
@@ -69,11 +78,34 @@ public class AvailabilityRepository : IRepository<Availability>
         }
     }
 
+    private Availability ExecuteGetAvailability(SqlCommand cmd)
+    {
+        var availability = new Availability();
+        
+        using (SqlConnection con = new SqlConnection(_dbConfiguration.ToString()))
+        {  
+            
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            
+            con.Open();
+
+            SqlDataReader rdr = cmd.ExecuteReader();  
+            while (rdr.Read())  
+            {
+                availability = getAvailabilityData(rdr);
+            }  
+
+            con.Close();
+        }
+
+        return availability;
+    }
+
     private IEnumerable<Availability> ExecuteGetAllAvailability(SqlCommand cmd)
     {
         IEnumerable<Availability> availabilityList = new List<Availability>();
         
-        using (SqlConnection con = new SqlConnection(cs))
+        using (SqlConnection con = new SqlConnection(_dbConfiguration.ToString()))
         {  
             
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -98,7 +130,7 @@ public class AvailabilityRepository : IRepository<Availability>
         DayOfWeek dayOfWeek= (DayOfWeek)Convert.ToInt32(rdr["DayEnum"]);
 
         var availability = new Availability(
-            new Guid((rdr["Id"]).ToString() ?? string.Empty),     //Id                                         //SquadMaster
+            new Guid((rdr["Id"]).ToString() ?? string.Empty),     //Id                      
             dayOfWeek,                                           //dayofweek
             (TimeSpan)rdr["StartTime"],                         //starttime  
             (TimeSpan)rdr["EndTime"]                           //endtime

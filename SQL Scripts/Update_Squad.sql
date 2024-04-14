@@ -15,7 +15,7 @@ CREATE PROCEDURE Update_Squad
 AS
 BEGIN
 
-DECLARE @Exists bit = (SELECT SquadPK from Squads WHERE SquadPK = @Id)
+DECLARE @Exists bit = (SELECT COUNT(1) from Squads WHERE SquadPK = @Id)
 
 IF @Exists = 0
 	BEGIN

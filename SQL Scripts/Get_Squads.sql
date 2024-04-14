@@ -7,12 +7,12 @@
 
 
 CREATE PROCEDURE Get_Squads
-	@SquadId uniqueidentifier
+	@Id uniqueidentifier
 
 AS
 BEGIN
 
-IF @SquadId IS NOT NULL
+IF @Id IS NOT NULL
 	BEGIN
 
 		SELECT SquadPK AS 'Id',
@@ -20,7 +20,7 @@ IF @SquadId IS NOT NULL
 			   SquadDesc,
 			   SquadLocation
 		FROM Squads 
-		WHERE @SquadId = SquadPK
+		WHERE @Id = SquadPK
 
 	END
 ELSE

@@ -7,12 +7,12 @@
 
 
 CREATE PROCEDURE Get_SquadMembers
-	@SquadId uniqueidentifier
+	@Id uniqueidentifier
 
 AS
 BEGIN
 
-IF @SquadId IS NOT NULL
+IF @Id IS NOT NULL
 	BEGIN
 		SELECT SquadMemberPK AS 'Id',
 			   u.UserPk,
@@ -22,7 +22,7 @@ IF @SquadId IS NOT NULL
 			   sm.JoinDate
 		FROM SquadMembers sm
 		INNER JOIN Users u ON u.UserPk = sm.UserFK
-		WHERE @SquadId = sm.SquadFK 
+		WHERE @Id = sm.SquadFK 
 			AND sm.IsDeleted = 0
 			AND u.IsDeleted = 0
 	END

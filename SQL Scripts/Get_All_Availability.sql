@@ -14,7 +14,7 @@ BEGIN
 
 IF @Id IS NOT NULL
 	BEGIN
-		SELECT ua.AvailabilityPK as Id,
+		SELECT ua.AvailabilityPK as 'Id',
 				ua.DayEnum,
 				ua.StartTime,
 				ua.EndTime
