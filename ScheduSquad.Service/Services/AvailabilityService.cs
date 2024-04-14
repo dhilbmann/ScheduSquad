@@ -96,6 +96,25 @@ namespace ScheduSquad.Service
 
             return commonValues;
         }
+
+        public List<List<int>> SplitAvailabilities(List<int> availability)
+        {
+            List<List<int>> splitAvailabilities = new List<List<int>>();
+            List<int> tempSpan = new List<int>();
+
+            for (int i = 0; i < availability.Count; i++)
+            {
+                tempSpan.Add(availability[i]);
+
+                if (availability[i] != availability[i+1] + 1)
+                {
+                    splitAvailabilities.Add(tempSpan);
+                    tempSpan.Clear();
+                }
+            }
+
+            return splitAvailabilities;
+        }
     }
 
 }
