@@ -2,9 +2,10 @@ using ScheduSquad.Models;
 
 namespace ScheduSquad.Models
 {
-    public class Member : PersisitedEntityBase
+    public class Member : IPersisitedEntityBase
     {
-
+        public Guid Id { get; set; }
+        public bool IsDeleted { get; set; }
         private string _firstName;
         public string FirstName { get { return _firstName; } }
 
@@ -13,9 +14,6 @@ namespace ScheduSquad.Models
         
         private string _email; 
         public string Email { get { return _email; } }
-
-        private string _password;
-        public string Password { get { return _password; } }
  
         public List<Availability> Availabilities { get; set; }
 
@@ -23,31 +21,28 @@ namespace ScheduSquad.Models
             _firstName = String.Empty;
             _lastName = String.Empty;
             _email = String.Empty;
-            _password = String.Empty;
             Availabilities = new List<Availability>();
         }
 
-        public Member(Guid id, string firstName, string lastName, string email, string password, List<Availability> availabilities)
+        public Member(Guid id, string firstName, string lastName, string email, List<Availability> availabilities)
         {
-            base.Id = id;
+            Id = id;
             _firstName = firstName;
             _lastName = lastName;
             _email = email;
-            _password = password;
             Availabilities = availabilities;
         }
 
-        public Member(Guid id, string firstName, string lastName, string email, string password)
+        public Member(Guid id, string firstName, string lastName, string email)
         {
-            base.Id = id;
+            Id = id;
             _firstName = firstName;
             _lastName = lastName;
             _email = email;
-            _password = password;
             Availabilities = new List<Availability>();
         }
 
-        public Member(string firstName, string lastName, string email, string password) : this(Guid.NewGuid(), firstName, lastName, email, password, new List<Availability>()) { }
+        public Member(string firstName, string lastName, string email, string password) : this(Guid.NewGuid(), firstName, lastName, email, new List<Availability>()) { }
 
         
         /// <summary>

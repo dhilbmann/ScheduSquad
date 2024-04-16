@@ -1,6 +1,6 @@
 namespace ScheduSquad.Models
 {
-    public abstract class PersisitedEntityBase
+    public interface IPersisitedEntityBase
     {
         public Guid Id { get; set; }
 

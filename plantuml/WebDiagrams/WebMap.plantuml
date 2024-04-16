@@ -1,0 +1,51 @@
+@startuml RepositoryClassDiagram
+
+skin rose
+
+class SquadController {
+    -_logger : ILogger<SquadController>
+    +SquadController(logger : ILogger<SquadController>)
+    +Index() : IActionResult
+    +Details(squadId : Guid) : IActionResult
+    +SquadMemberList(squadId : Guid) : IActionResult
+    +SquadAvailabilityList(squadId : Guid) : IActionResult
+    +AddMemberToSquad(squadId : Guid, memberId : Guid) : JsonResult
+    +RemoveMemberFromSquad(squadId : Guid, memberId : Guid) : JsonResult
+}
+
+class AccountController {
+    -_logger : ILogger<AccountController>
+    +HomeController(logger : ILogger<AccountController>)
+    +Login() : IActionResult
+    +Login(username : string, password : string) : IActionResult
+    +Create() : IActionResult
+    +Create(firstName : string, lastname : string, email : string, password : string) : IActionResult
+    +Logout() : IActionResult
+}
+
+class AvailabilityController {
+    -_logger : ILogger<AvailabilityController>
+    +AvailabilityController(logger : ILogger<AvailabilityController>)
+    +Index() : IActionResult
+    +GetAvailabilityTable(memberId : Guid) : IActionResult
+    +GetMemberAvailabilities(memberId : Guid) : IActionResult
+    +SaveAvailability(availability : Availability) : JsonResult
+    +UpdateAvailability(availability : Availability) : JsonResult
+    +DeleteAvailability(availability : Availability) : JsonResult
+}
+
+class MenuController {
+    -_logger : ILogger<MenuController>
+    +MenuController(logger : ILogger<MenuController>)
+    +Index() : IActionResult
+    +Menu() : IActionResult
+    +ProfileMenu() : IActionResult
+    +SquadMenu() : IActionResult
+}
+
+Controller <|-up- SquadController
+Controller <|-down- AccountController
+Controller <|-left- AvailabilityController
+Controller <|-right- MenuController
+
+@enduml

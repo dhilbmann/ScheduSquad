@@ -1,7 +1,20 @@
+using ScheduSquad.DataAccess;
+using ScheduSquad.Models;
+using ScheduSquad.Service;
+using ScheduSquad.Web;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IDbConfiguration, SqlExpressDbConfiguration>();
+builder.Services.AddScoped<IRepository<Availability>, AvailabilityRepository>();
+builder.Services.AddScoped<IRepository<Member>, MemberRepository>();
+builder.Services.AddScoped<IRepository<Squad>, SquadRepository>(); 
+builder.Services.AddScoped<IAvailabilityService, AvailabilityService>();
+builder.Services.AddScoped<IMemberService, MemberService>();
+builder.Services.AddScoped<ISquadService, SquadService>();
+
 
 var app = builder.Build();
 

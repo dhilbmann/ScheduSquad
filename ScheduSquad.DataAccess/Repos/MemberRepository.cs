@@ -1,34 +1,145 @@
-﻿
+﻿using System.Data.SqlClient;
+using ScheduSquad.Models;
+
 namespace ScheduSquad.DataAccess;
-public class MemberRepository<T> : IRepository<T> where T : class
+public class MemberRepository : IRepository<Member>
 {
-    public void Add(T entity)
-    {
-        throw new NotImplementedException();
+    private IDbConfiguration _dbConfiguration;
+
+    public MemberRepository(IDbConfiguration dbConfiguration) {
+        _dbConfiguration = dbConfiguration;
     }
 
-    public void Delete(T entity)
+   public string Test() {
+        return "MemberRepository.Test Return String";
+    }
+    
+    public void Add(Member entity)
     {
-        throw new NotImplementedException();
+        SqlCommand cmd = new SqlCommand("Add_Member");
+        cmd.Parameters.Add("@Id", System.Data.SqlDbType.UniqueIdentifier).Value = entity.Id;
+        cmd.Parameters.Add("@FirstName", System.Data.SqlDbType.VarChar).Value = entity.FirstName;
+        cmd.Parameters.Add("@LastName", System.Data.SqlDbType.VarChar).Value = entity.LastName;
+        cmd.Parameters.Add("@Email", System.Data.SqlDbType.VarChar).Value = entity.Email;
+        ExecuteLogic(cmd);
     }
 
-    public IEnumerable<T> GetAll()
+    public void Delete(Member entity)
     {
-        throw new NotImplementedException();
+        SqlCommand cmd = new SqlCommand("Delete_Member");
+        cmd.Parameters.Add("@Id", System.Data.SqlDbType.UniqueIdentifier).Value = entity.Id;
+        ExecuteLogic(cmd);
     }
 
-    public IEnumerable<T> GetAllByParentId(Guid id)
+    public IEnumerable<Member> GetAll()
     {
-        throw new NotImplementedException();
+        // Running the Get_Members proc without a specified Id will return a all members
+        SqlCommand cmd = new SqlCommand("Get_Members");
+        cmd.Parameters.Add("@Id", System.Data.SqlDbType.UniqueIdentifier).Value = null;
+        return ExecuteGetAllMembers(cmd);
     }
 
-    public T GetById(Guid id)
+    public IEnumerable<Member> GetAllByParentId(Guid id) //Get all members in a Squad
     {
-        throw new NotImplementedException();
+        SqlCommand cmd = new SqlCommand("Get_SquadMembers");
+        cmd.Parameters.Add("@Id", System.Data.SqlDbType.UniqueIdentifier).Value = id;
+        return ExecuteGetAllMembers(cmd);
     }
 
-    public void Update(T entity)
+    public Member GetById(Guid id)
     {
-        throw new NotImplementedException();
+        // Running the Get_Membesr proc with a specified Id will return a single member
+        SqlCommand cmd = new SqlCommand("Get_Members");
+        cmd.Parameters.Add("@Id", System.Data.SqlDbType.UniqueIdentifier).Value = id;
+        return ExecuteGetMember(cmd);
     }
+
+    public void Update(Member entity)
+    {
+        SqlCommand cmd = new SqlCommand("Update_Member");
+        cmd.Parameters.Add("@Id", System.Data.SqlDbType.UniqueIdentifier).Value = entity.Id;
+        cmd.Parameters.Add("@FirstName", System.Data.SqlDbType.VarChar).Value = entity.FirstName;
+        cmd.Parameters.Add("@LastName", System.Data.SqlDbType.VarChar).Value = entity.LastName;
+        cmd.Parameters.Add("@Email", System.Data.SqlDbType.VarChar).Value = entity.Email;
+        ExecuteLogic(cmd);
+    }
+
+    public void ExecuteLogic(SqlCommand cmd) 
+    {
+        using (SqlConnection con = new SqlConnection(_dbConfiguration.ToString()))
+        {  
+            
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            
+            con.Open();
+
+            cmd.ExecuteNonQuery();
+
+            con.Close();
+        }
+    }
+
+public Member ExecuteGetMember(SqlCommand cmd){
+
+        var member = new Member();
+
+        using (SqlConnection con = new SqlConnection(_dbConfiguration.ToString()))
+        {  
+            
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            
+            con.Open();
+
+            SqlDataReader rdr = cmd.ExecuteReader();  
+            while (rdr.Read())  
+            {
+                member = getMemberData(rdr);
+            }  
+
+            con.Close();
+        }
+
+        return member;
+    }
+
+    public IEnumerable<Member> ExecuteGetAllMembers(SqlCommand cmd) 
+    {
+        IEnumerable<Member> memberList = new List<Member>();
+        
+        using (SqlConnection con = new SqlConnection(_dbConfiguration.ToString()))
+        {  
+            
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            
+            con.Open();
+
+            SqlDataReader rdr = cmd.ExecuteReader();  
+            while (rdr.Read())  
+            {
+                var member = getMemberData(rdr);
+                
+               memberList.Append(member);  
+            }  
+
+            con.Close();
+        }
+
+        return memberList;
+    }
+
+    public Member getMemberData(SqlDataReader rdr)
+    {
+        var member = new Member(
+            new Guid((rdr["Id"]).ToString() ?? string.Empty),   //Id
+            rdr["FirstName"].ToString() ?? string.Empty,        //name
+            rdr["LastName"].ToString() ?? string.Empty,        //description  
+            rdr["Email"].ToString() ?? string.Empty          //location
+
+        );
+
+        return member;
+    }
+ 
 }
+   
+

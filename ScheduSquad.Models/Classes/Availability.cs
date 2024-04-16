@@ -2,8 +2,10 @@ using ScheduSquad.Models;
 
 namespace ScheduSquad.Models
 {
-    public class Availability : PersisitedEntityBase
+    public class Availability : IPersisitedEntityBase
     {
+        public Guid Id { get; set; }
+        public bool IsDeleted { get; set; }
         public DayOfWeek DayOfWeek { get; set; }
         private TimeSpan _startTime;
         public TimeSpan StartTime
@@ -38,6 +40,20 @@ namespace ScheduSquad.Models
                     throw new ArgumentException("EndTime is Invalid.  Time must end in :00, :15, :30, or :45.");
                 }
             }
+        }
+ 
+ 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="dayOfWeek"></param>
+        /// <param name="endTime"></param>
+        public Availability(){
+            Id = Guid.NewGuid();
+            DayOfWeek = default(DayOfWeek);
+            StartTime = new TimeSpan();
+            EndTime = new TimeSpan();
         }
 
         /// <summary>
