@@ -11,7 +11,7 @@
 
 <p>
     <ul>
-        <li>
+        @* <li>
             Availability -  @Model.AvailabilityServiceTest
         </li>
         <li>
@@ -19,18 +19,28 @@
         </li>
         <li>
             Squad -  @Model.SquadServiceTest
+        </li> *@
+        <li>
+            Squad Name-  @Model.squad.Name 
+        </li>
+        <li>
+            Squad Description-  @Model.squad.Description
+        </li>
+        <li>
+            Squad Location-  @Model.squad.Location
         </li>
     </ul>
 </p>
 <br />
 <br />
-@foreach(ScheduSquad.Models.Member u in Model.Squad.Members)
+ @foreach(ScheduSquad.Models.Squad u in @Model.squads)
 {
-    <p>@u.FirstName @u.LastName Availability</p>
+    <p>Squad</p>
+    <p>1 @u.Name @u.Description @u.Location</p>
     <p>
-    @foreach(int i in u.GetAllAvailabilityCodes())
+     @* @foreach(int i in u.GetAllAvailabilityCodes())
     {
         <span>@i</span>
-    }
+    } *@
     </p>
-}
+} 

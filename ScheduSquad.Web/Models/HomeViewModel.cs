@@ -11,5 +11,9 @@ public class HomeViewModel
     public HomeViewModel() {
         Squad = new Squad();
     }
+    public List<Member> members {get; set;}
+    public Member member {get; set;}
+    public Squad squad {get; set;}
+    public List<Squad> squads {get; set;}
 
 }

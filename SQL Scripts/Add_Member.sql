@@ -10,9 +10,7 @@ CREATE PROCEDURE Add_Member
 	@Id uniqueidentifier,
 	@FirstName nvarchar(35),
 	@LastName nvarchar(35),
-	@Email nvarchar(75),
-	@PwHash char(128),
-	@PwSalt char(128)
+	@Email nvarchar(75)
 
 AS
 BEGIN
@@ -28,16 +26,12 @@ ELSE
 	INSERT INTO Users ( UserPk, 
 						FirstName, 
 						LastName, 
-						Email, 
-						PwHash, 
-						PwSalt)
+						Email)
 	VALUES (
 			@Id,
 			@FirstName,
 			@LastName,
-			@Email,
-			@PwHash,
-			@PwSalt
+			@Email
 	)
 	END
 END

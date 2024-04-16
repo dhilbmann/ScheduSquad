@@ -7,30 +7,19 @@
 
 
 CREATE PROCEDURE Get_Squads
-	@Id uniqueidentifier
 
 AS
 BEGIN
 
-IF @Id IS NOT NULL
-	BEGIN
-
-		SELECT SquadPK AS 'Id',
-			   SquadName,
-			   SquadDesc,
-			   SquadLocation
-		FROM Squads 
-		WHERE @Id = SquadPK
-
-	END
-ELSE
-	BEGIN
-		SELECT SquadPK AS 'Id',
-			   SquadName,
-			   SquadDesc,
-			   SquadLocation
-		FROM Squads
-		WHERE IsDeleted = 0
-	END
+SELECT SquadPK AS 'Id',
+		SquadName,
+		SquadDesc,
+		SquadLocation,
+		sm.UserFK AS 'SquadMasterId'
+FROM Squads s
+INNER JOIN SquadMembers sm ON sm.SquadFK = s.SquadPK
+WHERE sm.IsDeleted = 0
+	AND s.IsDeleted = 0
+	AND sm.IsSquadMaster = 1
 END
 GO

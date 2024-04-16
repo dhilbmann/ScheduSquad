@@ -30,6 +30,11 @@ namespace ScheduSquad.Service {
             throw new NotImplementedException();
         }
 
+        public List<Member> GetAllMembersInSquad(Guid squadId) {
+
+            return _memberRepository.GetAllByParentId(squadId).ToList();
+        }
+
         public void AddMember(Member member)
         {
             _memberRepository.Add(member);

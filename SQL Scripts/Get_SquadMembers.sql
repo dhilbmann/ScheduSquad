@@ -14,12 +14,10 @@ BEGIN
 
 IF @Id IS NOT NULL
 	BEGIN
-		SELECT SquadMemberPK AS 'Id',
-			   u.UserPk,
+		SELECT u.UserPk AS 'Id',
 			   u.FirstName,
 			   u.LastName,
-			   sm.IsSquadMaster,
-			   sm.JoinDate
+			   u.Email
 		FROM SquadMembers sm
 		INNER JOIN Users u ON u.UserPk = sm.UserFK
 		WHERE @Id = sm.SquadFK 

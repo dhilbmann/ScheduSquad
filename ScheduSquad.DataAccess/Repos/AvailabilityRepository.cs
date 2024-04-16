@@ -12,6 +12,10 @@ public class AvailabilityRepository : IRepository<Availability>
        _dbConfiguration = dbConfiguration;
     }
 
+   public string Test() {
+        return "MemberRepository.Test Return String";
+    }
+
     public void Add(Availability entity){}
 
     public void Add(Availability entity, Guid userId)

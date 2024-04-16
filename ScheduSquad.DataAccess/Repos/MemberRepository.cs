@@ -33,9 +33,7 @@ public class MemberRepository : IRepository<Member>
 
     public IEnumerable<Member> GetAll()
     {
-        // Running the Get_Members proc without a specified Id will return a all members
-        SqlCommand cmd = new SqlCommand("Get_Members");
-        cmd.Parameters.Add("@Id", System.Data.SqlDbType.UniqueIdentifier).Value = null;
+        SqlCommand cmd = new SqlCommand("Get_AllMembers");
         return ExecuteGetAllMembers(cmd);
     }
 
@@ -49,7 +47,7 @@ public class MemberRepository : IRepository<Member>
     public Member GetById(Guid id)
     {
         // Running the Get_Membesr proc with a specified Id will return a single member
-        SqlCommand cmd = new SqlCommand("Get_Members");
+        SqlCommand cmd = new SqlCommand("Get_Member");
         cmd.Parameters.Add("@Id", System.Data.SqlDbType.UniqueIdentifier).Value = id;
         return ExecuteGetMember(cmd);
     }
@@ -66,9 +64,9 @@ public class MemberRepository : IRepository<Member>
 
     public void ExecuteLogic(SqlCommand cmd) 
     {
-        using (SqlConnection con = new SqlConnection(_dbConfiguration.ToString()))
+        using (SqlConnection con = new SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=ScheduSquad;Integrated Security=true"))
         {  
-            
+            cmd.Connection = con;
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             
             con.Open();
@@ -83,9 +81,10 @@ public Member ExecuteGetMember(SqlCommand cmd){
 
         var member = new Member();
 
-        using (SqlConnection con = new SqlConnection(_dbConfiguration.ToString()))
+        using (SqlConnection con = new SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=ScheduSquad;Integrated Security=true"))
         {  
             
+            cmd.Connection = con;
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             
             con.Open();
@@ -104,11 +103,12 @@ public Member ExecuteGetMember(SqlCommand cmd){
 
     public IEnumerable<Member> ExecuteGetAllMembers(SqlCommand cmd) 
     {
-        IEnumerable<Member> memberList = new List<Member>();
+        List<Member> memberList = new List<Member>();
         
-        using (SqlConnection con = new SqlConnection(_dbConfiguration.ToString()))
+        using (SqlConnection con = new SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=ScheduSquad;Integrated Security=true"))
         {  
             
+            cmd.Connection = con;
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             
             con.Open();
@@ -118,7 +118,7 @@ public Member ExecuteGetMember(SqlCommand cmd){
             {
                 var member = getMemberData(rdr);
                 
-               memberList.Append(member);  
+               memberList.Add(member);  
             }  
 
             con.Close();
