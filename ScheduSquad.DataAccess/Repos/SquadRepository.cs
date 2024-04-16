@@ -140,4 +140,9 @@ public class SquadRepository : IRepository<Squad>
 
         return squad;
     }
+
+    public string Test()
+    {
+        return "Test";
+    }
 }

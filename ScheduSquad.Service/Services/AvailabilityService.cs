@@ -100,8 +100,6 @@ namespace ScheduSquad.Service
 
             return commonValues;
         }
-
-      
     }
 }
 
