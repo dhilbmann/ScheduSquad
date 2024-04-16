@@ -101,9 +101,7 @@ namespace ScheduSquad.Service
             return commonValues;
         }
 
-      
-
-        public List<List<int>> SplitAvailabilities(List<int> availability)
+      public List<List<int>> SplitAvailabilities(List<int> availability)
         {
             List<List<int>> splitAvailabilities = new List<List<int>>();
             List<int> tempSpan = new List<int>();
@@ -154,6 +152,8 @@ namespace ScheduSquad.Service
 
             return humanReadable;
         }
+
     }
 }
+
 
