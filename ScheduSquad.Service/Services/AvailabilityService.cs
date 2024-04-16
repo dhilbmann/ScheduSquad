@@ -101,7 +101,58 @@ namespace ScheduSquad.Service
             return commonValues;
         }
 
-      
+      public List<List<int>> SplitAvailabilities(List<int> availability)
+        {
+            List<List<int>> splitAvailabilities = new List<List<int>>();
+            List<int> tempSpan = new List<int>();
+
+            for (int i = 0; i < availability.Count; i++)
+            {
+                tempSpan.Add(availability[i]);
+
+                if (availability[i] != availability[i+1] + 1)
+                {
+                    splitAvailabilities.Add(tempSpan);
+                    tempSpan.Clear();
+                }
+            }
+
+            return splitAvailabilities;
+        }
+
+        public String GetHumanReadableAvailabilityString(List<int> availability)
+        {
+            int startCode = availability [0];
+            int endCode = availability[availability.Count-1];
+
+            int startTimeCode = startCode % 100;
+            int endTimeCode = endCode % 100;
+
+            DayOfWeek availableDay = (DayOfWeek)((startCode - startTimeCode) / 100 - 1);
+
+            int startInterval = startTimeCode * 15;
+            int endInterval = endTimeCode * 15;
+
+            int startHours = startInterval / 60;
+            int endHours = endInterval / 60;
+
+            int startMinutes = startInterval % 60;
+            int endMinutes = endInterval % 60;
+
+            TimeOnly startTime = new TimeOnly(startHours, startMinutes);
+            TimeOnly endTime = new TimeOnly(endHours, endMinutes);
+
+            String humanReadable = String.Format
+            (
+                "On {0} from {1} to {2}.",
+                availableDay.ToString(),
+                startTime.ToShortTimeString(),
+                endTime.ToShortTimeString()
+            );
+
+            return humanReadable;
+        }
     }
 }
+
 

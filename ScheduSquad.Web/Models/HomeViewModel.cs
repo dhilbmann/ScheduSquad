@@ -8,6 +8,8 @@ public class HomeViewModel
     public string SquadServiceTest {get; set;}
     public string AvailabilityServiceTest {get; set;}
     public string MemberServiceTest {get; set;}
+
+    public List<Availability> availabilities{get; set;}
     public HomeViewModel() {
         Squad = new Squad();
     }

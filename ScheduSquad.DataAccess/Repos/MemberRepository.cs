@@ -62,7 +62,7 @@ public class MemberRepository : IRepository<Member>
         ExecuteLogic(cmd);
     }
 
-    public void ExecuteLogic(SqlCommand cmd) 
+    private void ExecuteLogic(SqlCommand cmd) 
     {
         using (SqlConnection con = new SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=ScheduSquad;Integrated Security=true"))
         {  
@@ -77,7 +77,7 @@ public class MemberRepository : IRepository<Member>
         }
     }
 
-public Member ExecuteGetMember(SqlCommand cmd){
+    private Member ExecuteGetMember(SqlCommand cmd){
 
         var member = new Member();
 
@@ -129,8 +129,9 @@ public Member ExecuteGetMember(SqlCommand cmd){
 
     public Member getMemberData(SqlDataReader rdr)
     {
+        Guid g;
         var member = new Member(
-            new Guid((rdr["Id"]).ToString() ?? string.Empty),   //Id
+            rdr["Id"].ToString(),   //Id
             rdr["FirstName"].ToString() ?? string.Empty,        //name
             rdr["LastName"].ToString() ?? string.Empty,        //description  
             rdr["Email"].ToString() ?? string.Empty          //location

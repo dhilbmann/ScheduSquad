@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using ScheduSquad.Web.Models;
 using ScheduSquad.Models;
 using ScheduSquad.Service;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ScheduSquad.Web.Controllers;
 
+[Authorize]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
@@ -25,7 +27,7 @@ public class HomeController : Controller
     {
         HomeViewModel vm = new HomeViewModel();
     
-        vm.AvailabilityServiceTest = _availabilityService.Test();
+        //vm.availabilities = _availabilityService.GetAllAvailabilities();
         vm.SquadServiceTest = _squadService.Test();
         vm.MemberServiceTest = _memberService.Test();
 
@@ -61,7 +63,7 @@ public class HomeController : Controller
         Member user_duncan = new Member(Guid.NewGuid(), "Duncan", "Clark", "duncan@gmail.com", new List<Availability>());
         user_duncan.Availabilities.Add(new Availability(DayOfWeek.Monday, new TimeSpan(8, 00, 00), new TimeSpan(9, 00, 00)));
         user_duncan.Availabilities.Add(new Availability(DayOfWeek.Monday, new TimeSpan(16, 45, 00), new TimeSpan(18, 30, 00)));
-        vm.Squad.AddMember(user_duncan);
+        vm.Squad.AddMember(user_duncan); 
 
         return View(vm);
     }
