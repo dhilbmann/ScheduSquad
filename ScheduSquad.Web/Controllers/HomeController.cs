@@ -39,10 +39,10 @@ public class HomeController : Controller
             "Under the Sea"
         );
 
-        vm.squad = _squadService.GetSquadById(new Guid("30A096F0-EC2D-47B6-9AF4-70E5F16C2EDF"));
-        vm.squads = _squadService.GetAllSquads();
+        //vm.squad = _squadService.GetSquadById(new Guid("30A096F0-EC2D-47B6-9AF4-70E5F16C2EDF"));
+        //vm.squads = _squadService.GetAllSquads();
 
-        vm.member = new Member(); //_memberService.GetMemberById(new Guid("6349C8C7-F12A-43A7-B70F-95ACBD388752"));
+        //vm.member = new Member(); //_memberService.GetMemberById(new Guid("6349C8C7-F12A-43A7-B70F-95ACBD388752"));
 
         vm.squads = new List<Squad>();
         Member user_david = new Member(Guid.NewGuid(), "David", "Hilbmann", "david@gmail.com", new List<Availability>());
