@@ -1,0 +1,17 @@
+C:\Users\David\ScheduSquad\ScheduSquad.Service\bin\Debug\net6.0\ScheduSquad.Service.deps.json
+C:\Users\David\ScheduSquad\ScheduSquad.Service\bin\Debug\net6.0\ScheduSquad.Service.dll
+C:\Users\David\ScheduSquad\ScheduSquad.Service\bin\Debug\net6.0\ref\ScheduSquad.Service.dll
+C:\Users\David\ScheduSquad\ScheduSquad.Service\bin\Debug\net6.0\ScheduSquad.Service.pdb
+C:\Users\David\ScheduSquad\ScheduSquad.Service\obj\Debug\net6.0\ScheduSquad.Service.csproj.AssemblyReference.cache
+C:\Users\David\ScheduSquad\ScheduSquad.Service\obj\Debug\net6.0\ScheduSquad.Service.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\David\ScheduSquad\ScheduSquad.Service\obj\Debug\net6.0\ScheduSquad.Service.AssemblyInfoInputs.cache
+C:\Users\David\ScheduSquad\ScheduSquad.Service\obj\Debug\net6.0\ScheduSquad.Service.AssemblyInfo.cs
+C:\Users\David\ScheduSquad\ScheduSquad.Service\obj\Debug\net6.0\ScheduSquad.Service.csproj.CoreCompileInputs.cache
+C:\Users\David\ScheduSquad\ScheduSquad.Service\obj\Debug\net6.0\ScheduSquad.Service.dll
+C:\Users\David\ScheduSquad\ScheduSquad.Service\obj\Debug\net6.0\ref\ScheduSquad.Service.dll
+C:\Users\David\ScheduSquad\ScheduSquad.Service\obj\Debug\net6.0\ScheduSquad.Service.pdb
+C:\Users\David\ScheduSquad\ScheduSquad.Service\bin\Debug\net6.0\ScheduSquad.DataAccess.dll
+C:\Users\David\ScheduSquad\ScheduSquad.Service\bin\Debug\net6.0\ScheduSquad.Models.dll
+C:\Users\David\ScheduSquad\ScheduSquad.Service\bin\Debug\net6.0\ScheduSquad.Models.pdb
+C:\Users\David\ScheduSquad\ScheduSquad.Service\bin\Debug\net6.0\ScheduSquad.DataAccess.pdb
+C:\Users\David\ScheduSquad\ScheduSquad.Service\obj\Debug\net6.0\ScheduSquad.Service.csproj.CopyComplete
