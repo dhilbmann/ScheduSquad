@@ -16,7 +16,10 @@ public class AvailabilityRepository : IRepository<Availability>, IAvailabilityRe
         return "MemberRepository.Test Return String";
     }
 
-    public void Add(Availability entity){}
+    public void Add(Availability entity){
+
+        throw new NotImplementedException();
+    }
 
     public void Add(Availability entity, Guid userId)
     {
@@ -40,7 +43,6 @@ public class AvailabilityRepository : IRepository<Availability>, IAvailabilityRe
     public IEnumerable<Availability> GetAll()
     {
         SqlCommand cmd = new SqlCommand("Get_All_Availability");
-        cmd.Parameters.Add("@Id", System.Data.SqlDbType.UniqueIdentifier).Value = null;
         return ExecuteGetAllAvailability(cmd);
     }
 
@@ -70,9 +72,10 @@ public class AvailabilityRepository : IRepository<Availability>, IAvailabilityRe
 
     public void ExecuteLogic(SqlCommand cmd)
     {
-        using (SqlConnection con = new SqlConnection(_dbConfiguration.ToString()))
+        using (SqlConnection con = new SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=ScheduSquad;Integrated Security=true"))
         {
 
+            cmd.Connection = con;
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
             con.Open();
@@ -87,9 +90,10 @@ public class AvailabilityRepository : IRepository<Availability>, IAvailabilityRe
     {
         var availability = new Availability();
 
-        using (SqlConnection con = new SqlConnection(_dbConfiguration.ToString()))
+        using (SqlConnection con = new SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=ScheduSquad;Integrated Security=true"))
         {
 
+            cmd.Connection = con;
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
             con.Open();
@@ -108,11 +112,12 @@ public class AvailabilityRepository : IRepository<Availability>, IAvailabilityRe
 
     private IEnumerable<Availability> ExecuteGetAllAvailability(SqlCommand cmd)
     {
-        IEnumerable<Availability> availabilityList = new List<Availability>();
+        List<Availability> availabilityList = new List<Availability>();
 
-        using (SqlConnection con = new SqlConnection(_dbConfiguration.ToString()))
+        using (SqlConnection con = new SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=ScheduSquad;Integrated Security=true"))
         {
 
+            cmd.Connection = con;
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
             con.Open();
@@ -122,7 +127,7 @@ public class AvailabilityRepository : IRepository<Availability>, IAvailabilityRe
             {
                 var availability = getAvailabilityData(rdr);
 
-                availabilityList.Append(availability);
+                availabilityList.Add(availability);
             }
 
             con.Close();
@@ -142,10 +147,5 @@ public class AvailabilityRepository : IRepository<Availability>, IAvailabilityRe
         );
 
         return availability;
-    }
-
-    public string MyNewFunction()
-    {
-        throw new NotImplementedException();
     }
 }

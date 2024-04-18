@@ -17,8 +17,8 @@ CREATE TABLE UserAvailability (
 	AvailabilityPK uniqueidentifier NOT NULL PRIMARY KEY,
 	UserFK uniqueidentifier NOT NULL,
 	DayEnum int NOT NULL,
-	StartTime datetime2 NOT NULL,
-	EndTime datetime2 NOT NULL,
+	StartTime time NOT NULL,
+	EndTime time NOT NULL,
 	FOREIGN KEY (UserFK) REFERENCES Users(UserPK),
 	IsDeleted bit NOT NULL DEFAULT 0
 );
