@@ -12,10 +12,6 @@ public class HomeViewModel
     public List<Availability> availabilities{get; set;}
     public HomeViewModel() {
         Squad = new Squad();
-        members = new List<Member>();
-        member = new Member();
-        squad = new Squad();
-        squads = new List<Squad>();
     }
     public List<Member> members {get; set;}
     public Member member {get; set;}
