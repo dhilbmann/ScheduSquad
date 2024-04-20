@@ -1,0 +1,49 @@
+@model FindSquadViewModel
+
+@{
+    ViewData["Title"] = "Find Squad";
+}
+
+<h1>Find Squad</h1>
+
+<div class="row">
+    @foreach (var squad in Model.Squads)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">@squad.Name</h5>
+                    <div class="card-location">@squad.Location</div>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">@squad.Description</p>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-6">Members: @squad.MemberCount</div>
+                        <div class="col-6 text-end">
+                            <button class="btn btn-primary join-squad" data-squad-id="@squad.Id">Join</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('.join-squad').click(function () {
+                var squadId = $(this).data('squad-id');
+                $.post('/Squad/JoinSquad', { squadId: squadId }, function (data) {
+                    if (data.success) {
+                        window.location.reload();
+                    } else {
+                        alert('Failed to join squad. Please try again.');
+                    }
+                });
+            });
+        });
+    </script>
+}

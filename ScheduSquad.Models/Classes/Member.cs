@@ -42,6 +42,15 @@ namespace ScheduSquad.Models
             Availabilities = new List<Availability>();
         }
 
+        public Member(string firstName, string lastName, string email)
+        {
+            Id = Guid.NewGuid();
+            _firstName = firstName;
+            _lastName = lastName;
+            _email = email;
+            Availabilities = new List<Availability>();
+        }
+
         public Member(string firstName, string lastName, string email, string password) : this(Guid.NewGuid(), firstName, lastName, email, new List<Availability>()) { }
 
         

@@ -17,6 +17,15 @@ public class SqlExpressDbConfiguration : IDbConfiguration
 
     public IDbConnection Connection => _connection;
 
+    public string GetConnectionString()
+    {
+        return _connectionString;
+    }
+
+    public IDbConnection GetDbConnection() {
+        return new SqlConnection(GetConnectionString());
+    }
+
     public void OpenConnection()
     {
         if (_connection.State != ConnectionState.Open)

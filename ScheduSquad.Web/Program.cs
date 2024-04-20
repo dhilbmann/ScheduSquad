@@ -14,6 +14,7 @@ builder.Configuration.AddJsonFile("appsettings.json");
 
 // Add DI classes/interfaces to container
 builder.Services.AddTransient<IDbConfiguration, SqlExpressDbConfiguration>();
+builder.Services.AddTransient<IPasswordRepository, PasswordRepository>();
 builder.Services.AddTransient<IRepository<Availability>, AvailabilityRepository>();
 builder.Services.AddTransient<IAvailabilityRepository, AvailabilityRepository>();
 builder.Services.AddTransient<IRepository<Member>, MemberRepository>();
@@ -21,13 +22,16 @@ builder.Services.AddTransient<IRepository<Squad>, SquadRepository>();
 builder.Services.AddScoped<IAvailabilityService, AvailabilityService>();
 builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<ISquadService, SquadService>();
+builder.Services.AddScoped<ILoginAuthenticationService, LoginAuthenticationService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
   .AddCookie(options =>
     {
+        options.Cookie.Name = "SSAuthorization";
         options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
         options.SlidingExpiration = true;
-        options.AccessDeniedPath = "/Forbidden/";
+        options.LoginPath = "/Account/Login";
+        options.AccessDeniedPath = "/Account/AccessDenied";
     });
 
 var app = builder.Build();

@@ -87,7 +87,7 @@ public class AvailabilityRepository : IRepository<Availability>, IAvailabilityRe
     {
         var availability = new Availability();
 
-        using (SqlConnection con = new SqlConnection(_dbConfiguration.ToString()))
+        using (SqlConnection con = new SqlConnection(_dbConfiguration.GetConnectionString()))
         {
 
             cmd.CommandType = System.Data.CommandType.StoredProcedure;

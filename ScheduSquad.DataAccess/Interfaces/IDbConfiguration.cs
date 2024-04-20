@@ -7,7 +7,9 @@ public interface IDbConfiguration : IDisposable {
     
     void OpenConnection();
     void CloseConnection();
-    
+    string GetConnectionString();
+    IDbConnection GetDbConnection();
+
     IDbCommand CreateCommand();
     IDbCommand CreateStoredProcedureCommand(string procedureName);
     

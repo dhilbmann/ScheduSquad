@@ -33,6 +33,7 @@ namespace ScheduSquad.Models
             Members = new List<Member>();
 
         }
+
         public Squad(Guid id, Member squadMaster, string name, string description, string location) 
         {
             Id = id;

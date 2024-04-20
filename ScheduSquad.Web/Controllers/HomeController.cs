@@ -28,8 +28,7 @@ public class HomeController : Controller
         HomeViewModel vm = new HomeViewModel();
     
         //vm.availabilities = _availabilityService.GetAllAvailabilities();
-        vm.SquadServiceTest = _squadService.Test();
-        vm.MemberServiceTest = _memberService.Test();
+        var user = HttpContext.User;
 
         Squad s = new (
             new Guid("5A71397A-7B44-4F64-BF6F-55E32040AF5F"),
@@ -38,6 +37,8 @@ public class HomeController : Controller
             "Forth squad for testing",
             "Under the Sea"
         );
+
+
 
         //vm.squad = _squadService.GetSquadById(new Guid("30A096F0-EC2D-47B6-9AF4-70E5F16C2EDF"));
         //vm.squads = _squadService.GetAllSquads();
