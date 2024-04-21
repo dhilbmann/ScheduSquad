@@ -36,7 +36,7 @@
         $(document).ready(function () {
             $('.join-squad').click(function () {
                 var squadId = $(this).data('squad-id');
-                $.post('/Squad/JoinSquad', { squadId: squadId }, function (data) {
+                $.post('/Squad/Join', { squadId: squadId }, function (data) {
                     if (data.success) {
                         window.location.reload();
                     } else {

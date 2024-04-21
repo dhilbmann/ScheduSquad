@@ -21,16 +21,26 @@ namespace ScheduSquad.Service
         }
 
         public List<Squad> GetAllSquads() {
-            return _squadRepository.GetAll().ToList();
+            List<Squad> squads = _squadRepository.GetAll().ToList();
+             foreach(Squad s in squads) {
+                s.Members = _memberService.GetAllMembersInSquad(s.Id);
+            }
+            return squads;
         }
 
         public List<Squad> GetAllSquadsBelongingToMember(Guid memberId) {
-            return _squadRepository.GetAllByParentId(memberId).ToList();
+            List<Squad> squads = _squadRepository.GetAllByParentId(memberId).ToList();
+             foreach(Squad s in squads) {
+                s.Members = _memberService.GetAllMembersInSquad(s.Id);
+            }
+            return squads;
         }
+        
 
         public List<Squad> GetAllSquadsNotBelongingToMember(Guid memberId) {
             // Get all the squads
             List<Squad> squadList = this.GetAllSquads();
+           
             // Find all the squads that doesn't have the member with the provided id
             return squadList.Where(squad => !squad.Members.Any(member => member.Id == memberId)).ToList();
         }

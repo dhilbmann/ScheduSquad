@@ -79,24 +79,25 @@ namespace ScheduSquad.Web.Controllers
                 ModelState.AddModelError(String.Empty, "Unable to get list of squads.  (Could not get member id)");
             }
             // return page with the list of squads
-            return View(vm);
+            return View("FindSquad", vm);
         }
 
         // POST: /Squad/Join
         [HttpPost]
         public IActionResult Join(Guid squadId)
         {
-            try
+
+            Guid userGuid; // Id of LoggedIn User
+                           // Validates the Id stored on the HttpContext.User object's claim, and stored the Guid in userGuid
+            if (Guid.TryParse(HttpContext.User.FindFirstValue(ClaimTypes.Sid), out userGuid))
             {
-                // TODO: We don't have a service/repo for putting members in/out of squads!  :[
-                // _squadService.AddMemberToSquad()
+                _squadService.AddMemberToSquad(userGuid, squadId, false);
                 return Json(new { success = true });
             }
-            catch (Exception)
-            {
-                // Failed to join squad
-                return Json(new { success = false });
-            }
+
+            // Failed to join squad
+            return Json(new { success = false });
+
         }
 
         // Helper method to map List of Squad objects to the shortened model that is used on the page
@@ -121,7 +122,7 @@ namespace ScheduSquad.Web.Controllers
             return list;
         }
 
-        
+
     }
 
 }
