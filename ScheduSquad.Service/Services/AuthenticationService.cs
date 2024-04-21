@@ -28,7 +28,7 @@ namespace ScheduSquad.Service
                 // Hash the input password with the salt
                 string hashedPassword = HashPassword(password, salt);
                 // Compare. If the saved password matches the hashed password, return true
-                if (savedPassword == hashedPassword) return true;
+                if (savedPassword.Trim() == hashedPassword.Trim()) return true;
             }
             // Pass through for failure or null password.
             return false;
@@ -43,10 +43,8 @@ namespace ScheduSquad.Service
             // If p is null, generate password and store it
             if (String.IsNullOrEmpty(p))
             {
-
                 var salt = GenerateSalt(); // Make salty
                 var hashedPw = HashPassword(password, salt); // Make hashy
-
                 _passwordRepo.UpdatePassword(memberId, password, salt); // Make savey
             }
             else

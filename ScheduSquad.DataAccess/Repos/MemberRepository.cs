@@ -33,7 +33,9 @@ public class MemberRepository : IRepository<Member>
 
     public IEnumerable<Member> GetAll()
     {
-        SqlCommand cmd = new SqlCommand("Get_AllMembers");
+        //SqlCommand cmd = new SqlCommand("Get_AllMembers");
+        SqlCommand cmd = new SqlCommand(@"SELECT UserPk, FirstName, LastName, Email FROM Users WHERE IsDeleted = 0");
+        cmd.CommandType = System.Data.CommandType.Text;
         return ExecuteGetAllMembers(cmd);
     }
 
@@ -41,6 +43,7 @@ public class MemberRepository : IRepository<Member>
     {
         SqlCommand cmd = new SqlCommand("Get_SquadMembers");
         cmd.Parameters.Add("@Id", System.Data.SqlDbType.UniqueIdentifier).Value = id;
+        cmd.CommandType = System.Data.CommandType.StoredProcedure;
         return ExecuteGetAllMembers(cmd);
     }
 
@@ -109,7 +112,6 @@ public class MemberRepository : IRepository<Member>
         {  
             
             cmd.Connection = con;
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
             
             con.Open();
 
@@ -131,13 +133,11 @@ public class MemberRepository : IRepository<Member>
     {
         Guid g;
         var member = new Member(
-            rdr["Id"].ToString(),   //Id
-            rdr["FirstName"].ToString() ?? string.Empty,        //name
+            new Guid(rdr["UserPk"].ToString()), // Id
+            rdr["FirstName"].ToString() ?? string.Empty, //name
             rdr["LastName"].ToString() ?? string.Empty,        //description  
             rdr["Email"].ToString() ?? string.Empty          //location
-
         );
-
         return member;
     }
  

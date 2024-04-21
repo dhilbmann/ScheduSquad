@@ -34,8 +34,17 @@ namespace ScheduSquad.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = "/")
         {
-            // Attempt to get the user from the database
-            Member member = _memberService.GetMemberByEmail(model.Email);
+            Member member = null;
+            try
+            {
+                // Attempt to get the user from the database
+                member = _memberService.GetMemberByEmail(model.Email);
+            }
+            catch (System.Exception ex)
+            {
+                 // TODO: Handle this better than swallowing the error.
+            }
+                                    
             // if the user is not null and if the password checks out fine... 
             if (member != null && _authService.CheckPassword(model.Password, member.Id))
             {

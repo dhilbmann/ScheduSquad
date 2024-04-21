@@ -27,13 +27,13 @@ namespace ScheduSquad.Service {
         public Member GetMemberByEmail(string email) {
             try
             {
-                return _memberRepository.GetAll().First(x => x.Email == email);
+                List<Member> members = _memberRepository.GetAll().ToList();
+                return members.Single(x => x.Email == email);
             }
             catch (System.Exception ex)
             {
                  throw new Exception("Unable to get the member from the database.  Probably doesn't exist. " + ex.Message);
             }
-           
         }
 
         public List<Member> GetAllMembers()

@@ -28,18 +28,14 @@ public class PasswordRepository : IPasswordRepository
             using (SqlCommand command = new SqlCommand("SELECT TOP 1 PwHash FROM Users WHERE UserPk = @memberId", connection))
             {
                 // Set a parameter for memberId
-                command.Parameters.AddWithValue("@memberId", memberId);
-                // Using the reader, get the value
-                using (SqlDataReader rdr = command.ExecuteReader())
-                {
-                    // The reader should only return a single value (due to the top 1) so this is okay.
-                    password = rdr["UserPk"].ToString();
-                }
+                command.Parameters.AddWithValue("@memberId", memberId.ToString());
+                // Query returns a single value (top 1) single field; executeScalar instead of reader
+                password = command.ExecuteScalar().ToString();
             }
         } // Connection should close on dispose
         // Returns the password, whether it was found in the db or not.
         return password;
-    } 
+    }
 
     // Separated GetSalt and GetPassword.  Something felt bad about returning these two values together.
     public string? GetSalt(Guid memberId)
@@ -55,18 +51,14 @@ public class PasswordRepository : IPasswordRepository
             using (SqlCommand command = new SqlCommand("SELECT TOP 1 PwSalt FROM Users WHERE UserPk = @memberId", connection))
             {
                 // Set a parameter for memberId
-                command.Parameters.AddWithValue("@memberId", memberId);
-                // Using the reader, get the value
-                using (SqlDataReader rdr = command.ExecuteReader())
-                {
-                    // The reader should only return a single value (due to the top 1) so this is okay.
-                    salt = rdr["UserPk"].ToString();
-                }
+                command.Parameters.AddWithValue("@memberId", memberId.ToString());
+                // Query returns a single value (top 1) single field; executeScalar instead of reader
+                salt = command.ExecuteScalar().ToString();
             }
         } // Connection should close on dispose
         // Returns the salt, whether it was found in the db or not.
         return salt;
-    } 
+    }
 
 
     public void UpdatePassword(Guid memberId, string password, string salt)
