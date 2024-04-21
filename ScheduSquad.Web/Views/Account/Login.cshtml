@@ -5,6 +5,10 @@
 
 
     <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="~/Images/ScheduSquad_Logo_WhiteBorder.png"></img>
+            </div>
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card">
@@ -13,8 +17,9 @@
                         <form asp-action="Login" asp-controller="Account" method="post">
                             <div class="mb-3">
                                 <label for="inputEmail" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="inputEmail" name="Username" asp-for="Username" required>
+                                <input type="email" class="form-control" id="inputEmail" name="Email" asp-for="Email" required>
                                 <div class="invalid-feedback">Please enter your email.</div>
+                                
                             </div>
                             <div class="mb-3">
                                 <label for="inputPassword" class="form-label">Password</label>
@@ -30,7 +35,7 @@
                         </form>
                     </div>
                     <div class="card-footer">
-                        <p class="mb-0">Don't have an account? <a href="#">Create one</a></p>
+                        <p class="mb-0">Don't have an account? @Html.ActionLink("Create One!", "Create")</p>
                     </div>
                 </div>
             </div>

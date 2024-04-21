@@ -13,9 +13,6 @@ namespace ScheduSquad.Service
             _availabilityRepository = availabilityRepo;
         }
 
-        public string Test() {
-            return _availabilityRepository.Test();
-        }
 
         public Availability GetAvailabilityById(Guid availabilityId)
         {

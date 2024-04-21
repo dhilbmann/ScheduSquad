@@ -1,0 +1,39 @@
+@model CreateSquadViewModel
+
+@{
+    ViewData["Title"] = "Create Squad";
+}
+
+<h1>Create Squad</h1>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger" role="alert">
+        Please correct the errors below.
+    </div>
+}
+
+<form method="post">
+    <div class="mb-3">
+        <label for="squadName" class="form-label">Squad Name</label>
+        <input type="text" class="form-control" id="squadName" name="SquadName" value="@Model.SquadName" required>
+        <div class="invalid-feedback">
+            @Html.ValidationMessageFor(model => model.SquadName)
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" name="Description" rows="3" required>@Model.Description</textarea>
+        <div class="invalid-feedback">
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="location" class="form-label">Location</label>
+        <input type="text" class="form-control" id="location" name="Location" value="@Model.Location" required>
+        <div class="invalid-feedback">
+            @Html.ValidationMessageFor(model => model.Location)
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Create Squad</button>
+</form>

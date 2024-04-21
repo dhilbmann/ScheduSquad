@@ -1,0 +1,65 @@
+@model FindSquadViewModel
+
+@{
+    ViewData["Title"] = "Find Squad";
+}
+
+<h1>Find Squad</h1>
+
+<div class="row">
+    
+    @foreach (var squad in Model.Squads) {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">@squad.Name</h5>
+                    <div class="card-location">@squad.Location</div>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">@squad.Description</p>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-6">Members: @squad.MemberCount</div>
+                        <div class="col-6 text-end">
+                            <button class="btn btn-primary join-squad" data-squad-id="@squad.Id">Join</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+        
+    @if (Model.Squads.Count == 0) {
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6 text-center">
+                <div class="alert alert-warning" role="alert">
+                    <div class="d-flex align-items-center">
+                        <span class="icon-warning"><i class="fas fa-exclamation-triangle fa-5x"></i></span>
+                        <div class="ml-3">
+                            <h4 class="alert-heading">Woah there, pardner!</h4>
+                            <p class="mb-0">I don't know why you did it... but, you joined literally every squad in the system! Since you're so eager to join squads, why not switch it up and <a asp-action="Create" asp-controller="Squad" class="alert-link">create a squad of your own</a>?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('.join-squad').click(function () {
+                var squadId = $(this).data('squad-id');
+                $.post('/Squad/Join', { squadId: squadId }, function (data) {
+                    if (data.success) {
+                        window.location.reload();
+                    } else {
+                        alert('Failed to join squad. Please try again.');
+                    }
+                });
+            });
+        });
+    </script>
+}

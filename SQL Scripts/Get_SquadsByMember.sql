@@ -12,7 +12,7 @@ CREATE PROCEDURE Get_SquadsByMember
 AS
 BEGIN
 
-IF @Id IS NOT NULL
+IF @Id IS NULL
 	BEGIN
 		RETURN 0;
 	END
@@ -21,7 +21,8 @@ ELSE
 		SELECT SquadPK AS 'Id',
 			   SquadName,
 			   SquadDesc,
-			   SquadLocation
+			   SquadLocation,
+			   (Select UserFK From SquadMembers sm1 Where SquadFK = s.SquadPK AND sm1.IsSquadMaster = 1) as SquadMasterId
 		FROM Squads s
 		INNER JOIN SquadMembers sm ON sm.SquadFK = s.SquadPK
 		WHERE s.IsDeleted = 0

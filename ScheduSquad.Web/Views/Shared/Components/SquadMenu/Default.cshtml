@@ -1,0 +1,125 @@
+@model IEnumerable<SquadMenuItem>
+
+<h2>My Squads</h2>
+
+@if (Model.Count() > 0)
+{
+    <div>
+        <ul class="squad-list">
+            @foreach (SquadMenuItem s in Model)
+            {
+                <li class="squad-item" data-squad-id="@s.Id.ToString()">
+                    <a asp-action="Details" asp-controller="Squad" asp-route-id="@s.Id.ToString()">
+                        @s.SquadName
+                        @if (s.IsSquadmaster)
+                        {
+                            <span class="squadmaster-icon"><i class="fa-solid fa-crown"></i></span>
+                        }
+                        <span class="cog-icon" style="display: none;"><i class="fa-solid fa-cog"></i></span>
+                        <div class="context-menu" style="display: none;">
+                            <ul>
+                                @if (s.IsSquadmaster)
+                                {
+                                    <li class="manage-members"><i class="fa-solid fa-user-friends"></i> Manage Members</li>
+                                }
+                                else
+                                {
+                                    <li class="leave-squad"><i class="fa-solid fa-sign-out"></i> Leave Squad</li>
+                                }
+                            </ul>
+                        </div>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+}
+else
+{
+    <div>You aren't in any squads.</div>
+}
+<hr />
+@Html.ActionLink("Create a Squad", "Create", "Squad") or @Html.ActionLink("Find a Squad", "Find", "Squad")
+
+<style>
+    .squad-list {
+        padding: 0;
+        list-style: none;
+    }
+
+    .squad-item {
+        width: 100%;
+        position: relative;
+        left-margin: 15px;
+    }
+
+    .cog-icon {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 1050;
+    }
+
+    .context-menu {
+        position: absolute;
+        width: 50%;
+        z-index: 1100;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 5px;
+    }
+
+    .context-menu ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .context-menu ul li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px;
+        cursor: pointer;
+    }
+
+    .context-menu ul li i {
+        margin-right: 5px;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $('.squad-item').on('mouseenter', function () {
+            $(this).find('.cog-icon').show();
+        });
+
+        $('.squad-item').on('mouseleave', function () {
+            $(this).find('.cog-icon').hide();
+            $(this).find('.context-menu').hide();
+        });
+
+        $('.cog-icon').on('click', function (e) {
+            e.preventDefault();
+            var squadItem = $(this).closest('.squad-item');
+            var squadId = $(this).closest('.squad-item').data('squad-id');
+            var contextMenu = $(this).siblings('.context-menu');
+
+            contextMenu.toggle(); // Show menu because cog is clicked
+
+            contextMenu.css({
+                'top': 16,
+                'right': $(this).width() / 2
+            });
+
+            // Handle clicks outside of context menu
+            $(document).on('click', function (event) {
+                if (!contextMenu.is(event.target) && contextMenu.has(event.target).length === 0 && !$(event.target).is('.cog-icon')) {
+                    contextMenu.hide();
+                }
+            });
+
+            e.stopPropagation();
+        });
+    });
+</script>

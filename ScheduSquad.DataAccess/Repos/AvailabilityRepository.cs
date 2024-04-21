@@ -90,7 +90,7 @@ public class AvailabilityRepository : IRepository<Availability>, IAvailabilityRe
     {
         var availability = new Availability();
 
-        using (SqlConnection con = new SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=ScheduSquad;Integrated Security=true"))
+        using (SqlConnection con = new SqlConnection(_dbConfiguration.GetConnectionString()))
         {
 
             cmd.Connection = con;

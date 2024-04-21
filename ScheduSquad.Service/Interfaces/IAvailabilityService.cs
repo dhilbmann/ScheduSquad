@@ -13,7 +13,6 @@ namespace ScheduSquad.Service
         public void DeleteAvailability(Availability availability);
         public List<int> GetCommonAvailabilityCodes(Squad squad);
         public List<int> GetCommonAvailabilityCodes(List<List<int>> lists);
-        public string Test();
     }
 }
 
