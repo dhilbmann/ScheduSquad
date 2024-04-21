@@ -96,14 +96,15 @@ namespace ScheduSquad.Web.Controllers
         }
 
         // GET: /Account/CreateAccount
-        public IActionResult CreateAccount()
+        public IActionResult Create()
         {
-            return View();
+            CreateAccountViewModel vm = new CreateAccountViewModel();
+            return View(vm);
         }
 
         // POST: /Account/CreateAccount
         [HttpPost]
-        public IActionResult CreateAccount(CreateAccountViewModel model)
+        public IActionResult Create(CreateAccountViewModel model)
         {
             if (ModelState.IsValid)
             {
