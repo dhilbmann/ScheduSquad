@@ -21,7 +21,7 @@ namespace ScheduSquad.Web.Controllers
         [HttpGet]
         public IActionResult Index(Guid id)
         {
-            id = new Guid("6349C8C7-F12A-43A7-B70F-95ACBD388752");
+            id = new Guid("9F9D518F-AA15-412A-AF2B-E6D83D9DCB04");
             AvailabilityViewModel vm = new AvailabilityViewModel();
 
             vm.availabilities = _availabilityService.GetAllAvailabilitiesBelongingToMember(id);

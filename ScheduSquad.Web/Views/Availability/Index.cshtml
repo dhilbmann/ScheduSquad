@@ -23,7 +23,9 @@
      <td role="cell"> @a.DayOfWeek</td> 
      <td role="cell"> @a.StartTime</td>
      <td role="cell"> @a.EndTime</td>
-     <td role="cell"><button class="btn btn-primary" type="button" id="editButton">Edit</button></td>
+     <div id='editDiv'>
+     <td role="cell"><button class="btn btn-primary edit-button" data-availability-id=@a.Id>Edit</button></td>
+     </div>
      <td role="cell"><button class="btn btn-primary" type="button" id="deleteButton">Delete</button></td>
      </tr>
 }
@@ -36,17 +38,20 @@
 
 <script>
     $(document).ready(function() {
-        @* function editButton(x) {
-            @* document.getElementById("availabilityTable").ariaRowIndex(); 
-            @* alert("Row index is: " + x.editButton.)
-        } *@ 
+         
+            $('.edit-button').click(function () {
+                var availId = $(this).data('availability-id');
 
-        $("#button").click(function() {
-            $(this).hide();
-
-        $("p").click(function(){
-            $(this).hide();
-
+                alert(availId);
+                });
         });
+
+        //Use this code if button is appended in the DOM
+        //$(document).on('click', '#editDiv.edit-button', function(){
+           // alert("button");
+        //});
+
+
+        
     });
 </script>
