@@ -7,8 +7,8 @@
 <h1>Find Squad</h1>
 
 <div class="row">
-    @foreach (var squad in Model.Squads)
-    {
+    
+    @foreach (var squad in Model.Squads) {
         <div class="col-md-4 mb-4">
             <div class="card">
                 <div class="card-header">
@@ -23,6 +23,22 @@
                         <div class="col-6">Members: @squad.MemberCount</div>
                         <div class="col-6 text-end">
                             <button class="btn btn-primary join-squad" data-squad-id="@squad.Id">Join</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+        
+    @if (Model.Squads.Count == 0) {
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6 text-center">
+                <div class="alert alert-warning" role="alert">
+                    <div class="d-flex align-items-center">
+                        <span class="icon-warning"><i class="fas fa-exclamation-triangle fa-5x"></i></span>
+                        <div class="ml-3">
+                            <h4 class="alert-heading">Woah there, pardner!</h4>
+                            <p class="mb-0">I don't know why you did it... but, you joined literally every squad in the system! Since you're so eager to join squads, why not switch it up and <a href="#" class="alert-link">create a squad of your own</a>?</p>
                         </div>
                     </div>
                 </div>
