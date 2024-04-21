@@ -15,10 +15,6 @@ namespace ScheduSquad.Service {
             _authenticationService = authService;
         }
 
-        public string Test() {
-            return _memberRepository.Test();
-        }
-
         public Member GetMemberById(Guid memberId)
         {
             return _memberRepository.GetById(memberId);

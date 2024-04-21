@@ -14,11 +14,12 @@ builder.Configuration.AddJsonFile("appsettings.json");
 
 // Add DI classes/interfaces to container
 builder.Services.AddTransient<IDbConfiguration, SqlExpressDbConfiguration>();
-builder.Services.AddTransient<IPasswordRepository, PasswordRepository>();
-builder.Services.AddTransient<IRepository<Availability>, AvailabilityRepository>();
-builder.Services.AddTransient<IAvailabilityRepository, AvailabilityRepository>();
-builder.Services.AddTransient<IRepository<Member>, MemberRepository>();
-builder.Services.AddTransient<IRepository<Squad>, SquadRepository>();
+builder.Services.AddScoped<IPasswordRepository, PasswordRepository>();
+builder.Services.AddScoped<IRepository<Availability>, AvailabilityRepository>();
+builder.Services.AddScoped<IAvailabilityRepository, AvailabilityRepository>();
+builder.Services.AddScoped<IRepository<Member>, MemberRepository>();
+builder.Services.AddScoped<IRepository<Squad>, SquadRepository>();
+builder.Services.AddScoped<ISquadMemberRepository, SquadRepository>();
 builder.Services.AddScoped<IAvailabilityService, AvailabilityService>();
 builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<ISquadService, SquadService>();

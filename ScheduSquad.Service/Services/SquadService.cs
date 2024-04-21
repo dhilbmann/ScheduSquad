@@ -1,19 +1,19 @@
 using ScheduSquad.Models;
+using ScheduSquad.DataAccess;
 
 namespace ScheduSquad.Service
 {
     public class SquadService : ISquadService
     {
         private readonly IRepository<Squad> _squadRepository;
+        private readonly ISquadMemberRepository _squadMemberRepo;
         private readonly IMemberService _memberService;
 
-        public SquadService(IRepository<Squad> squadRepo, IMemberService memberService) {
+        public SquadService(IRepository<Squad> squadRepo, ISquadMemberRepository squadMemberRepo, IMemberService memberService) {
             _squadRepository = squadRepo;
+            _squadMemberRepo = squadMemberRepo;
             _memberService = memberService;
-        }
-
-        public string Test() {
-            return _squadRepository.Test();
+            
         }
 
         public Squad GetSquadById(Guid squadId) {
@@ -50,6 +50,7 @@ namespace ScheduSquad.Service
             try {
                 // Add Squad via Repo
                 _squadRepository.Add(s);
+                _squadMemberRepo.AddMemberToSquad(squadMaster.Id, s.Id, true);
             } catch (Exception ex) { // Uh oh.  
                 throw new Exception("Failed to create a new Squad.  " + ex);
             }
@@ -63,24 +64,23 @@ namespace ScheduSquad.Service
             _squadRepository.Delete(squad);
         }
 
-        public void AddMemberToSquad(Guid memberId, Guid squadId)
+        public void AddMemberToSquad(Guid memberId, Guid squadId, bool isSquadMaster)
         {
             Member memberToAdd = _memberService.GetMemberById(memberId);
             Squad squadToAddTo = _squadRepository.GetById(squadId);
 
-            AddMemberToSquad(memberToAdd, squadToAddTo);
+            AddMemberToSquad(memberToAdd, squadToAddTo, isSquadMaster);
         }
 
-        public void AddMemberToSquad(Member member, Squad squad)
+        public void AddMemberToSquad(Member member, Squad squad, bool isSquadMaster)
         {
-            // TODO: No Repo function to call for this process.
-            throw new NotImplementedException();
+            _squadMemberRepo.AddMemberToSquad(member.Id, squad.Id, isSquadMaster);
         }
 
 
          public void RemoveMemberFromSquad(Member member, Squad squad)
         {
-            throw new NotImplementedException();
+            _squadMemberRepo.RemoveMemberFromSquad(member.Id, squad.Id);
         }
 
   
