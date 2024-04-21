@@ -25,16 +25,16 @@ namespace ScheduSquad.Web.Controllers
             _memberService = memberService;
         }
 
-        // GET: /Squad/CreateSquad
-        public IActionResult CreateSquad()
+        // GET: /Squad/Create
+        public IActionResult Create()
         {
             CreateSquadViewModel vm = new CreateSquadViewModel();
             return View("Create", vm);
         }
 
-        // POST: /Squad/CreateSquad
+        // POST: /Squad/Create
         [HttpPost]
-        public IActionResult CreateSquad(CreateSquadViewModel model)
+        public IActionResult Create(CreateSquadViewModel model)
         {
             // If there aren't any errors on the model
             if (ModelState.IsValid)
@@ -59,8 +59,8 @@ namespace ScheduSquad.Web.Controllers
             return View("Create", model);
         }
 
-        // GET: /Squad/FindSquad
-        public IActionResult FindSquad()
+        // GET: /Squad/Find
+        public IActionResult Find()
         {
             // Instantiate a new model for the page
             FindSquadViewModel vm = new FindSquadViewModel();
@@ -82,9 +82,9 @@ namespace ScheduSquad.Web.Controllers
             return View(vm);
         }
 
-        // POST: /Squad/JoinSquad
+        // POST: /Squad/Join
         [HttpPost]
-        public IActionResult JoinSquad(Guid squadId)
+        public IActionResult Join(Guid squadId)
         {
             try
             {
