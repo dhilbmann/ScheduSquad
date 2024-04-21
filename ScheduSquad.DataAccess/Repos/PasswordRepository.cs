@@ -63,11 +63,13 @@ public class PasswordRepository : IPasswordRepository
 
     public void UpdatePassword(Guid memberId, string password, string salt)
     {
+        
+
         using (SqlConnection connection = (SqlConnection)_dbConfiguration.GetDbConnection())
         {
             connection.Open();
 
-            using (SqlCommand command = new SqlCommand("INSERT INTO Users (PwHash, PwSalt) VALUES (@PwHash, @PwSalt) WHERE UserPk = @memberId ", connection))
+            using (SqlCommand command = new SqlCommand("UPDATE Users SET PwHash = @PwHash, PwSalt = @PwSalt WHERE UserPk = @memberId ", connection))
             {
                 command.Parameters.AddWithValue("@PwHash", password);
                 command.Parameters.AddWithValue("@PwSalt", salt);

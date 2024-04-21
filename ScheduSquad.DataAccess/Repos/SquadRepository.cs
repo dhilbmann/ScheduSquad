@@ -5,13 +5,13 @@ using ScheduSquad.Models;
 namespace ScheduSquad.DataAccess;
 public class SquadRepository : IRepository<Squad>
 {
-    private IDbConfiguration _dbConfiguration;
+    private readonly IDbConfiguration _dbConfiguration;
 
-    private MemberRepository memberRep;
+    private readonly IRepository<Member> _memberRep;
 
-    public SquadRepository(IDbConfiguration dbConfiguration) {
+    public SquadRepository(IDbConfiguration dbConfiguration, IRepository<Member> memberRepo) {
         _dbConfiguration = dbConfiguration;
-        memberRep = new MemberRepository(dbConfiguration);
+        _memberRep = memberRepo;
     }
 
    public string Test() {
@@ -133,7 +133,7 @@ public class SquadRepository : IRepository<Squad>
 
     public Squad getSquadData(SqlDataReader rdr)
     {
-        Member sqdmaster = memberRep.GetById(new Guid(rdr["SquadMasterId"].ToString() ?? string.Empty));
+        Member sqdmaster = _memberRep.GetById(new Guid(rdr["SquadMasterId"].ToString() ?? string.Empty));
 
         var squad = new Squad(
             new Guid((rdr["Id"]).ToString() ?? string.Empty),   //Id

@@ -45,7 +45,7 @@ namespace ScheduSquad.Service
             {
                 var salt = GenerateSalt(); // Make salty
                 var hashedPw = HashPassword(password, salt); // Make hashy
-                _passwordRepo.UpdatePassword(memberId, password, salt); // Make savey
+                _passwordRepo.UpdatePassword(memberId, hashedPw, salt); // Make savey
             }
             else
             {

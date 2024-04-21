@@ -8,8 +8,8 @@ CREATE TABLE Users (
 	FirstName nvarchar(35) NOT NULL,
 	LastName nvarchar(35)  NOT NULL,
 	Email nvarchar(75)  NOT NULL,
-	PwHash char(128)  NOT NULL,
-	PwSalt char(128)  NOT NULL,
+	PwHash char(128)  NULL,
+	PwSalt char(128)  NULL,
 	IsDeleted bit NOT NULL DEFAULT 0
 );
 

@@ -99,7 +99,6 @@ namespace ScheduSquad.Web.Controllers
             }
         }
 
-
         // Helper method to map List of Squad objects to the shortened model that is used on the page
         // (Doing this because the Squad knows about Members and SquadLeader, but this info isn't needed
         // on the page.)
@@ -121,6 +120,8 @@ namespace ScheduSquad.Web.Controllers
 
             return list;
         }
+
+        
     }
 
 }
