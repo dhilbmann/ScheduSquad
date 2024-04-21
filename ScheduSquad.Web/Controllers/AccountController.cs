@@ -18,14 +18,14 @@ namespace ScheduSquad.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login(string returnUrl = "/")
+        public IActionResult Login(string returnUrl = "/Availability")
         {
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = "/")
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = "/Availability")
         {
             // Validate user credentials
             if (model.Username == "admin@email.com" && model.Password == "password")

@@ -48,7 +48,7 @@ public class AvailabilityRepository : IRepository<Availability>, IAvailabilityRe
 
     public IEnumerable<Availability> GetAllByParentId(Guid id) //ParentId by User
     {
-        SqlCommand cmd = new SqlCommand("Get_All_Availability");
+        SqlCommand cmd = new SqlCommand("Get_All_Availability_by_Id");
         cmd.Parameters.Add("@Id", System.Data.SqlDbType.UniqueIdentifier).Value = id;
         return ExecuteGetAllAvailability(cmd);
     }

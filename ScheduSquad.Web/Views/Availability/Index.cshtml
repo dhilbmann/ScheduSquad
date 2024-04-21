@@ -1,0 +1,52 @@
+@model AvailabilityViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Member Availability Page";
+}
+
+<br />
+<br />
+<p>Availabilities</p>
+<table class = "table table-bordered table-responsive table-hover">
+    <tr role="row">
+        <th>ID</th>
+        <th>Day</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+    </tr>
+    <div class="availabilityChart"></div>
+ @foreach(ScheduSquad.Models.Availability a in @Model.availabilities)
+{
+    <tr role="row id=@a.Id">
+     <td role="cell"> @a.Id</td> 
+     <td role="cell"> @a.DayOfWeek</td> 
+     <td role="cell"> @a.StartTime</td>
+     <td role="cell"> @a.EndTime</td>
+     <td role="cell"><button class="btn btn-primary" type="button" id="editButton">Edit</button></td>
+     <td role="cell"><button class="btn btn-primary" type="button" id="deleteButton">Delete</button></td>
+     </tr>
+}
+</div>
+</table> 
+
+<p id="editRow">
+    <label>This is a test</label>
+</p>
+
+<script>
+    $(document).ready(function() {
+        @* function editButton(x) {
+            @* document.getElementById("availabilityTable").ariaRowIndex(); 
+            @* alert("Row index is: " + x.editButton.)
+        } *@ 
+
+        $("#button").click(function() {
+            $(this).hide();
+
+        $("p").click(function(){
+            $(this).hide();
+
+        });
+    });
+</script>
