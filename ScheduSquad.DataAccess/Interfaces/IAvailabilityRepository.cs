@@ -1,6 +1,8 @@
+using ScheduSquad.Models;
+
 public interface IAvailabilityRepository {
     
-    string MyNewFunction();
+    void Add(Availability entity, Guid userId);
 }
 
 

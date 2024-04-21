@@ -6,12 +6,12 @@
 -- ================================================
 
 
-CREATE PROCEDURE Add_Availability
+CREATE PROCEDURE [dbo].[Add_Availability]
 	@Id uniqueidentifier,
 	@UserId uniqueidentifier,
 	@DayEnum int,
-	@StartTime datetime2,
-	@EndTime datetime2
+	@StartTime time,
+	@EndTime time
 
 AS
 BEGIN

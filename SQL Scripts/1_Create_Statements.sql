@@ -8,8 +8,8 @@ CREATE TABLE Users (
 	FirstName nvarchar(35) NOT NULL,
 	LastName nvarchar(35)  NOT NULL,
 	Email nvarchar(75)  NOT NULL,
-	PwHash char(128)  NULL,
-	PwSalt char(128)  NULL,
+	PwHash nvarchar(128)  NOT NULL,
+	PwSalt nvarchar(128)  NOT NULL,
 	IsDeleted bit NOT NULL DEFAULT 0
 );
 
@@ -17,8 +17,8 @@ CREATE TABLE UserAvailability (
 	AvailabilityPK uniqueidentifier NOT NULL PRIMARY KEY,
 	UserFK uniqueidentifier NOT NULL,
 	DayEnum int NOT NULL,
-	StartTime datetime2 NOT NULL,
-	EndTime datetime2 NOT NULL,
+	StartTime time NOT NULL,
+	EndTime time NOT NULL,
 	FOREIGN KEY (UserFK) REFERENCES Users(UserPK),
 	IsDeleted bit NOT NULL DEFAULT 0
 );
