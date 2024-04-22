@@ -8,50 +8,40 @@
 <br />
 <br />
 <p>Availabilities</p>
-<table class = "table table-bordered table-responsive table-hover">
+<table class="table table-bordered table-responsive table-hover">
     <tr role="row">
-        <th>ID</th>
         <th>Day</th>
         <th>Start Time</th>
         <th>End Time</th>
     </tr>
     <div class="availabilityChart"></div>
- @foreach(ScheduSquad.Models.Availability a in @Model.availabilities)
-{
-    <tr role="row id=@a.Id">
-     <td role="cell"> @a.Id</td> 
-     <td role="cell"> @a.DayOfWeek</td> 
-     <td role="cell"> @a.StartTime</td>
-     <td role="cell"> @a.EndTime</td>
-     <div id='editDiv'>
-     <td role="cell"><button class="btn btn-primary edit-button" data-availability-id=@a.Id>Edit</button></td>
-     </div>
-     <td role="cell"><button class="btn btn-primary" type="button" id="deleteButton">Delete</button></td>
-     </tr>
-}
-</div>
-</table> 
+    @foreach (ScheduSquad.Models.Availability a in Model.availabilities)
+    {
+        Html.RenderPartial("AvailabilityReadRow", a);
+    }
+    </div>
+</table>
 
 <p id="editRow">
     <label>This is a test</label>
 </p>
 
 <script>
-    $(document).ready(function() {
-         
-            $('.edit-button').click(function () {
-                var availId = $(this).data('availability-id');
+    $(document).ready(function () {
 
-                alert(availId);
-                });
+        $('.edit-button').click(function () {
+            var availId = $(this).data('availability-id');
+            //Ajax call to get edit row Availability/AvailabilityEditRow(availId)
+            $.ajax({
+                url: '@Url.Action("GetAvailabilityEditRow")',
+                type: "GET",
+                data: {'availabilityId' : availId}
+            }).done(function(result) {
+                $('#'+availId).html(result);
+            });
+            //find edit button row and replace with Ajax result and define click functions
         });
-
-        //Use this code if button is appended in the DOM
-        //$(document).on('click', '#editDiv.edit-button', function(){
-           // alert("button");
-        //});
-
-
-        
     });
+
+
 </script>

@@ -41,6 +41,20 @@ namespace ScheduSquad.Web.Controllers
             return PartialView("AvailabilityTable");
         }
 
+        [HttpGet]
+        public IActionResult GetAvailabilityReadRow(Guid availabilityId)
+        {
+            Availability availability = _availabilityService.GetAvailabilityById(availabilityId);//return from service
+            return PartialView("AvailabilityReadRow",availability);
+        }
+
+        [HttpGet]
+        public IActionResult GetAvailabilityEditRow(Guid availabilityId)
+        {
+            Availability availability = _availabilityService.GetAvailabilityById(availabilityId);//return from service
+            return PartialView("AvailabilityEditRow",availability);
+        }
+
         [HttpPost]
         public JsonResult SaveAvailability(Availability availability)
         {
