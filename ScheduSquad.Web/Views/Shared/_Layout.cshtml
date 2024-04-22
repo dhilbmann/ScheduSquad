@@ -24,16 +24,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="d-flex justify-content-end">
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-user-circle fa-lg"></i>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <!-- Account  panel content goes here -->
-                        <li><button id="logout-btn" class="dropdown-item">Logout</button></li>
-                    </ul>
-                </div>
+                @await Component.InvokeAsync("ProfileMenu")
             </div>
         </div>
     </header>
@@ -60,16 +51,7 @@
                 $('body').toggleClass('menu-open');
             });
 
-            $('#user-menu').click(function (event) {
-                var menu = $('#context-menu');
-                if (menu.css('display') === 'block') {
-                    menu.css('display', 'none');
-                } else {
-                    menu.css('display', 'block');
-                }
-                event.stopPropagation(); // Prevent bubbling up to document click
-            });
-
+           
             $(document).click(function (event) {
                 var menu = $('#context-menu');
                 if (menu.css('display') === 'block' && !menu.is(event.target) && menu.has(event.target).length === 0) {
@@ -77,14 +59,7 @@
                 }
             });
 
-            $('#logout-btn').click(function () {
-                // Perform logout POST request
-                var form = $('<form>');
-                form.attr('method', 'POST');
-                form.attr('action', '/Account/Logout');
-                $('body').append(form);
-                form.submit();
-            });
+       
         });
     </script>
     @await RenderSectionAsync("Scripts", required: false)

@@ -1,0 +1,72 @@
+@model ScheduSquad.Models.Member
+
+<div class="dropdown" >
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="user-menu" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        <i class="fas fa-user-circle fa-lg"></i>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="user-profile">
+        <li>
+            <h4>My Profile</h4>
+            <hr />
+            <span style="font-style: italics;">@Model.FirstName @Model.LastName</span>
+            </br></br>
+        </li>
+        <li><a asp-controller="Availability" class="dropdown-item"><i class="fa-solid fa-calendar-days"></i>Update Availability</a></li>
+        <li><button id="logout-btn" class="dropdown-item"><i class="fa-solid fa-sign-out"></i>Logout</button></li></br>
+    </ul>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#user-menu').click(function (event) {
+            var menu = $('#context-menu');
+            if (menu.css('display') === 'block') {
+                menu.css('display', 'none');
+            } else {
+                menu.css('display', 'block');
+            }
+
+            event.stopPropagation(); 
+        });
+
+        $('#logout-btn').click(function () {
+            // Perform logout POST request
+            var form = $('<form>');
+            form.attr('method', 'POST');
+            form.attr('action', '/Account/Logout');
+            $('body').append(form);
+            form.submit();
+        });
+    });
+</script>
+
+<style>
+    #user-profile {
+        position: absolute;
+        z-index: 1100;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 5px;
+        width: 250px;
+        left: -180px;
+    }
+
+    #user-profile ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    #user-profile ul li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px;
+        cursor: pointer;
+    }
+
+    .dropdown-item i {
+        margin-right: 10px;
+    }
+</style>
