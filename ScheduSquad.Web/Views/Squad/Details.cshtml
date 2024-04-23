@@ -1,0 +1,35 @@
+@model SquadDetailsViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Squad Details";
+}
+
+<h1>Squad Details</h1>
+
+<br />
+<br />
+<p>Details</p>
+<p>This Squad has m.members.Count members</p>
+<button class="btn btn-primary manage-button"
+<table class table table-bordered>
+    <tr role="row">
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Availabilities</th>
+    </tr>
+    <div class="memberChart"></div>
+    @foreach (ScheduSquad.Models.Member m in Model.members)
+    {
+        <div id=m.Id>
+        <tr role="row">
+            <td role="cell"> m.FirstName</td>
+            <td role="cell"> m.LastName</td>
+            <td role="cell"> m.Email</td>
+            <td role="cell"> m.Availabilities.Count</td>
+        </tr>
+        </div>
+    }
+</table>
+    

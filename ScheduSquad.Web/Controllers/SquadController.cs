@@ -100,6 +100,18 @@ namespace ScheduSquad.Web.Controllers
 
         }
 
+        public IActionResult Details(Guid squadId)
+        {
+            SquadDetailsViewModel vm = new SquadDetailsViewModel();
+
+            Guid userGuid;
+
+            if (Guid.TryParse(HttpContext.User.FindFirstValue(ClaimTypes.Sid), out userGuid))
+            {
+                vm.members = MapToViewModels(_squadService.)
+            }
+        }
+
         // Helper method to map List of Squad objects to the shortened model that is used on the page
         // (Doing this because the Squad knows about Members and SquadLeader, but this info isn't needed
         // on the page.)
