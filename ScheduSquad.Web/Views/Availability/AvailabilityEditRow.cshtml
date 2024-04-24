@@ -1,7 +1,5 @@
 @model ScheduSquad.Models.Availability
-<div id=@Model.Id>
-    <table>
-    <tr role="row">
+    <tr role="row" data-availability-id="@Model.Id">
         <td role="cell"> <select class="form-select form-select-sm day-list" data-availability-id="@Model.DayOfWeek">
             <option value="0">Sunday</option>
             <option value="1">Monday</option>
@@ -12,16 +10,16 @@
             <option value="6">Saturday</option>
         </select></td>
         <td role="cell"><select class="form-select form-select-sm start-hour" data-availability-id="@Model.StartTime">
-            <option value="00">00</option>
-            <option value="01">01</option>
-            <option value="02">02</option>
-            <option value="03">03</option>
-            <option value="04">04</option>
-            <option value="05">05</option>
-            <option value="06">06</option>
-            <option value="07">07</option>
-            <option value="08">08</option>
-            <option value="09">09</option>
+            <option value="0">00</option>
+            <option value="1">01</option>
+            <option value="2">02</option>
+            <option value="3">03</option>
+            <option value="4">04</option>
+            <option value="5">05</option>
+            <option value="6">06</option>
+            <option value="7">07</option>
+            <option value="8">08</option>
+            <option value="9">09</option>
             <option value="10">10</option>
             <option value="11">11</option>
             <option value="12">12</option>
@@ -38,23 +36,23 @@
             <option value="23">23</option>
         </select>
         <select class="form-select form-select-sm start-minute" data-availability-id="@Model.StartTime">
-            <option value="00">00</option>
+            <option value="0">00</option>
             <option value="15">15</option>
             <option value="30">30</option>
             <option value="45">45</option>
         </select>
         </td>
         <td role="cell"><select class="form-select form-select-sm end-hour" data-availability-id="@Model.EndTime">
-            <option value="00">00</option>
-            <option value="01">01</option>
-            <option value="02">02</option>
-            <option value="03">03</option>
-            <option value="04">04</option>
-            <option value="05">05</option>
-            <option value="06">06</option>
-            <option value="07">07</option>
-            <option value="08">08</option>
-            <option value="09">09</option>
+            <option value="0">00</option>
+            <option value="1">01</option>
+            <option value="2">02</option>
+            <option value="3">03</option>
+            <option value="4">04</option>
+            <option value="5">05</option>
+            <option value="6">06</option>
+            <option value="7">07</option>
+            <option value="8">08</option>
+            <option value="9">09</option>
             <option value="10">10</option>
             <option value="11">11</option>
             <option value="12">12</option>
@@ -71,7 +69,7 @@
             <option value="23">23</option>
         </select>
         <select class="form-select form-select-sm end-minute" data-availability-id="@Model.EndTime">
-            <option value="00">00</option>
+            <option value="0">00</option>
             <option value="15">15</option>
             <option value="30">30</option>
             <option value="45">45</option>
@@ -79,13 +77,15 @@
         <td role="cell"><button class="btn btn-primary save-button" data-availability-id=@Model.Id>Save</button></td>
         <td role="cell"><button class="btn btn-primary cancel-button" data-availability-id=@Model.Id>Cancel</button></td>
     </tr>
-    </table>
-</div>
 
 <script>
     $(document).ready(function () {
-        $("#start-hour").val(@Model.StartTime.Hours.ToString());
-        $("#start-minute").val(@Model.StartTime.Minutes.ToString());
+        $('.start-hour').val(@Model.StartTime.Hours.ToString()).change();
+        $('.start-minute').val(@Model.StartTime.Minutes.ToString()).change();
 
+
+        $('.end-hour').val(@Model.EndTime.Hours.ToString()).change();
+        $('.end-minute').val(@Model.EndTime.Minutes.ToString()).change();
     });
+
 </script>

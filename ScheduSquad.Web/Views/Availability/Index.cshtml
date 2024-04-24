@@ -41,6 +41,25 @@
             });
             //find edit button row and replace with Ajax result and define click functions
         });
+
+        $('.save-button').click(function () {
+            var availId = $(this).data('availability-id');
+            var startTime = $(this).data('start-hour') +":" + $(this).data('start-minute');
+            //Ajax call to get edit row Availability/AvailabilityEditRow(availId)
+            @* $.ajax({
+                url: '@Url.Action("GetAvailabilityEditRow")',
+                type: "GET",
+                data: {'availabilityId' : availId}
+            }).done(function(result) {
+                $('#'+availId).html(result);
+            }); *@
+            //find edit button row and replace with Ajax result and define click functions
+        });
+
+        $(document).on('click', '.save-button', function(){ 
+            var availId = $(this).data('availability-id');
+            var startTime = $(this).data('start-hour') +":" + $(this).data('start-minute');
+        });
     });
 
 

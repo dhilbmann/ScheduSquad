@@ -56,15 +56,16 @@ namespace ScheduSquad.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult SaveAvailability(Availability availability)
+        public IActionResult SaveAvailability(Availability availability)
         {
-            return new JsonResult(new { });
+            return RedirectToAction("Index","Availability");
         }
 
         [HttpPost]
-        public JsonResult UpdateAvailability(Availability availability)
+        public IActionResult UpdateAvailability(Availability availability)
         {
-            return new JsonResult(new { });
+            _availabilityService.UpdateAvailability(availability);
+            return RedirectToAction("Index","Availability");
         }
 
         [HttpPost]
