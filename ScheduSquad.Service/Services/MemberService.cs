@@ -1,4 +1,5 @@
 using System.Security.Cryptography;
+using ScheduSquad.DataAccess;
 using ScheduSquad.Models;
 
 namespace ScheduSquad.Service {
@@ -8,11 +9,13 @@ namespace ScheduSquad.Service {
 
         private readonly IRepository<Member> _memberRepository;
         private readonly ILoginAuthenticationService _authenticationService;
+        private readonly IMembersForSquadRepository _memberForSquadRepo;
 
-        public MemberService(IRepository<Member> memberRepo, ILoginAuthenticationService authService)
+        public MemberService(IRepository<Member> memberRepo, ILoginAuthenticationService authService, IMembersForSquadRepository membersForSquadRepo)
         {
             _memberRepository = memberRepo;
             _authenticationService = authService;
+            _memberForSquadRepo = membersForSquadRepo;
         }
 
         public Member GetMemberById(Guid memberId)
@@ -38,7 +41,8 @@ namespace ScheduSquad.Service {
         }
 
         public List<Member> GetAllMembersNotInSquad(Guid squadId) {
-            throw new NotImplementedException();
+            
+            return _memberForSquadRepo.GetMembersNotInSquad(squadId).ToList();
         }
 
         public List<Member> GetAllMembersInSquad(Guid squadId) {
@@ -67,6 +71,9 @@ namespace ScheduSquad.Service {
             _memberRepository.Delete(member);
         }
 
+        public DateTime GetJoinedDateForSquadMember(Guid memberId, Guid squadId) {
+            return _memberForSquadRepo.GetJoinedDateForSquadMember(memberId, squadId);
+        }
 
 
     }

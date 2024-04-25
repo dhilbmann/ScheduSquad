@@ -1,6 +1,6 @@
 @model IEnumerable<SquadMenuItem>
 
-<h2>My Squads</h2>
+<h4>My Squads</h4>
 
 @if (Model.Count() > 0)
 {
@@ -8,12 +8,12 @@
         <ul class="squad-list">
             @foreach (SquadMenuItem s in Model)
             {
-                <li class="squad-item" data-squad-id="@s.Id.ToString()">
+                <li class="squad-item dropdown-item" data-squad-id="@s.Id.ToString()">
                     <a asp-action="Details" asp-controller="Squad" asp-route-id="@s.Id.ToString()">
                         @s.SquadName
                         @if (s.IsSquadmaster)
                         {
-                            <span class="squadmaster-icon"><i class="fa-solid fa-crown"></i></span>
+                            <span class="squadmaster-icon squadmaster"><i class="fa-solid fa-crown"></i></span>
                         }
                         <span class="cog-icon" style="display: none;"><i class="fa-solid fa-cog"></i></span>
                         <div class="context-menu" style="display: none;">
@@ -50,12 +50,12 @@ else
     .squad-item {
         width: 100%;
         position: relative;
-        left-margin: 15px;
+        left-margin: 5px;
     }
 
     .cog-icon {
         position: absolute;
-        top: 0;
+        top: 4px;
         right: 0;
         z-index: 1050;
     }

@@ -7,45 +7,45 @@
 
     <title>@ViewData["Title"] - ScheduSquad.Web</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/ScheduSquad.Web.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/StaticFiles/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/StaticFiles/css/site.css" asp-append-version="true" />
+    <link rel="icon" type="image/x-icon" href="~/StaticFiles/favicon.ico">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js"></script>
+    <script src="~/StaticFiles/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/StaticFiles/js/site.js"></script>
 </head>
 
 <body>
 
-    <header class="navbar navbar-dark bg-dark">
+    <header class="navbar navbar-light" style="background-color: #E3F2FD">
         <div class="container">
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLeft"
-                aria-controls="offcanvasLeft">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="d-flex justify-content-end">
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-user-circle fa-lg"></i>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <!-- Account  panel content goes here -->
-                        <li><button id="logout-btn" class="dropdown-item">Logout</button></li>
-                    </ul>
+            <div class="row col-md-12">
+                <div class="col-md-4 mt-2">
+                    <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasLeft" aria-controls="offcanvasLeft">
+                        <span class="fa-solid fa-bars"></span>
+                </div>
+                <div class="col-md-4 d-flex justify-content-center">
+                    <img src="~/StaticFiles/images/ScheduSquad_Logo_NoBorder.png" style="height: 50px;" class="img-fluid"  />
+                </div>
+                <div class="col-md-4">
+                    <div class="mt-2 d-flex justify-content-end">
+                        @await Component.InvokeAsync("ProfileMenu")
+                    </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasLeft" aria-labelledby="offcanvasLeftLabel" style="overflow: visible;">
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasLeft" aria-labelledby="offcanvasLeftLabel"
+        style="overflow: visible;">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasLeftLabel">Squad Menu</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
             @await Component.InvokeAsync("SquadMenu")
-            
+
         </div>
     </div>
 
@@ -53,22 +53,13 @@
         @RenderBody()
     </main>
 
-   
+
     <script>
         $(document).ready(function () {
             $('#hamburger-menu').click(function () {
                 $('body').toggleClass('menu-open');
             });
 
-            $('#user-menu').click(function (event) {
-                var menu = $('#context-menu');
-                if (menu.css('display') === 'block') {
-                    menu.css('display', 'none');
-                } else {
-                    menu.css('display', 'block');
-                }
-                event.stopPropagation(); // Prevent bubbling up to document click
-            });
 
             $(document).click(function (event) {
                 var menu = $('#context-menu');
@@ -77,14 +68,7 @@
                 }
             });
 
-            $('#logout-btn').click(function () {
-                // Perform logout POST request
-                var form = $('<form>');
-                form.attr('method', 'POST');
-                form.attr('action', '/Account/Logout');
-                $('body').append(form);
-                form.submit();
-            });
+
         });
     </script>
     @await RenderSectionAsync("Scripts", required: false)

@@ -13,6 +13,7 @@ namespace ScheduSquad.Service
         public Guid AddMember(string firstName, string lastName, string email, string password);
         public void UpdateMember(Member member);
         public void DeleteMember(Member member);
+        public DateTime GetJoinedDateForSquadMember (Guid memberId, Guid squadId);
     }
 }
 

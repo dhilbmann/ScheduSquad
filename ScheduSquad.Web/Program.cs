@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.FileProviders;
 using ScheduSquad.DataAccess;
 using ScheduSquad.Models;
 using ScheduSquad.Service;
@@ -18,6 +19,7 @@ builder.Services.AddScoped<IPasswordRepository, PasswordRepository>();
 builder.Services.AddScoped<IRepository<Availability>, AvailabilityRepository>();
 builder.Services.AddScoped<IAvailabilityRepository, AvailabilityRepository>();
 builder.Services.AddScoped<IRepository<Member>, MemberRepository>();
+builder.Services.AddScoped<IMembersForSquadRepository, MemberRepository>();
 builder.Services.AddScoped<IRepository<Squad>, SquadRepository>();
 builder.Services.AddScoped<ISquadMemberRepository, SquadRepository>();
 builder.Services.AddScoped<IAvailabilityService, AvailabilityService>();
@@ -45,8 +47,14 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+           Path.Combine(builder.Environment.ContentRootPath, "StaticFiles")),
+    RequestPath = "/StaticFiles"
+});
+
 app.UseHttpsRedirection();
-app.UseStaticFiles();
 
 app.UseAuthentication();
 app.UseRouting();
