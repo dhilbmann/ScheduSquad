@@ -11,25 +11,38 @@
 <br />
 <p>Details</p>
 <p>This Squad has m.members.Count members</p>
-<button class="btn btn-primary manage-button"
-<table class table table-bordered>
-    <tr role="row">
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Email</th>
-        <th>Availabilities</th>
-    </tr>
-    <div class="memberChart"></div>
-    @foreach (ScheduSquad.Models.Member m in Model.members)
+<div>
+    @if (Model.SquadBelongsToUser)
     {
-        <div id=m.Id>
-        <tr role="row">
-            <td role="cell"> m.FirstName</td>
-            <td role="cell"> m.LastName</td>
-            <td role="cell"> m.Email</td>
-            <td role="cell"> m.Availabilities.Count</td>
-        </tr>
-        </div>
+        <button class="btn btn-primary manage-squad" asp-controller="SquadManagement" asp-action="Members">Manage Members</button>
     }
+    else
+    {
+        <button class="btn btn-primary leave-squad"></button>
+    }
+<table class table table-striped>
+    <thead>
+        <tr role="row">
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Date Joined</th>
+            <th>Availabilities</th>
+        </tr>
+    <thead>
+    <tbody>
+        @foreach (SquadDetailModel m in Model.members)
+        {
+            <div id=m.Id>
+                <tr role="row">
+                    <td role="cell">@m.FirstName</td>
+                    <td role="cell">@m.LastName</td>
+                    <td role="cell">@m.Email</td>
+                    <td role="cell">@m.JoinDate.ToShortDateString()</td>
+                    <td role="cell">@m.Availabilities.Count</td>
+                </tr>
+            </div>
+        }
+    </tbody>
 </table>
     

@@ -1,13 +1,22 @@
-using ScheduSquad.Models;
-
 namespace ScheduSquad.Web.Models
-
-public class SquadDetailsViewModel
 {
-    public SquadViewModel()
+    // Model for the Page
+    public class SquadDetailsViewModel
     {
-        members = new List<Member>();
+        public List<SquadDetailModel> Members { get; set;}
     }
 
-    public List<Member> members {get; set;}
+    public bool SquadBelongsToUser { get; set; }
+
+    // Model for the individual squad to show on the FindSquad Page
+    public class SquadDetailModel
+    {
+        public Guid Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public DateTime JoinDate { get; set; }
+        public int AvailabilityCount { get; set; }
+        public bool IsSquadmaster { get; set; }
+    }
 }
