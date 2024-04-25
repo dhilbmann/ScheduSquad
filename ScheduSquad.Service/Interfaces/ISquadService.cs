@@ -15,6 +15,7 @@ namespace ScheduSquad.Service
         public void AddMemberToSquad(Member member, Squad squad, bool isSquadMaster);
         public void AddMemberToSquad(Guid memberId, Guid squadId, bool isSquadMaster);
         public void RemoveMemberFromSquad(Member member, Squad squad);
+         public void RemoveMemberFromSquad(Guid memberId, Guid squadId); 
 
     }
 }

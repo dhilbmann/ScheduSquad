@@ -77,7 +77,7 @@ namespace ScheduSquad.DataAccess
                 // Open connection
                 connection.Open();
                 // Create & using command
-                using (SqlCommand command = new SqlCommand("UPDATE SquadMembers SET IsDeleted = 0 WHERE SquadFK = @squadId AND UserFK = @userId", connection))
+                using (SqlCommand command = new SqlCommand("UPDATE SquadMembers SET IsDeleted = 1 WHERE SquadFK = @squadId AND UserFK = @userId", connection))
                 {
                     // Set a parameter for memberId
                     command.Parameters.Add("@squadId", System.Data.SqlDbType.UniqueIdentifier).Value = squadId;
@@ -185,10 +185,6 @@ namespace ScheduSquad.DataAccess
             return squad;
         }
 
-        public void AddMemberToSquad(Member m, Squad s)
-        {
-            throw new NotImplementedException();
-        }
     }
 
     public interface ISquadMemberRepository

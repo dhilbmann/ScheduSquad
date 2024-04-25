@@ -18,6 +18,7 @@ builder.Services.AddScoped<IPasswordRepository, PasswordRepository>();
 builder.Services.AddScoped<IRepository<Availability>, AvailabilityRepository>();
 builder.Services.AddScoped<IAvailabilityRepository, AvailabilityRepository>();
 builder.Services.AddScoped<IRepository<Member>, MemberRepository>();
+builder.Services.AddScoped<IMembersForSquadRepository, MemberRepository>();
 builder.Services.AddScoped<IRepository<Squad>, SquadRepository>();
 builder.Services.AddScoped<ISquadMemberRepository, SquadRepository>();
 builder.Services.AddScoped<IAvailabilityService, AvailabilityService>();
