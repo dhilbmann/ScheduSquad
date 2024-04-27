@@ -22,43 +22,105 @@
     </div>
 </table>
 
-<p id="editRow">
-    <label>This is a test</label>
+<p>
+    <table id="editRow">
+        <td role="cell"><button class="btn btn-primary add-button">+ Add</button></td>
+
+    </table>
 </p>
 
 <script>
     $(document).ready(function () {
 
-        $('.edit-button').click(function () {
+        ////////// Add ////////
+        $('.add-button').click(function () 
+        {
+            //Ajax call to get add row Availability/AvailabilityEditRow(availId)
+            $.ajax(
+            {
+                url: '@Url.Action("GetAvailabilityEditRow")',
+                type: "GET",
+                data: {'availabilityId' : "00000000-0000-0000-0000-000000000000"}
+            }).done(function(result) 
+            {
+                $('#editRow').html(result);
+            });
+            //find edit button row and replace with Ajax result and define click functions
+        });
+
+
+
+        ////////// Edit ////////
+        $('.edit-button').click(function () 
+        {
             var availId = $(this).data('availability-id');
             //Ajax call to get edit row Availability/AvailabilityEditRow(availId)
-            $.ajax({
+            $.ajax(
+            {
                 url: '@Url.Action("GetAvailabilityEditRow")',
                 type: "GET",
                 data: {'availabilityId' : availId}
-            }).done(function(result) {
+            }).done(function(result) 
+            {
                 $('#'+availId).html(result);
             });
             //find edit button row and replace with Ajax result and define click functions
         });
 
-        $('.save-button').click(function () {
+        ////////// Delete ////////
+        $('.delete-button').click(function () 
+        {
             var availId = $(this).data('availability-id');
-            var startTime = $(this).data('start-hour') +":" + $(this).data('start-minute');
-            //Ajax call to get edit row Availability/AvailabilityEditRow(availId)
-            @* $.ajax({
-                url: '@Url.Action("GetAvailabilityEditRow")',
-                type: "GET",
-                data: {'availabilityId' : availId}
-            }).done(function(result) {
-                $('#'+availId).html(result);
-            }); *@
-            //find edit button row and replace with Ajax result and define click functions
+
+            var availabilityToDelete = {
+                Id: availId, 
+                IsDeleted : true,
+                DayOfWeek : 1,
+                StartTime : "00:00",
+                EndTime : "00:00",
+            };
+
+            $.ajax(
+            {
+                url: 'Availability/DeleteAvailability',
+                type: "POST",
+                data: availabilityToDelete
+            }).done(function(result) 
+            {
+                location.reload();
+            });
         });
 
-        $(document).on('click', '.save-button', function(){ 
+        ////////// Save ////////
+        $('.save-button').click(function () {
+
             var availId = $(this).data('availability-id');
             var startTime = $(this).data('start-hour') +":" + $(this).data('start-minute');
+            var endTime = $(this).data('end-hour') +":" + $(this).data('end-minute');
+            var day = $(this).data('day-list');
+            
+            var availability = {
+                Id: availId, 
+                IsDeleted : false,
+                DayOfWeek : day,
+                StartTime : startTime,
+                EndTime : endTime,
+            };
+
+            $.ajax(
+            {
+                url: 'Availability/SaveAvailability',
+                type: "POST",
+                data: availability
+            }).done(function(result) 
+            {
+                location.reload();
+            });
+        });
+
+        ////////// Cancel ////////
+        $(document).on('click', '#save-button', function(){ 
+                location.reload();
         });
     });
 

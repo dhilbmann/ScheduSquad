@@ -58,6 +58,14 @@ namespace ScheduSquad.Web.Controllers
         [HttpPost]
         public IActionResult SaveAvailability(Availability availability)
         {
+            if (_availabilityService.GetAllAvailabilities().Any(x=> x.Id == availability.Id))
+            {
+                UpdateAvailability(availability);
+            }
+            else
+            {
+                _availabilityService.AddAvailability(availability);
+            }
             return RedirectToAction("Index","Availability");
         }
 
@@ -69,9 +77,10 @@ namespace ScheduSquad.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult DeleteAvailability(Availability availability)
+        public IActionResult DeleteAvailability(Availability availability)
         {
-            return new JsonResult(new { });
+            _availabilityService.DeleteAvailability(availability);
+            return RedirectToAction("Index","Availability");
         }
 
         [HttpPost]

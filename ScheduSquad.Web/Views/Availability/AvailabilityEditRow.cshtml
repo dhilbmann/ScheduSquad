@@ -1,6 +1,6 @@
 @model ScheduSquad.Models.Availability
     <tr role="row" data-availability-id="@Model.Id">
-        <td role="cell"> <select class="form-select form-select-sm day-list" data-availability-id="@Model.DayOfWeek">
+        <td role="cell"> <select class="form-select form-select-sm day-list" data-availability-id="@Model.Id">
             <option value="0">Sunday</option>
             <option value="1">Monday</option>
             <option value="2">Tuesday</option>
@@ -86,6 +86,8 @@
 
         $('.end-hour').val(@Model.EndTime.Hours.ToString()).change();
         $('.end-minute').val(@Model.EndTime.Minutes.ToString()).change();
+        
+        //$('.day-list').val(((int)@Model.DayOfWeek).ToString()).change();
     });
 
 </script>
