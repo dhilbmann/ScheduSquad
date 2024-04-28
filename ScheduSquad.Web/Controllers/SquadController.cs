@@ -18,11 +18,14 @@ namespace ScheduSquad.Web.Controllers
         private readonly ISquadService _squadService;
         private readonly IMemberService _memberService;
 
-        public SquadController(ILogger<SquadController> logger, ISquadService squadService, IMemberService memberService)
+        private readonly IAvailabilityService _availabilityService;
+
+        public SquadController(ILogger<SquadController> logger, ISquadService squadService, IMemberService memberService, IAvailabilityService availabilityService)
         {
             _logger = logger;
             _squadService = squadService;
             _memberService = memberService;
+            _availabilityService = availabilityService;
         }
 
         // GET: /Squad/Create
@@ -109,7 +112,15 @@ namespace ScheduSquad.Web.Controllers
             if (Guid.TryParse(HttpContext.User.FindFirstValue(ClaimTypes.Sid), out userGuid))
             {
                 vm.Members = MapToViewModels(_memberService.GetAllMembersInSquad(squadId), squadId);
-                vm.SquadBelongsToUser = (userGuid == _squadService.GetSquadById(squadId).squadMaster.Id)
+                vm.SquadBelongsToUser = (userGuid == _squadService.GetSquadById(squadId).SquadMaster.Id);
+                vm.AvailabilityLists = _availabilityService.SplitAvailabilities(_availabilityService.GetCommonAvailabilityCodes(_squadService.GetSquadById(squadId)));
+                vm.AvailabilityStrings = new List<String>();
+                foreach(List<int> availabilityList in vm.AvailabilityLists)
+                {
+                    vm.AvailabilityStrings.Add(_availabilityService.GetHumanReadableAvailabilityString(availabilityList));
+                }
+                vm.SquadId = squadId;
+                vm.UserId = userGuid;
             }
             else
             {
@@ -149,15 +160,17 @@ namespace ScheduSquad.Web.Controllers
             List<SquadDetailModel> list = new List<SquadDetailModel>();
             foreach (Member m in members)
             {
-                list.Add(new FindSquadModel
+
+                int availabilityCount = _availabilityService.GetAllAvailabilitiesBelongingToMember(m.Id).Count;
+                list.Add(new SquadDetailModel
                 {
                     Id = m.Id,
                     FirstName = m.FirstName,
                     LastName = m.LastName,
                     Email = m.Email,
-                    JoinDate = _memberService.GetJoinedDateForSquadMember(m.Id, squadId);
-                    AvailabilityCount = m.Availabilities.Count,
-                    IsSquadmaster = (m.Id == _squadService.GetSquadById(squadId).squadMaster.Id)
+                    JoinDate = _memberService.GetJoinedDateForSquadMember(m.Id, squadId),
+                    AvailabilityCount = availabilityCount,
+                    IsSquadmaster = (m.Id == _squadService.GetSquadById(squadId).SquadMaster.Id)
                 });
             }
 

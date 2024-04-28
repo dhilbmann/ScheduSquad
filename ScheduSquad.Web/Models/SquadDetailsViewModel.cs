@@ -4,9 +4,12 @@ namespace ScheduSquad.Web.Models
     public class SquadDetailsViewModel
     {
         public List<SquadDetailModel> Members { get; set;}
+        public bool SquadBelongsToUser { get; set; }
+        public List<List<int>> AvailabilityLists { get; set; }
+        public List<String> AvailabilityStrings { get; set; }
+        public Guid SquadId { get; set; }
+        public Guid UserId { get; set; }
     }
-
-    public bool SquadBelongsToUser { get; set; }
 
     // Model for the individual squad to show on the FindSquad Page
     public class SquadDetailModel
