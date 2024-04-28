@@ -18,20 +18,21 @@
                         {
                             <span class="squadmaster-icon squadmaster"><i class="fa-solid fa-crown"></i></span>
                         }
-                        <span class="cog-icon" style="display: none;"><i class="fa-solid fa-cog"></i></span>
+                        
+                    </a>
+                    <span class="cog-icon" style="display: none;"><i class="fa-solid fa-cog"></i></span>
                         <div class="context-menu" style="display: none;">
                             <ul>
                                 @if (s.IsSquadmaster)
                                 {
-                                    <li class="manage-members" data-squad-id="@s.Id.ToString()"><i class="fa-solid fa-user-friends"></i> Manage Members</li>
+                                    <li class="manage-members" data-url=@Url.ActionLink("Members", "SquadManagement", new { squadId = @s.Id.ToString() })><i class="fa-solid fa-user-friends"></i> Manage Members</li>
                                 }
                                 else
                                 {
-                                    <li class="leave-squad" data-squad-id="@s.Id.ToString()"><i class="fa-solid fa-sign-out"></i>Leave Squad</li>
+                                    <li class="leave-squad" data-url="@s.Id.ToString()"><i class="fa-solid fa-sign-out"></i>Leave Squad</li>
                                 }
                             </ul>
                         </div>
-                    </a>
                 </li>
             }
         </ul>
@@ -123,6 +124,14 @@ else
             });
 
             e.stopPropagation();
+        });
+        
+        $('.manage-members').on('click', function() {
+            window.location.href = $(this).data('url');
+        });
+
+        $('.manage-members').on('click', function() {
+            window.location.href = $(this).data('url');
         });
     });
 </script>
