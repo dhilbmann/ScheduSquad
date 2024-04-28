@@ -1,14 +1,17 @@
 @model ScheduSquad.Models.Availability
+
     <tr role="row" data-availability-id="@Model.Id">
-        <td role="cell"> <select class="form-select form-select-sm day-list" data-availability-id="@Model.Id">
-            <option value="0">Sunday</option>
-            <option value="1">Monday</option>
-            <option value="2">Tuesday</option>
-            <option value="3">Wednesday</option>
-            <option value="4">Thursday</option>
-            <option value="5">Friday</option>
-            <option value="6">Saturday</option>
-        </select></td>
+        <td role="cell"> 
+            <select class="form-select form-select-sm day-list" data-availability-id="@Model.Id">
+                <option value="0">Sunday</option>
+                <option value="1">Monday</option>
+                <option value="2">Tuesday</option>
+                <option value="3">Wednesday</option>
+                <option value="4">Thursday</option>
+                <option value="5">Friday</option>
+                <option value="6">Saturday</option>
+            </select>
+        </td>
         <td role="cell"><select class="form-select form-select-sm start-hour" data-availability-id="@Model.StartTime">
             <option value="0">00</option>
             <option value="1">01</option>
@@ -74,10 +77,10 @@
             <option value="30">30</option>
             <option value="45">45</option>
         </select></td>
-        <td role="cell"><button class="btn btn-primary save-button" data-availability-id=@Model.Id>Save</button></td>
-        <td role="cell"><button class="btn btn-primary cancel-button" data-availability-id=@Model.Id>Cancel</button></td>
-    </tr>
-
+        <td role="cell">
+            <button class="btn btn-primary save-button" data-availability-id=@Model.Id id="saveButton">Save</button>
+            <button class="btn btn-primary cancel-button" data-availability-id=@Model.Id id="cancelButton">Cancel</button>
+            
 <script>
     $(document).ready(function () {
         $('.start-hour').val(@Model.StartTime.Hours.ToString()).change();
@@ -87,7 +90,10 @@
         $('.end-hour').val(@Model.EndTime.Hours.ToString()).change();
         $('.end-minute').val(@Model.EndTime.Minutes.ToString()).change();
         
-        //$('.day-list').val(((int)@Model.DayOfWeek).ToString()).change();
+        @* var x = ((int)@Model.DayOfWeek).ToString();
+        $('.day-list option:eq(' + x + ')').prop('selected', true) *@
     });
 
 </script>
+        </td>
+    </tr>

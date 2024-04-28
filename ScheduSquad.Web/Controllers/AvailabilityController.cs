@@ -56,7 +56,7 @@ namespace ScheduSquad.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveAvailability(Availability availability)
+        public IActionResult SaveAvailability(Availability availability, Guid id)
         {
             if (_availabilityService.GetAllAvailabilities().Any(x=> x.Id == availability.Id))
             {
@@ -64,7 +64,7 @@ namespace ScheduSquad.Web.Controllers
             }
             else
             {
-                _availabilityService.AddAvailability(availability);
+                _availabilityService.AddAvailability(availability, new Guid("713626F9-D78E-4E68-8548-AEB073A22C63"));
             }
             return RedirectToAction("Index","Availability");
         }
