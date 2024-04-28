@@ -25,10 +25,10 @@ public class AvailabilityRepository : IRepository<Availability>, IAvailabilityRe
     {
         SqlCommand cmd = new SqlCommand("Add_Availability");
         cmd.Parameters.Add("@Id", System.Data.SqlDbType.UniqueIdentifier).Value = entity.Id;
-        cmd.Parameters.Add("@UserId", System.Data.SqlDbType.VarChar).Value = userId;
-        cmd.Parameters.Add("@DayEnum", System.Data.SqlDbType.VarChar).Value = entity.DayOfWeek;
-        cmd.Parameters.Add("@StartTime", System.Data.SqlDbType.VarChar).Value = entity.StartTime;
-        cmd.Parameters.Add("@EndTime", System.Data.SqlDbType.VarChar).Value = entity.EndTime;
+        cmd.Parameters.Add("@UserId", System.Data.SqlDbType.UniqueIdentifier).Value = userId;
+        cmd.Parameters.Add("@DayEnum", System.Data.SqlDbType.Int).Value = entity.DayOfWeek;
+        cmd.Parameters.Add("@StartTime", System.Data.SqlDbType.Time).Value = entity.StartTime;
+        cmd.Parameters.Add("@EndTime", System.Data.SqlDbType.Time).Value = entity.EndTime;
         ExecuteLogic(cmd);
 
     }
@@ -64,9 +64,9 @@ public class AvailabilityRepository : IRepository<Availability>, IAvailabilityRe
     {
         SqlCommand cmd = new SqlCommand("Update_Availability");
         cmd.Parameters.Add("@Id", System.Data.SqlDbType.UniqueIdentifier).Value = entity.Id;
-        cmd.Parameters.Add("@DayEnum", System.Data.SqlDbType.VarChar).Value = entity.DayOfWeek;
-        cmd.Parameters.Add("@StartTime", System.Data.SqlDbType.VarChar).Value = entity.StartTime;
-        cmd.Parameters.Add("@EndTime", System.Data.SqlDbType.VarChar).Value = entity.EndTime;
+        cmd.Parameters.Add("@DayEnum", System.Data.SqlDbType.Int).Value = entity.DayOfWeek;
+        cmd.Parameters.Add("@StartTime", System.Data.SqlDbType.Time).Value = entity.StartTime;
+        cmd.Parameters.Add("@EndTime", System.Data.SqlDbType.Time).Value = entity.EndTime;
         ExecuteLogic(cmd);
     }
 
@@ -142,8 +142,8 @@ public class AvailabilityRepository : IRepository<Availability>, IAvailabilityRe
         var availability = new Availability(
             new Guid((rdr["Id"]).ToString() ?? string.Empty),    //Id                      
             dayOfWeek,                                           //dayofweek
-            ((DateTime)rdr["StartTime"]).TimeOfDay,              //starttime  
-            ((DateTime)rdr["EndTime"]).TimeOfDay                 //endtime
+            (TimeSpan)rdr["StartTime"],              //starttime  
+            (TimeSpan)rdr["EndTime"]                 //endtime
         );
 
         return availability;

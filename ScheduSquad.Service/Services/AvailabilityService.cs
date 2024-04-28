@@ -5,12 +5,14 @@ namespace ScheduSquad.Service
 
     public class AvailabilityService : IAvailabilityService
     {
+        private readonly IAvailabilityRepository _addAvailabilityRepo;
 
         private readonly IRepository<Availability> _availabilityRepository;
 
-        public AvailabilityService(IRepository<Availability> availabilityRepo)
+        public AvailabilityService(IRepository<Availability> availabilityRepo, IAvailabilityRepository addAvailabilityRepo)
         {
             _availabilityRepository = availabilityRepo;
+            _addAvailabilityRepo = addAvailabilityRepo;
         }
 
 
@@ -32,6 +34,11 @@ namespace ScheduSquad.Service
         public void AddAvailability(Availability availability)
         {
             _availabilityRepository.Add(availability);
+        }
+
+        public void AddAvailability(Availability availability, Guid id)
+        {
+            _addAvailabilityRepo.Add(availability, id);
         }
 
         public void UpdateAvailability(Availability availability)

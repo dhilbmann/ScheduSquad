@@ -1,10 +1,10 @@
 
 DECLARE @Id uniqueidentifier = NEWID()
-exec Add_Member @Id, 'Cara', 'Perez', 'cara.c.perez@gmail.com', '$2y$10$ez7OOiHD9IR60EFHYDVXJusRea/jiGYmUQhflb4h8GoaS6yZ5GQ6q', '$2y$10$ez7OOiHD9IR60EFHYDVXJusRea/jiGYmUQhflb4h8GoaS6yZ5GQ6q'
+exec Add_Member @Id, 'Cara', 'Perez', 'cara.c.perez@gmail.com'
 SET  @Id = NEWID()
-exec Add_Member @Id, 'David', 'Hilbmann', 'a@b.com', '$2y$10$ez7OOiHD9IR60EFHYDVXJusRea/jiGYmUQhflb4h8GoaS6yZ5GQ6q', '$2y$10$ez7OOiHD9IR60EFHYDVXJusRea/jiGYmUQhflb4h8GoaS6yZ5GQ6q'
+exec Add_Member @Id, 'David', 'Hilbmann', 'a@b.com'
 SET  @Id = NEWID()
-exec Add_Member @Id, 'Duncan', 'Clark', 'test@test.com', '$2y$10$ez7OOiHD9IR60EFHYDVXJusRea/jiGYmUQhflb4h8GoaS6yZ5GQ6q', '$2y$10$ez7OOiHD9IR60EFHYDVXJusRea/jiGYmUQhflb4h8GoaS6yZ5GQ6q'
+exec Add_Member @Id, 'Duncan', 'Clark', 'test@test.com'
 
 SET  @Id = NEWID()
 exec Add_Squad @Id, 'Prime Squad', 'First test squad', 'Online' 

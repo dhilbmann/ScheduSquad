@@ -1,5 +1,6 @@
 
 CREATE DATABASE ScheduSquad; 
+GO
 
 USE ScheduSquad ;
 

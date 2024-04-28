@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ScheduSquad.Models;
+using ScheduSquad.Service;
+using ScheduSquad.Web.Models;
 
 namespace ScheduSquad.Web.Controllers
 {
@@ -8,16 +10,23 @@ namespace ScheduSquad.Web.Controllers
     {
 
         private readonly ILogger<AvailabilityController> _logger;
+        private readonly IAvailabilityService _availabilityService;
 
-        public AvailabilityController(ILogger<AvailabilityController> logger)
+        public AvailabilityController(ILogger<AvailabilityController> logger, IAvailabilityService availabilityService)
         {
             _logger = logger;
+            _availabilityService = availabilityService;
         }
 
         [HttpGet]
         public IActionResult Index(Guid id)
         {
-            return View();
+            id = new Guid("9F9D518F-AA15-412A-AF2B-E6D83D9DCB04");
+            AvailabilityViewModel vm = new AvailabilityViewModel();
+
+            vm.availabilities = _availabilityService.GetAllAvailabilitiesBelongingToMember(id);
+
+            return View(vm);
         }
 
         [HttpGet]
@@ -32,22 +41,54 @@ namespace ScheduSquad.Web.Controllers
             return PartialView("AvailabilityTable");
         }
 
-        [HttpPost]
-        public JsonResult SaveAvailability(Availability availability)
+        [HttpGet]
+        public IActionResult GetAvailabilityReadRow(Guid availabilityId)
         {
-            return new JsonResult(new { });
+            Availability availability = _availabilityService.GetAvailabilityById(availabilityId);//return from service
+            return PartialView("AvailabilityReadRow",availability);
+        }
+
+        [HttpGet]
+        public IActionResult GetAvailabilityEditRow(Guid availabilityId)
+        {
+            Availability availability = _availabilityService.GetAvailabilityById(availabilityId);//return from service
+            return PartialView("AvailabilityEditRow",availability);
         }
 
         [HttpPost]
-        public JsonResult UpdateAvailability(Availability availability)
+        public IActionResult SaveAvailability(Availability availability, Guid id)
         {
-            return new JsonResult(new { });
+            if (_availabilityService.GetAllAvailabilities().Any(x=> x.Id == availability.Id))
+            {
+                UpdateAvailability(availability);
+            }
+            else
+            {
+                _availabilityService.AddAvailability(availability, new Guid("713626F9-D78E-4E68-8548-AEB073A22C63"));
+            }
+            return RedirectToAction("Index","Availability");
         }
 
         [HttpPost]
-        public JsonResult DeleteAvailability(Availability availability)
+        public IActionResult UpdateAvailability(Availability availability)
         {
-            return new JsonResult(new { });
+            _availabilityService.UpdateAvailability(availability);
+            return RedirectToAction("Index","Availability");
+        }
+
+        [HttpPost]
+        public IActionResult DeleteAvailability(Availability availability)
+        {
+            _availabilityService.DeleteAvailability(availability);
+            return RedirectToAction("Index","Availability");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditAvailability(Guid id)
+        {
+            //await HttpContext.
+            return RedirectToAction("Index","Availability");
+
         }
     }
 
