@@ -8,8 +8,11 @@
         <ul class="squad-list">
             @foreach (SquadMenuItem s in Model)
             {
-                <li class="squad-item dropdown-item" data-squad-id="@s.Id.ToString()">
-                    <a asp-action="Details" asp-controller="Squad" asp-route-id="@s.Id.ToString()">
+                <li class="squad-item dropdown-item">
+                    @{
+                        var url = Url.Action("Details", "Squad", new { squadId = s.Id.ToString() } );
+                    }
+                    <a href="@url" >
                         @s.SquadName
                         @if (s.IsSquadmaster)
                         {
@@ -20,11 +23,11 @@
                             <ul>
                                 @if (s.IsSquadmaster)
                                 {
-                                    <li class="manage-members"><i class="fa-solid fa-user-friends"></i> Manage Members</li>
+                                    <li class="manage-members" data-squad-id="@s.Id.ToString()"><i class="fa-solid fa-user-friends"></i> Manage Members</li>
                                 }
                                 else
                                 {
-                                    <li class="leave-squad"><i class="fa-solid fa-sign-out"></i> Leave Squad</li>
+                                    <li class="leave-squad" data-squad-id="@s.Id.ToString()"><i class="fa-solid fa-sign-out"></i>Leave Squad</li>
                                 }
                             </ul>
                         </div>
