@@ -9,6 +9,7 @@ namespace ScheduSquad.Web.Models
         public List<String> AvailabilityStrings { get; set; }
         public Guid SquadId { get; set; }
         public Guid UserId { get; set; }
+        public String SquadName { get; set; }
     }
 
     // Model for the individual squad to show on the FindSquad Page

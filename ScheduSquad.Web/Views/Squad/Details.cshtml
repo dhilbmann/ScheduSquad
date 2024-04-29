@@ -7,63 +7,81 @@
 <div class="container">
     <div class="row">
         <div class="col justify-content-start">
-            <h1>Squad Details</h1>
+            <h1>@Model.SquadName Details</h1>
         </div>
     </div>
-
-    <div class="row justify-content-between">
-        <div class="col">
-            <p>Details</p>
-        </div>
-        <div class="col">
-            <p>This Squad has @Model.Members.Count() members</p>
-        </div>
-        <div class="col">
-            <div>
-                @if (Model.SquadBelongsToUser)
-                {
-                    <button class="btn btn-primary manage-squad" asp-controller="SquadManagement" asp-action="Members">Manage Members</button>
-                }
-                else
-                {
-                    <button class="btn btn-primary leave-squad" data-squad-id="@Model.SquadId" data-user-id="@Model.UserId">Leave Squad</button>
-                }
+    @if (true)
+    {
+        <div class="row justify-content-between">
+            <div class="col">
+                <p>Details</p>
+            </div>
+            <div class="col">
+                <p>This Squad has @Model.Members.Count() members</p>
+            </div>
+            <div class="col justify-content-end">
+                <div>
+                    @if (Model.SquadBelongsToUser)
+                    {
+                        <a class="btn btn-primary manage-squad" asp-controller="SquadManagement" asp-action="Members" asp-route-squadId="@Model.SquadId">Manage Members</a>
+                    }
+                    else
+                    {
+                        <button class="btn btn-primary leave-squad" data-squad-id="@Model.SquadId" data-user-id="@Model.UserId">Leave Squad</button>
+                    }
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col md-12">
-            <table class="table table-striped">
-                <thead>
-                    <tr role="row">
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Email</th>
-                        <th>Date Joined</th>
-                        <th>Availabilities</th>
-                    </tr>
-                <thead>
-                <tbody>
-                    @foreach (SquadDetailModel m in Model.Members)
-                    {
-                        <tr role="row">
-                            <td role="cell">@m.FirstName</td>
-                            <td role="cell">@m.LastName</td>
-                            <td role="cell">@m.Email</td>
-                            <td role="cell">@m.JoinDate.ToShortDateString()</td>
-                            <td role="cell">@m.AvailabilityCount</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    @foreach (String s in Model.AvailabilityStrings)
-    {
+    <h4>Squad Members</h4>
         <div class="row">
-            <p>Available @s</p>
+            <div class="col md-12">
+                <table class="table table-striped">
+                    <thead>
+                        <tr role="row">
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Date Joined</th>
+                            <th>Availabilities</th>
+                        </tr>
+                    <thead>
+                    <tbody>
+                        @foreach (SquadDetailModel m in Model.Members)
+                        {
+                            <tr role="row">
+                                <td role="cell">@m.FirstName</td>
+                                <td role="cell">@m.LastName</td>
+                                <td role="cell">@m.Email</td>
+                                <td role="cell">@m.JoinDate.ToShortDateString()</td>
+                                <td role="cell">@m.AvailabilityCount</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <h4>Squad Availabilities</h4>
+        @foreach (String s in Model.AvailabilityStrings) // todo check for no overlapping availability
+        {
+            <div class="row">
+                <p>Available @s</p>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6 text-center">
+                <div class="alert alert-warning" role="alert">
+                    <div class="d-flex align-items-center">
+                        <span class="icon-warning"><i class="fas fa-exclamation-triangle fa-5x"></i></span>
+                        <div class="ml-3">
+                            <h4 class="alert-heading">Intruder Alert!</h4>
+                            <p class="mb-0">You're not part of this squad - <a asp-action="Find" asp-controller="Squad" class="alert-link">go join some!</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     }
 </div>

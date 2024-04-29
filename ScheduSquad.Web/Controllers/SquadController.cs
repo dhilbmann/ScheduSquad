@@ -112,8 +112,13 @@ namespace ScheduSquad.Web.Controllers
             if (Guid.TryParse(HttpContext.User.FindFirstValue(ClaimTypes.Sid), out userGuid))
             {
                 vm.Members = MapToViewModels(_memberService.GetAllMembersInSquad(squadId), squadId);
-                vm.SquadBelongsToUser = (userGuid == _squadService.GetSquadById(squadId).SquadMaster.Id);
-                vm.AvailabilityLists = _availabilityService.SplitAvailabilities(_availabilityService.GetCommonAvailabilityCodes(_squadService.GetSquadById(squadId)));
+                Squad s = _squadService.GetSquadById(squadId);
+                vm.SquadBelongsToUser = (userGuid == s.SquadMaster.Id);
+                foreach (Member m in s.Members)
+                {
+                    m.Availabilities =  _availabilityService.GetAllAvailabilitiesBelongingToMember(m.Id);
+                }
+                vm.AvailabilityLists = _availabilityService.SplitAvailabilities(_availabilityService.GetCommonAvailabilityCodes(s));
                 vm.AvailabilityStrings = new List<String>();
                 foreach(List<int> availabilityList in vm.AvailabilityLists)
                 {
@@ -121,6 +126,7 @@ namespace ScheduSquad.Web.Controllers
                 }
                 vm.SquadId = squadId;
                 vm.UserId = userGuid;
+                vm.SquadName = s.Name;
             }
             else
             {
