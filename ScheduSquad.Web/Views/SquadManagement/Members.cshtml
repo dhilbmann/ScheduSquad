@@ -9,9 +9,9 @@
     <div class="row">
         <div class="col-md-12">
 
-            <h2>Manage Squad Membership <a class="btn btn-secondary float-end mb-3" asp-controller="Squad"
-                    asp-action="Details">Back to
-                    @Model.SquadName Details</a>
+            <h2>Manage Squad Membership
+                <a class="btn btn-secondary float-end mb-3" asp-controller="Squad" asp-action="Details"
+                    asp-route-squadId="@Model.SquadId">Back to @Model.SquadName Details</a>
             </h2>
         </div>
     </div>
