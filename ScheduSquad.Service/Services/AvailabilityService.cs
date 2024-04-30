@@ -5,12 +5,14 @@ namespace ScheduSquad.Service
 
     public class AvailabilityService : IAvailabilityService
     {
+        private readonly IAvailabilityRepository _addAvailabilityRepo;
 
         private readonly IRepository<Availability> _availabilityRepository;
 
-        public AvailabilityService(IRepository<Availability> availabilityRepo)
+        public AvailabilityService(IRepository<Availability> availabilityRepo, IAvailabilityRepository addAvailabilityRepo)
         {
             _availabilityRepository = availabilityRepo;
+            _addAvailabilityRepo = addAvailabilityRepo;
         }
 
 
@@ -32,6 +34,11 @@ namespace ScheduSquad.Service
         public void AddAvailability(Availability availability)
         {
             _availabilityRepository.Add(availability);
+        }
+
+        public void AddAvailability(Availability availability, Guid id)
+        {
+            _addAvailabilityRepo.Add(availability, id);
         }
 
         public void UpdateAvailability(Availability availability)
@@ -105,15 +112,20 @@ namespace ScheduSquad.Service
 
             for (int i = 0; i < availability.Count; i++)
             {
-                tempSpan.Add(availability[i]);
-
-                if (availability[i] != availability[i+1] + 1)
+                if (tempSpan.Count() >=1 )
                 {
-                    splitAvailabilities.Add(tempSpan);
-                    tempSpan.Clear();
+                    if (availability[i] != tempSpan[tempSpan.Count() - 1] + 1)
+                    {
+                        splitAvailabilities.Add(new List<int>(tempSpan));
+                        tempSpan.Clear();
+                    }
                 }
+
+                tempSpan.Add(availability[i]);
             }
 
+            splitAvailabilities.Add(new List<int>(tempSpan));
+            splitAvailabilities.Sort((left, right) => left[0].CompareTo(right[0]));
             return splitAvailabilities;
         }
 
