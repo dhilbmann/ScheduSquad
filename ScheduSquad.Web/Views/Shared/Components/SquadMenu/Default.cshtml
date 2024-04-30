@@ -29,7 +29,7 @@
                                 }
                                 else
                                 {
-                                    <li class="leave-squad" data-url="@s.Id.ToString()"><i class="fa-solid fa-sign-out"></i>Leave Squad</li>
+                                    <li class="leave-squad" data-url="@s.Id.ToString()" data-squad-id="@s.Id.ToString()"><i class="fa-solid fa-sign-out"></i>Leave Squad</li>
                                 }
                             </ul>
                         </div>
@@ -130,8 +130,16 @@ else
             window.location.href = $(this).data('url');
         });
 
-        $('.manage-members').on('click', function() {
-            window.location.href = $(this).data('url');
+         $('.leave-squad').on('click', function() {
+                var that = $(this);
+                var squadId = $(this).data('squad-id');
+                $.post('/Squad/Leave', { squadId: squadId }, function (data) {
+                    if (data.success) {
+                        $(that).parents(".squad-item").remove();
+                    } else {
+                        alert('Failed to join squad. Please try again.');
+                    }
+                });
         });
     });
 </script>

@@ -142,8 +142,8 @@ public class AvailabilityRepository : IRepository<Availability>, IAvailabilityRe
         var availability = new Availability(
             new Guid((rdr["Id"]).ToString() ?? string.Empty),    //Id                      
             dayOfWeek,                                           //dayofweek
-            ((DateTime)rdr["StartTime"]).TimeOfDay,              //starttime  
-            ((DateTime)rdr["EndTime"]).TimeOfDay                 //endtime
+            (TimeSpan)rdr["StartTime"],              //starttime  
+            (TimeSpan)rdr["EndTime"]                 //endtime
         );
 
         return availability;
