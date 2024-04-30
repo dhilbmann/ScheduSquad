@@ -33,17 +33,4 @@ public class HomeController : Controller
     {
         return View();
     }
-
-    [HttpGet]
-    public IActionResult ProfileMenu()
-    {
-        return View();
-    }
-
-    [HttpGet]
-    public IActionResult SquadMenu()
-    {
-        return View();
-    }
-
 }
