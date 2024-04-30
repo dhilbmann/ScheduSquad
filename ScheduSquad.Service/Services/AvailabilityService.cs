@@ -116,7 +116,7 @@ namespace ScheduSquad.Service
                 {
                     if (availability[i] != tempSpan[tempSpan.Count() - 1] + 1)
                     {
-                        splitAvailabilities.Add(tempSpan);
+                        splitAvailabilities.Add(new List<int>(tempSpan));
                         tempSpan.Clear();
                     }
                 }
@@ -124,6 +124,8 @@ namespace ScheduSquad.Service
                 tempSpan.Add(availability[i]);
             }
 
+            splitAvailabilities.Add(new List<int>(tempSpan));
+            splitAvailabilities.Sort((left, right) => left[0].CompareTo(right[0]));
             return splitAvailabilities;
         }
 

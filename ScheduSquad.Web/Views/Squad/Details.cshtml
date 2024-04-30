@@ -10,7 +10,7 @@
             <h1>@Model.SquadName Details</h1>
         </div>
     </div>
-    @if (true)
+    @if (Model.UserIsInSquad)
     {
         <div class="row justify-content-between">
             <div class="col">
@@ -61,10 +61,19 @@
             </div>
         </div>
     <h4>Squad Availabilities</h4>
-        @foreach (String s in Model.AvailabilityStrings) // todo check for no overlapping availability
+        @if (Model.AvailabilityLists.Count != 0)
+        {
+            @foreach (String s in Model.AvailabilityStrings)
+            {
+                <div class="row">
+                    <p>Available @s</p>
+                </div>
+            }
+        }
+        else
         {
             <div class="row">
-                <p>Available @s</p>
+                <p>Oops! No common availabilities this week.</p>
             </div>
         }
     }
