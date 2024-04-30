@@ -25,7 +25,9 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        HomeViewModel vm = new HomeViewModel();
+        var user = HttpContext.User;
+        return View(vm);
     }
 
     [HttpGet]
