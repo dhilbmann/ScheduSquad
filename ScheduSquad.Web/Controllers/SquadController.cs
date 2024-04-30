@@ -103,6 +103,17 @@ namespace ScheduSquad.Web.Controllers
 
         }
 
+        [HttpPost]
+        public IActionResult Leave(Guid squadId) {
+            Guid userGuid;               
+            if (Guid.TryParse(HttpContext.User.FindFirstValue(ClaimTypes.Sid), out userGuid)) {
+                _squadService.RemoveMemberFromSquad(userGuid, squadId);
+                return Json(new { success = true });
+            }
+                // Failed to join squad
+            return Json(new { success = false });
+        }
+
         public IActionResult Details(Guid squadId)
         {
             SquadDetailsViewModel vm = new SquadDetailsViewModel();

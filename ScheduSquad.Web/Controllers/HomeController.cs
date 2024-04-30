@@ -25,12 +25,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        HomeViewModel vm = new HomeViewModel();
-    
-        //vm.availabilities = _availabilityService.GetAllAvailabilities();
-        var user = HttpContext.User;
-
-        return View(vm);
+        return View();
     }
 
     [HttpGet]
