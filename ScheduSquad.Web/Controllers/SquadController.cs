@@ -138,9 +138,12 @@ namespace ScheduSquad.Web.Controllers
                 vm.AvailabilityLists = _availabilityService.SplitAvailabilities(_availabilityService.GetCommonAvailabilityCodes(s));
                 vm.AvailabilityStrings = new List<String>();
 
-                foreach(List<int> availabilityList in vm.AvailabilityLists)
+                if (vm.AvailabilityLists.Count > 0)
                 {
-                    vm.AvailabilityStrings.Add(_availabilityService.GetHumanReadableAvailabilityString(availabilityList));
+                    foreach(List<int> availabilityList in vm.AvailabilityLists)
+                    {
+                        vm.AvailabilityStrings.Add(_availabilityService.GetHumanReadableAvailabilityString(availabilityList));
+                    }
                 }
 
                 vm.SquadId = squadId;
