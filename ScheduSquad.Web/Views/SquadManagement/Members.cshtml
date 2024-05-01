@@ -1,0 +1,131 @@
+@model ManageSquadMembersViewModel
+
+
+@{
+    ViewData["Title"] = "Manage Squad Membership";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <h2>Manage Squad Membership
+                <a class="btn btn-secondary float-end mb-3" asp-controller="Squad" asp-action="Details"
+                    asp-route-squadId="@Model.SquadId">Back to @Model.SquadName Details</a>
+            </h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-5">
+                <div class="card-header">
+                    <h3 class="card-title">Squad Members</h3>
+                </div>
+                <div class="card-body">
+
+                    <table id="in-squad-table" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Date Joined</th>
+                                <th>Availabilities</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (MemberDetailsForSquad member in Model.MembersInSquad)
+                            {
+                                <tr>
+                                    <td>@member.FirstName</td>
+                                    <td>@member.LastName</td>
+                                    <td>@member.Email</td>
+                                    <td>@member.JoinedDate.ToShortDateString()</td>
+                                    <td>@member.AvailabilityCount</td>
+                                    <td>
+                                        @if (Model.SquadMaster.Id != member.Id)
+                                        {
+                                            <button class="btn btn-primary remove-from-squad" data-squad-id="@Model.SquadId"
+                                                data-member-id="@member.Id">Remove from Squad</button>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card mb-5">
+                <div class="card-header">
+                    <h3 class="card-title">Non-Squad Members</h3>
+                </div>
+                <div class="card-body">
+                    <table id="not-in-squad-table" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Squad Count</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (MemberDetailsForSquad member in Model.MembersNotInSquad)
+                            {
+                                <tr>
+                                    <td>@member.FirstName</td>
+                                    <td>@member.LastName</td>
+                                    <td>@member.Email</td>
+                                    <td>@member.SquadCount</td>
+                                    <td>
+                                        <button class="btn btn-primary add-to-squad" data-squad-id="@Model.SquadId"
+                                            data-member-id="@member.Id">Add to Squad</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+
+            let inTable = new DataTable('#in-squad-table');
+            let outTable = new DataTable('#not-in-squad-table');
+
+            $('.add-to-squad').click(function () {
+                var squadId = $(this).data('squad-id');
+                var memberId = $(this).data('member-id');
+                $.post('/SquadManagement/AddMember', { squadId: squadId, memberId: memberId }, function (data) {
+                    if (data.success) {
+                        window.location.reload();
+                    } else {
+                        alert('Failed to join squad. Please try again.');
+                    }
+                });
+            });
+
+            $('.remove-from-squad').click(function () {
+                var squadId = $(this).data('squad-id');
+                var memberId = $(this).data('member-id');
+                $.post('/SquadManagement/RemoveMember', { squadId: squadId, memberId: memberId }, function (data) {
+                    if (data.success) {
+                        window.location.reload();
+                    } else {
+                        alert('Failed to remove from squad. Please try again.');
+                    }
+                });
+            });
+        });
+    </script>
+}

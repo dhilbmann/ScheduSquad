@@ -1,4 +1,5 @@
 using System.Security.Cryptography;
+using ScheduSquad.DataAccess;
 using ScheduSquad.Models;
 
 namespace ScheduSquad.Service {
@@ -8,11 +9,14 @@ namespace ScheduSquad.Service {
 
         private readonly IRepository<Member> _memberRepository;
         private readonly ILoginAuthenticationService _authenticationService;
-
-        public MemberService(IRepository<Member> memberRepo, ILoginAuthenticationService authService)
+        private readonly IMembersForSquadRepository _memberForSquadRepo;
+        private readonly IAvailabilityService _availabilityService;
+        public MemberService(IRepository<Member> memberRepo, ILoginAuthenticationService authService, IMembersForSquadRepository membersForSquadRepo, IAvailabilityService availabilityService)
         {
             _memberRepository = memberRepo;
             _authenticationService = authService;
+            _memberForSquadRepo = membersForSquadRepo;
+            _availabilityService = availabilityService;
         }
 
         public Member GetMemberById(Guid memberId)
@@ -38,11 +42,11 @@ namespace ScheduSquad.Service {
         }
 
         public List<Member> GetAllMembersNotInSquad(Guid squadId) {
-            throw new NotImplementedException();
+            
+            return _memberForSquadRepo.GetMembersNotInSquad(squadId).ToList();
         }
 
         public List<Member> GetAllMembersInSquad(Guid squadId) {
-
             return _memberRepository.GetAllByParentId(squadId).ToList();
         }
 
@@ -67,6 +71,9 @@ namespace ScheduSquad.Service {
             _memberRepository.Delete(member);
         }
 
+        public DateTime GetJoinedDateForSquadMember(Guid memberId, Guid squadId) {
+            return _memberForSquadRepo.GetJoinedDateForSquadMember(memberId, squadId);
+        }
 
 
     }

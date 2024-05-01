@@ -26,10 +26,7 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         HomeViewModel vm = new HomeViewModel();
-    
-        //vm.availabilities = _availabilityService.GetAllAvailabilities();
         var user = HttpContext.User;
-
         return View(vm);
     }
 
@@ -38,17 +35,4 @@ public class HomeController : Controller
     {
         return View();
     }
-
-    [HttpGet]
-    public IActionResult ProfileMenu()
-    {
-        return View();
-    }
-
-    [HttpGet]
-    public IActionResult SquadMenu()
-    {
-        return View();
-    }
-
 }

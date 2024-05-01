@@ -1,14 +1,14 @@
 @model LoginViewModel
 @{
-        Layout = "~/Views/Shared/_UnauthLayout.cshtml";
+    Layout = "~/Views/Shared/_UnauthLayout.cshtml";
 }
 
 
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-6">
-                <img src="~/Images/ScheduSquad_Logo_WhiteBorder.png"></img>
-            </div>
+<div class="container mt-5">
+    <div class="row  justify-content-center">
+        <div class="col-md-6 d-flex justify-content-center">
+            <img src="~/StaticFiles/images/ScheduSquad_Logo_WhiteBorder.png" class="img" />
+        </div>
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card">
@@ -17,18 +17,21 @@
                         <form asp-action="Login" asp-controller="Account" method="post">
                             <div class="mb-3">
                                 <label for="inputEmail" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="inputEmail" name="Email" asp-for="Email" required>
+                                <input type="email" class="form-control" id="inputEmail" name="Email" asp-for="Email"
+                                    required>
                                 <div class="invalid-feedback">Please enter your email.</div>
-                                
+
                             </div>
                             <div class="mb-3">
                                 <label for="inputPassword" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="inputPassword" name="Password" asp-for="Password" required>
+                                <input type="password" class="form-control" id="inputPassword" name="Password"
+                                    asp-for="Password" required>
                                 <div class="invalid-feedback">Please enter your password.</div>
                                 @Html.ValidationSummary(false, "", new { @class = "text-danger" })
                             </div>
                             <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="rememberMe" name="RememberMe" asp-for="RememberMe">
+                                <input type="checkbox" class="form-check-input" id="rememberMe" name="RememberMe"
+                                    asp-for="RememberMe">
                                 <label class="form-check-label" for="rememberMe">Remember me</label>
                             </div>
                             <button type="submit" class="btn btn-primary">Login</button>

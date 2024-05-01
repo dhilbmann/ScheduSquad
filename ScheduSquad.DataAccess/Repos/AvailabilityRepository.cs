@@ -48,7 +48,7 @@ public class AvailabilityRepository : IRepository<Availability>, IAvailabilityRe
 
     public IEnumerable<Availability> GetAllByParentId(Guid id) //ParentId by User
     {
-        SqlCommand cmd = new SqlCommand("Get_All_Availability_by_Id");
+        SqlCommand cmd = new SqlCommand("Get_All_Availability_By_Id");
         cmd.Parameters.Add("@Id", System.Data.SqlDbType.UniqueIdentifier).Value = id;
         return ExecuteGetAllAvailability(cmd);
     }
@@ -140,10 +140,10 @@ public class AvailabilityRepository : IRepository<Availability>, IAvailabilityRe
         DayOfWeek dayOfWeek = (DayOfWeek)Convert.ToInt32(rdr["DayEnum"]);
 
         var availability = new Availability(
-            new Guid((rdr["Id"]).ToString() ?? string.Empty),     //Id                      
+            new Guid((rdr["Id"]).ToString() ?? string.Empty),    //Id                      
             dayOfWeek,                                           //dayofweek
-            (TimeSpan)rdr["StartTime"],                         //starttime  
-            (TimeSpan)rdr["EndTime"]                           //endtime
+            (TimeSpan)rdr["StartTime"],              //starttime  
+            (TimeSpan)rdr["EndTime"]                 //endtime
         );
 
         return availability;

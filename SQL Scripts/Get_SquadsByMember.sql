@@ -25,7 +25,8 @@ ELSE
 			   (Select UserFK From SquadMembers sm1 Where SquadFK = s.SquadPK AND sm1.IsSquadMaster = 1) as SquadMasterId
 		FROM Squads s
 		INNER JOIN SquadMembers sm ON sm.SquadFK = s.SquadPK
-		WHERE s.IsDeleted = 0
+		WHERE s.IsDeleted = 0 
+			AND sm.IsDeleted = 0	
 			AND sm.UserFK = @Id
 
 	END

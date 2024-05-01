@@ -6,7 +6,7 @@
 -- ================================================
 
 
-CREATE PROCEDURE Add_Member_to_Squad
+CREATE OR ALTER PROCEDURE Add_Member_to_Squad
 	@Id uniqueidentifier,		--SquadMemberId
 	@SquadId uniqueidentifier,
 	@UserId uniqueidentifier,
@@ -19,14 +19,16 @@ DECLARE @AlreadyExists bit = (SELECT COUNT(1)
 							  FROM SquadMembers 
 							  WHERE @UserId = UserFk AND @SquadId = SquadFK)
 
--- If the member already exists in the squad, do not add them again
+
+DECLARE @Today datetime2 = GETDATE()
+-- If the member already exists in the squad, update their record.
 IF @AlreadyExists = 1
 	BEGIN
-		RETURN 0;
+		UPDATE SquadMembers SET IsDeleted = 0, JoinDate = @Today WHERE @UserId = UserFk AND @SquadId = SquadFK 
 	END
 ELSE
 	BEGIN
-		DECLARE @Today datetime2 = GETDATE()
+		
 
 		INSERT INTO SquadMembers(SquadMemberPK, 
 								 SquadFK, 

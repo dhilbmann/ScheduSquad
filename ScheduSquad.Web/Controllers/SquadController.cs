@@ -18,11 +18,14 @@ namespace ScheduSquad.Web.Controllers
         private readonly ISquadService _squadService;
         private readonly IMemberService _memberService;
 
-        public SquadController(ILogger<SquadController> logger, ISquadService squadService, IMemberService memberService)
+        private readonly IAvailabilityService _availabilityService;
+
+        public SquadController(ILogger<SquadController> logger, ISquadService squadService, IMemberService memberService, IAvailabilityService availabilityService)
         {
             _logger = logger;
             _squadService = squadService;
             _memberService = memberService;
+            _availabilityService = availabilityService;
         }
 
         // GET: /Squad/Create
@@ -100,6 +103,63 @@ namespace ScheduSquad.Web.Controllers
 
         }
 
+        [HttpPost]
+        public IActionResult Leave(Guid squadId) {
+            Guid userGuid;               
+            if (Guid.TryParse(HttpContext.User.FindFirstValue(ClaimTypes.Sid), out userGuid)) {
+                _squadService.RemoveMemberFromSquad(userGuid, squadId);
+                return Json(new { success = true });
+            }
+                // Failed to join squad
+            return Json(new { success = false });
+        }
+
+        public IActionResult Details(Guid squadId)
+        {
+            SquadDetailsViewModel vm = new SquadDetailsViewModel();
+            Guid userGuid;
+
+            if (Guid.TryParse(HttpContext.User.FindFirstValue(ClaimTypes.Sid), out userGuid))
+            {
+                vm.Members = MapToViewModels(_memberService.GetAllMembersInSquad(squadId), squadId);
+                Squad s = _squadService.GetSquadById(squadId);
+                vm.SquadBelongsToUser = (userGuid == s.SquadMaster.Id);
+                vm.UserIsInSquad = true;
+
+                foreach (Member m in s.Members)
+                {
+                    m.Availabilities =  _availabilityService.GetAllAvailabilitiesBelongingToMember(m.Id);
+                    if (m.Id != userGuid)
+                    {
+                        vm.UserIsInSquad = false;
+                    }
+                }
+
+                vm.AvailabilityLists = _availabilityService.SplitAvailabilities(_availabilityService.GetCommonAvailabilityCodes(s));
+                vm.AvailabilityStrings = new List<String>();
+
+                if (vm.AvailabilityLists.Count > 0)
+                {
+                    foreach(List<int> availabilityList in vm.AvailabilityLists)
+                    {
+                        vm.AvailabilityStrings.Add(_availabilityService.GetHumanReadableAvailabilityString(availabilityList));
+                    }
+                }
+
+                vm.SquadId = squadId;
+                vm.UserId = userGuid;
+                vm.SquadName = s.Name;
+            }
+            else
+            {
+                // Couldn't get the user id, so we couldn't display Squad.
+                vm = new SquadDetailsViewModel();
+                ModelState.AddModelError(String.Empty, "Unable to display squad details.  (Could not get user id)");
+                return RedirectToAction("Login", "Account");
+            }
+            return View("Details", vm);
+        }
+
         // Helper method to map List of Squad objects to the shortened model that is used on the page
         // (Doing this because the Squad knows about Members and SquadLeader, but this info isn't needed
         // on the page.)
@@ -116,6 +176,29 @@ namespace ScheduSquad.Web.Controllers
                     Location = s.Location,
                     Description = s.Description,
                     MemberCount = s.Members.Count,
+                });
+            }
+
+            return list;
+        }
+
+        private List<SquadDetailModel> MapToViewModels(List<Member> members, Guid squadId)
+        {
+            // 
+            List<SquadDetailModel> list = new List<SquadDetailModel>();
+            foreach (Member m in members)
+            {
+
+                int availabilityCount = _availabilityService.GetAllAvailabilitiesBelongingToMember(m.Id).Count;
+                list.Add(new SquadDetailModel
+                {
+                    Id = m.Id,
+                    FirstName = m.FirstName,
+                    LastName = m.LastName,
+                    Email = m.Email,
+                    JoinDate = _memberService.GetJoinedDateForSquadMember(m.Id, squadId),
+                    AvailabilityCount = availabilityCount,
+                    IsSquadmaster = (m.Id == _squadService.GetSquadById(squadId).SquadMaster.Id)
                 });
             }
 

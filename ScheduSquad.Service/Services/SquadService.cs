@@ -17,7 +17,9 @@ namespace ScheduSquad.Service
         }
 
         public Squad GetSquadById(Guid squadId) {
-           return _squadRepository.GetById(squadId);
+            Squad s = _squadRepository.GetById(squadId);
+            s.Members = _memberService.GetAllMembersInSquad(squadId);
+            return s;
         }
 
         public List<Squad> GetAllSquads() {
@@ -93,6 +95,12 @@ namespace ScheduSquad.Service
             _squadMemberRepo.RemoveMemberFromSquad(member.Id, squad.Id);
         }
 
+        public void RemoveMemberFromSquad(Guid memberId, Guid squadId) {
+            Member memberToRemove = _memberService.GetMemberById(memberId);
+            Squad squadToRemoveFrom = _squadRepository.GetById(squadId);
+
+            _squadMemberRepo.RemoveMemberFromSquad(memberToRemove.Id, squadToRemoveFrom.Id);
+        }
   
     }
 }

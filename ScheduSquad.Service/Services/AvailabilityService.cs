@@ -112,15 +112,20 @@ namespace ScheduSquad.Service
 
             for (int i = 0; i < availability.Count; i++)
             {
-                tempSpan.Add(availability[i]);
-
-                if (availability[i] != availability[i+1] + 1)
+                if (tempSpan.Count() >=1 )
                 {
-                    splitAvailabilities.Add(tempSpan);
-                    tempSpan.Clear();
+                    if (availability[i] != tempSpan[tempSpan.Count() - 1] + 1)
+                    {
+                        splitAvailabilities.Add(new List<int>(tempSpan));
+                        tempSpan.Clear();
+                    }
                 }
+
+                tempSpan.Add(availability[i]);
             }
 
+            splitAvailabilities.Add(new List<int>(tempSpan));
+            splitAvailabilities.Sort((left, right) => left[0].CompareTo(right[0]));
             return splitAvailabilities;
         }
 
