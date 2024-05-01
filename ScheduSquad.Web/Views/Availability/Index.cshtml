@@ -168,32 +168,6 @@
                 });
         });
 
-        ////////// Save ////////
-        function SaveAvailability(button) {
-
-            var availId = $(this).data('availability-id');
-            var startTime = $(this).data('start-hour') + ":" + $(this).data('start-minute');
-            var endTime = $(this).data('end-hour') + ":" + $(this).data('end-minute');
-            var day = $(this).data('day-list');
-
-            var availability = {
-                Id: availId,
-                IsDeleted: false,
-                DayOfWeek: day,
-                StartTime: startTime,
-                EndTime: endTime,
-            };
-
-            $.ajax(
-                {
-                    url: 'Availability/SaveAvailability',
-                    type: "POST",
-                    data: availability
-                }).done(function (result) {
-                    location.reload();
-                });
-        }
-
         
     });
     
