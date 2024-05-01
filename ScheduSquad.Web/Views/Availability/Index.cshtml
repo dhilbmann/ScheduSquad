@@ -22,12 +22,16 @@
         {
             Html.RenderPartial("AvailabilityReadRow", a);
         }
+        <tr role="row">
+            <td role="cell">
+                <button class="btn btn-primary add-button" data-availability-id="00000000-0000-0000-0000-000000000000">+ Add</button>
+            </td>
+        </tr>
     </tbody>
 </table>
 
 <p>
 <table id="editRow">
-    <td role="cell"><button class="btn btn-primary add-button">+ Add</button></td>
 
 </table>
 </p>
@@ -37,26 +41,12 @@
 
         ////////// Add ////////
         $('.add-button').click(function () {
-            //Ajax call to get add row Availability/AvailabilityEditRow(availId)
-            $.ajax(
-                {
-                    url: '@Url.Action("GetAvailabilityEditRow")',
-                    type: "GET",
-                    data: { 'availabilityId': "00000000-0000-0000-0000-000000000000" }
-                }).done(function (result) {
-                    $('#editRow').html(result);
-
-                });
-            //find edit button row and replace with Ajax result and define click functions
-        });
-
-
-
-        ////////// Edit ////////
-        $('.edit-button').click(function () {
+            
             var availId = $(this).data('availability-id');
             let that = $(this);
-            //Ajax call to get edit row Availability/AvailabilityEditRow(availId)
+            let row = that.closest("tr");
+
+            //Ajax call to get add row Availability/AvailabilityEditRow(availId)
             $.ajax(
                 {
                     url: '@Url.Action("GetAvailabilityEditRow")',
@@ -66,10 +56,17 @@
                     that.closest("tr").replaceWith(result);
 
                     $('#saveButton').on('click', function(){
-                        var availId = $(that).data('availability-id');
-                        var startTime = $(that).data('start-hour') + ":" + $(that).data('start-minute');
-                        var endTime = $(this).data('end-hour') + ":" + $(this).data('end-minute');
-                        var day = $(this).data('day-list');
+                        var availId = $(this).data('availability-id');
+
+                        var startHour = $('#startHour option:selected').text();
+                        var startMinute = $('#startMinute option:selected').text();
+                        var startTime =  startHour + ":" + startMinute;
+                        
+                        var endHour = $('#endHour option:selected').text();
+                        var endMinute = $('#endMinute option:selected').text();
+                        var endTime =  endHour + ":" + endMinute;
+
+                        var day = $('#dayList').val();
 
                         var availability = {
                             Id: availId,
@@ -88,8 +85,64 @@
                                 location.reload();
                             });
                     });
-                    $('#cancelButton').on('click', function(){location.reload();});
+
+                    $('#cancelButton').on('click', function(){
+                        location.reload();
+                    });
                 });
+                
+        });
+
+
+
+        ////////// Edit ////////
+        $('.edit-button').click(function () {
+            var availId = $(this).data('availability-id');
+            let that = $(this);
+            let row = that.closest("tr");
+            //Ajax call to get edit row Availability/AvailabilityEditRow(availId)
+            $.ajax(
+                {
+                    url: '@Url.Action("GetAvailabilityEditRow")',
+                    type: "GET",
+                    data: { 'availabilityId': availId }
+                }).done(function (result) {
+                    that.closest("tr").replaceWith(result);
+
+                    $('#saveButton').on('click', function(){
+                        var availId = $(that).data('availability-id');
+
+                        var startHour = $('#startHour option:selected').text();
+                        var startMinute = $('#startMinute option:selected').text();
+                        var startTime =  startHour + ":" + startMinute;
+                        
+                        var endHour = $('#endHour option:selected').text();
+                        var endMinute = $('#endMinute option:selected').text();
+                        var endTime =  endHour + ":" + endMinute;
+
+                        var day = $('#dayList').val();
+
+                        var availability = {
+                            Id: availId,
+                            IsDeleted: false,
+                            DayOfWeek: day,
+                            StartTime: startTime,
+                            EndTime: endTime,
+                        };
+
+                        $.ajax(
+                            {
+                                url: 'Availability/SaveAvailability',
+                                type: "POST",
+                                data: availability
+                            }).done(function (result) {
+                                location.reload();
+                            });
+                    });
+                    $('#cancelButton').on('click', function(){
+                        location.reload();
+                        });
+             });
                 
         });
 

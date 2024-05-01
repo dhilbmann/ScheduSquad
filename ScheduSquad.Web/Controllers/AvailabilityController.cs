@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using ScheduSquad.Models;
 using ScheduSquad.Service;
@@ -21,10 +22,14 @@ namespace ScheduSquad.Web.Controllers
         [HttpGet]
         public IActionResult Index(Guid id)
         {
-            id = new Guid("9F9D518F-AA15-412A-AF2B-E6D83D9DCB04");
             AvailabilityViewModel vm = new AvailabilityViewModel();
 
-            vm.availabilities = _availabilityService.GetAllAvailabilitiesBelongingToMember(id);
+            Guid userGuid; // Id of LoggedIn User
+            // Validates the Id stored on the HttpContext.User object's claim, and stored the Guid in userGuid
+            if (Guid.TryParse(HttpContext.User.FindFirstValue(ClaimTypes.Sid), out userGuid))
+            {
+                vm.availabilities = _availabilityService.GetAllAvailabilitiesBelongingToMember(userGuid);
+            }
 
             return View(vm);
         }
@@ -51,20 +56,44 @@ namespace ScheduSquad.Web.Controllers
         [HttpGet]
         public IActionResult GetAvailabilityEditRow(Guid availabilityId)
         {
-            Availability availability = _availabilityService.GetAvailabilityById(availabilityId);//return from service
-            return PartialView("AvailabilityEditRow",availability);
+            Availability availability = new Availability();
+
+            if (availabilityId != new Guid("00000000-0000-0000-0000-000000000000"))
+            {
+                availability = _availabilityService.GetAvailabilityById(availabilityId);//return from service
+            }
+            else 
+            {
+                availability.Id = Guid.NewGuid();
+            }
+
+            EditRowViewModel vm = new EditRowViewModel();
+            vm.StartTime = availability.StartTime;
+            vm.EndTime = availability.EndTime;
+            vm.AvailabilityId = availability.Id;
+            vm.DayOfWeek = (int)availability.DayOfWeek;
+            
+            return PartialView("AvailabilityEditRow",vm);
         }
 
         [HttpPost]
-        public IActionResult SaveAvailability(Availability availability, Guid id)
+        public IActionResult SaveAvailability(Availability availability)
         {
-            if (_availabilityService.GetAllAvailabilities().Any(x=> x.Id == availability.Id))
+            if (availability.StartTime <= availability.EndTime)
             {
-                UpdateAvailability(availability);
-            }
-            else
-            {
-                _availabilityService.AddAvailability(availability, new Guid("713626F9-D78E-4E68-8548-AEB073A22C63"));
+                if (_availabilityService.GetAllAvailabilities().Any(x=> x.Id == availability.Id))
+                {
+                    UpdateAvailability(availability);
+                }
+                else
+                {
+                    Guid userGuid; // Id of LoggedIn User
+                    // Validates the Id stored on the HttpContext.User object's claim, and stored the Guid in userGuid
+                    if (Guid.TryParse(HttpContext.User.FindFirstValue(ClaimTypes.Sid), out userGuid)){
+                        _availabilityService.AddAvailability(availability, userGuid);
+                        return RedirectToAction("Index", "Home"); 
+                    }
+                }
             }
             return RedirectToAction("Index","Availability");
         }
