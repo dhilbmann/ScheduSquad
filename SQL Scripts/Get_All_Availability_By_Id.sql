@@ -22,7 +22,8 @@ IF @Id IS NOT NULL
 		INNER JOIN Users u ON u.UserPk = ua.UserFK
 		WHERE @Id = u.UserPk 
 			AND u.IsDeleted = 0
-			AND ua.IsDeleted = 0		
+			AND ua.IsDeleted = 0
+		ORDER BY ua.DayEnum
 	END
 ELSE
 	BEGIN
