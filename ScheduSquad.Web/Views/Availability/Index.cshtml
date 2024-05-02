@@ -6,29 +6,34 @@
 }
 
 <br />
-<br />
-<p>Availabilities</p>
-<table class="table table-bordered table-responsive table-hover">
-    <thead>
-        <tr role="row">
-            <th>Day</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (ScheduSquad.Models.Availability a in Model.availabilities)
-        {
-            Html.RenderPartial("AvailabilityReadRow", a);
-        }
-        <tr role="row">
-            <td role="cell">
-                <button class="btn btn-primary add-button" data-availability-id="00000000-0000-0000-0000-000000000000">+ Add</button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div class="card mb-5">
+    <div class="card-header">
+        <h3 class="card-title">Availabilities</h3>
+    </div>
+    <div class="card-body">
+        <table id="availability-table" class="table table-bordered table-responsive table-hover">
+            <thead>
+                <tr role="row">
+                    <th>Day</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ScheduSquad.Models.Availability a in Model.availabilities)
+                {
+                    Html.RenderPartial("AvailabilityReadRow", a);
+                }
+                <tr role="row">
+                    <td role="cell">
+                        <button class="btn btn-primary add-button" data-availability-id="00000000-0000-0000-0000-000000000000">+ Add</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <p>
 <table id="editRow">
@@ -39,9 +44,9 @@
 <script>
     $(document).ready(function () {
 
-        ////////// Add ////////
+            ////////// Add ////////
         $('.add-button').click(function () {
-            
+
             var availId = $(this).data('availability-id');
             let that = $(this);
             let row = that.closest("tr");
@@ -61,7 +66,7 @@
                         var startHour = $('#startHour option:selected').text();
                         var startMinute = $('#startMinute option:selected').text();
                         var startTime =  startHour + ":" + startMinute;
-                        
+
                         var endHour = $('#endHour option:selected').text();
                         var endMinute = $('#endMinute option:selected').text();
                         var endTime =  endHour + ":" + endMinute;
@@ -90,7 +95,7 @@
                         location.reload();
                     });
                 });
-                
+
         });
 
 
@@ -115,7 +120,7 @@
                         var startHour = $('#startHour option:selected').text();
                         var startMinute = $('#startMinute option:selected').text();
                         var startTime =  startHour + ":" + startMinute;
-                        
+
                         var endHour = $('#endHour option:selected').text();
                         var endMinute = $('#endMinute option:selected').text();
                         var endTime =  endHour + ":" + endMinute;
@@ -143,7 +148,7 @@
                         location.reload();
                         });
              });
-                
+
         });
 
         ////////// Delete ////////
@@ -168,9 +173,9 @@
                 });
         });
 
-        
+
     });
-    
+
 
 
 </script>

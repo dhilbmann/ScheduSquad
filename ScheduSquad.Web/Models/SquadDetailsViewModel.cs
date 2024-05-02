@@ -11,6 +11,8 @@ namespace ScheduSquad.Web.Models
         public Guid UserId { get; set; }
         public String SquadName { get; set; }
         public bool UserIsInSquad { get; set; }
+        public string Location { get; set; }
+        public string Details { get; set; }
     }
 
     // Model for the individual squad to show on the FindSquad Page

@@ -27,7 +27,7 @@ namespace ScheduSquad.Service
              foreach(Squad s in squads) {
                 s.Members = _memberService.GetAllMembersInSquad(s.Id);
             }
-            return squads;
+            return squads.OrderBy(x => x.Name).ToList();
         }
 
         public List<Squad> GetAllSquadsBelongingToMember(Guid memberId) {
@@ -35,7 +35,7 @@ namespace ScheduSquad.Service
              foreach(Squad s in squads) {
                 s.Members = _memberService.GetAllMembersInSquad(s.Id);
             }
-            return squads;
+            return squads.OrderBy(x => x.Name).ToList();
         }
         
 
@@ -44,7 +44,7 @@ namespace ScheduSquad.Service
             List<Squad> squadList = this.GetAllSquads();
            
             // Find all the squads that doesn't have the member with the provided id
-            return squadList.Where(squad => !squad.Members.Any(member => member.Id == memberId)).ToList();
+            return squadList.Where(squad => !squad.Members.Any(member => member.Id == memberId)).OrderBy(x => x.Name).ToList();
         }
 
         public void AddSquad(Squad squad) {
