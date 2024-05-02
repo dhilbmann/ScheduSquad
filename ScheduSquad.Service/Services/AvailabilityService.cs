@@ -23,12 +23,12 @@ namespace ScheduSquad.Service
 
         public List<Availability> GetAllAvailabilities()
         {
-            return _availabilityRepository.GetAll().ToList();
+            return _availabilityRepository.GetAll().OrderBy(x => (int)x.DayOfWeek).ThenBy(x => x.StartTime).ToList();
         }
 
         public List<Availability> GetAllAvailabilitiesBelongingToMember(Guid memberId)
         {
-            return _availabilityRepository.GetAllByParentId(memberId).ToList();
+            return _availabilityRepository.GetAllByParentId(memberId).OrderBy(x => (int)x.DayOfWeek).ThenBy(x => x.StartTime).ToList();
         }
 
         public void AddAvailability(Availability availability)
@@ -61,7 +61,8 @@ namespace ScheduSquad.Service
             List<List<int>> lists = new List<List<int>>();
             foreach (Member u in squad.Members)
             {
-                lists.Add(u.GetAllAvailabilityCodes());
+                List<int> codes = u.GetAllAvailabilityCodes();
+                if (codes.Count > 0) lists.Add(codes);
             }
             return GetCommonAvailabilityCodes(lists);
         }

@@ -125,7 +125,8 @@ namespace ScheduSquad.Web.Controllers
                 Squad s = _squadService.GetSquadById(squadId);
                 vm.SquadBelongsToUser = (userGuid == s.SquadMaster.Id);
                 vm.UserIsInSquad = false;
-
+                vm.Details = s.Description;
+                vm.Location = s.Location;
                 foreach (Member m in s.Members)
                 {
                     m.Availabilities =  _availabilityService.GetAllAvailabilitiesBelongingToMember(m.Id);

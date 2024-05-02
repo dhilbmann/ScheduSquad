@@ -7,109 +7,112 @@
 <div class="container">
     <div class="row">
         <div class="col justify-content-start">
-            <h1>@Model.SquadName Details</h1>
+            <h2>
+                @Model.SquadName Details
+
+                @if (Model.SquadBelongsToUser)
+                {
+                                <a class="btn btn-primary manage-squad justify-content-end float-end" asp-controller="SquadManagement" asp-action="Members" asp-route-squadId="@Model.SquadId">Manage Members</a>
+                }
+                else
+                {
+                                <a class="btn btn-primary leave-squad justify-content-end float-end" data-squad-id="@Model.SquadId" data-user-id="@Model.UserId">Leave Squad</a>
+                }
+                </h2>
         </div>
     </div>
     @if (Model.UserIsInSquad)
     {
-        <div class="row justify-content-between">
-            <div class="col">
-                <p>Details</p>
-            </div>
-            <div class="col">
-                <p>This Squad has @Model.Members.Count() members</p>
-            </div>
-            <div class="col justify-content-end">
-                <div>
-                    @if (Model.SquadBelongsToUser)
-                    {
-                        <a class="btn btn-primary manage-squad" asp-controller="SquadManagement" asp-action="Members" asp-route-squadId="@Model.SquadId">Manage Members</a>
-                    }
-                    else
-                    {
-                        <button class="btn btn-primary leave-squad" data-squad-id="@Model.SquadId" data-user-id="@Model.UserId">Leave Squad</button>
-                    }
+
+            <p>@Model.Details</p>
+            <hr />
+            <h4>Squad Members <span class="justify-content-end float-end ">This Squad has @Model.Members.Count() 
+                @if (Model.Members.Count == 1) {
+                        @:member 
+                    } else { 
+                        @:members 
+                    } </span></h4>
+                <div class="row">
+                    <div class="col md-12">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr role="row">
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Date Joined</th>
+                                    <th>Availabilities</th>
+                                </tr>
+                            <thead>
+                            <tbody>
+                                @foreach (SquadDetailModel m in Model.Members)
+                                {
+                                            <tr role="row">
+                                                <td role="cell">@m.FirstName</td>
+                                                <td role="cell">@m.LastName</td>
+                                                <td role="cell">@m.Email</td>
+                                                <td role="cell">@m.JoinDate.ToShortDateString()</td>
+                                                <td role="cell">@m.AvailabilityCount</td>
+                                            </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+            <h4>Squad Availabilities</h4>
+            <div class="mb-2">
+                This week, only @foreach (SquadDetailModel m in Model.Members.Where(x => x.AvailabilityCount > 0)) {
+                    <span class="badge bg-secondary">@m.FirstName @m.LastName</span>
+                    } can meet... <br />
             </div>
-        </div>
-    <h4>Squad Members</h4>
-        <div class="row">
-            <div class="col md-12">
-                <table class="table table-striped">
-                    <thead>
-                        <tr role="row">
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Date Joined</th>
-                            <th>Availabilities</th>
-                        </tr>
-                    <thead>
-                    <tbody>
-                        @foreach (SquadDetailModel m in Model.Members)
-                        {
-                            <tr role="row">
-                                <td role="cell">@m.FirstName</td>
-                                <td role="cell">@m.LastName</td>
-                                <td role="cell">@m.Email</td>
-                                <td role="cell">@m.JoinDate.ToShortDateString()</td>
-                                <td role="cell">@m.AvailabilityCount</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    <h4>Squad Availabilities</h4>
         @if (Model.AvailabilityLists.Count != 0)
         {
             @foreach (String s in Model.AvailabilityStrings)
             {
-                <div class="row">
-                    <p>Available @s</p>
-                </div>
+                                        <div class="row">
+                                            <p>... @s</p>
+                                        </div>
             }
         }
         else
         {
-            <div class="row">
-                <p>Oops! No common availabilities this week.</p>
-            </div>
+                            <div class="row">
+                                <p>Oops! No common availabilities this week.</p>
+                            </div>
         }
     }
     else
     {
-        <div class="row justify-content-center mt-5">
-            <div class="col-md-6 text-center">
-                <div class="alert alert-warning" role="alert">
-                    <div class="d-flex align-items-center">
-                        <span class="icon-warning"><i class="fas fa-exclamation-triangle fa-5x"></i></span>
-                        <div class="ml-3">
-                            <h4 class="alert-heading">Intruder Alert!</h4>
-                            <p class="mb-0">You're not part of this squad - <a asp-action="Find" asp-controller="Squad" class="alert-link">go join some!</a></p>
+                <div class="row justify-content-center mt-5">
+                    <div class="col-md-6 text-center">
+                        <div class="alert alert-warning" role="alert">
+                            <div class="d-flex align-items-center">
+                                <span class="icon-warning"><i class="fas fa-exclamation-triangle fa-5x"></i></span>
+                                <div class="ml-3">
+                                    <h4 class="alert-heading">Intruder Alert!</h4>
+                                    <p class="mb-0">You're not part of this squad - <a asp-action="Find" asp-controller="Squad" class="alert-link">go join some!</a></p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
     }
 </div>
 
 @section scripts {
-    <script>
-        $(document).ready(function () {
-            $('.leave-squad').click(function () {
-                var squadId = $(this).data('squad-id');
-                var userId = $(this).data('user-id');
-                $.post('/SquadManagement/RemoveMember', { squadId: squadId, memberId: userId }, function (data) {
-                    if (data.success) {
-                        window.location.reload();
-                    } else {
-                        alert('Failed to remove from squad. Please try again.');
-                    }
+            <script>
+                $(document).ready(function () {
+                    $('.leave-squad').click(function () {
+                        var squadId = $(this).data('squad-id');
+                        var userId = $(this).data('user-id');
+                        $.post('/SquadManagement/RemoveMember', { squadId: squadId, memberId: userId }, function (data) {
+                            if (data.success) {
+                                window.location.reload();
+                            } else {
+                                alert('Failed to remove from squad. Please try again.');
+                            }
+                        });
+                    });
                 });
-            });
-        });
-    </script>
+            </script>
 }
-    

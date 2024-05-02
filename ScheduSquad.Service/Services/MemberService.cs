@@ -38,16 +38,16 @@ namespace ScheduSquad.Service {
 
         public List<Member> GetAllMembers()
         {
-            return _memberRepository.GetAll().ToList();
+            return _memberRepository.GetAll().OrderBy(x => x.FirstName).ToList();
         }
 
         public List<Member> GetAllMembersNotInSquad(Guid squadId) {
             
-            return _memberForSquadRepo.GetMembersNotInSquad(squadId).ToList();
+            return _memberForSquadRepo.GetMembersNotInSquad(squadId).OrderBy(x => x.FirstName).ToList();
         }
 
         public List<Member> GetAllMembersInSquad(Guid squadId) {
-            return _memberRepository.GetAllByParentId(squadId).ToList();
+            return _memberRepository.GetAllByParentId(squadId).OrderBy(x => x.FirstName).ToList();
         }
 
         public Guid AddMember(string firstname, string lastname, string email, string password) {
