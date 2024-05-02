@@ -108,6 +108,11 @@ namespace ScheduSquad.Service
       public List<List<int>> SplitAvailabilities(List<int> availability)
         {
             List<List<int>> splitAvailabilities = new List<List<int>>();
+            if (availability.Count == 0)
+            {
+                return splitAvailabilities;
+            }
+
             List<int> tempSpan = new List<int>();
 
             for (int i = 0; i < availability.Count; i++)
