@@ -1,13 +1,13 @@
 -- ================================================
 -- 
 -- This procedure will return a list of all 
--- members in a squad
+-- availability for all members in a squad
 -- 
 -- ================================================
 
 
-CREATE PROCEDURE Get_SquadMembers
-	@Id uniqueidentifier
+CREATE OR ALTER PROCEDURE Get_Availability_for_SquadMembers
+	@Id uniqueidentifier --Squad Id
 
 AS
 BEGIN
@@ -15,14 +15,17 @@ BEGIN
 IF @Id IS NOT NULL
 	BEGIN
 		SELECT u.UserPk AS 'Id',
-			   u.FirstName,
-			   u.LastName,
-			   u.Email
+			   u.UserPk,
+			   ua.DayEnum,
+			   ua.StartTime,
+			   ua.EndTime
 		FROM SquadMembers sm
 		INNER JOIN Users u ON u.UserPk = sm.UserFK
+		INNER JOIN UserAvailability ua ON ua.UserFK = u.UserPk
 		WHERE @Id = sm.SquadFK 
 			AND sm.IsDeleted = 0
 			AND u.IsDeleted = 0
+			AND ua.IsDeleted = 0
 	END
 ELSE
 	BEGIN

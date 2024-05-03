@@ -6,7 +6,7 @@
 -- ================================================
 
 
-CREATE PROCEDURE Delete_Availability
+CREATE OR ALTER PROCEDURE Delete_Availability
 	@Id uniqueidentifier
 
 AS

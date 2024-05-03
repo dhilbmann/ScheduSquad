@@ -1,12 +1,12 @@
 -- ================================================
 -- 
 -- This procedure will return details for an 
--- individual member or all members if no Id is given
+-- all members 
 -- 
 -- ================================================
 
 
-CREATE PROCEDURE Get_AllMembers
+CREATE OR ALTER PROCEDURE Get_AllMembers
 
 AS
 

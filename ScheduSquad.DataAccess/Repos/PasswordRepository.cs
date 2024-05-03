@@ -25,8 +25,9 @@ public class PasswordRepository : IPasswordRepository
             // Open connection
             connection.Open();
             // Create & using command
-            using (SqlCommand command = new SqlCommand("SELECT TOP 1 PwHash FROM Users WHERE UserPk = @memberId", connection))
+            using (SqlCommand command = new SqlCommand("Get_Password", connection))
             {
+                command.CommandType = System.Data.CommandType.StoredProcedure;
                 // Set a parameter for memberId
                 command.Parameters.AddWithValue("@memberId", memberId.ToString());
                 // Query returns a single value (top 1) single field; executeScalar instead of reader
@@ -48,8 +49,9 @@ public class PasswordRepository : IPasswordRepository
             // Open connection
             connection.Open();
             // Create & using command
-            using (SqlCommand command = new SqlCommand("SELECT TOP 1 PwSalt FROM Users WHERE UserPk = @memberId", connection))
+            using (SqlCommand command = new SqlCommand("Get_Salt", connection))
             {
+                command.CommandType = System.Data.CommandType.StoredProcedure;
                 // Set a parameter for memberId
                 command.Parameters.AddWithValue("@memberId", memberId.ToString());
                 // Query returns a single value (top 1) single field; executeScalar instead of reader
@@ -69,8 +71,10 @@ public class PasswordRepository : IPasswordRepository
         {
             connection.Open();
 
-            using (SqlCommand command = new SqlCommand("UPDATE Users SET PwHash = @PwHash, PwSalt = @PwSalt WHERE UserPk = @memberId ", connection))
+            using (SqlCommand command = new SqlCommand("Update_Password", connection))
             {
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                
                 command.Parameters.AddWithValue("@PwHash", password);
                 command.Parameters.AddWithValue("@PwSalt", salt);
                 command.Parameters.AddWithValue("@memberId", memberId);

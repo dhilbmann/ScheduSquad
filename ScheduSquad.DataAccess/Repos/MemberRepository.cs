@@ -37,9 +37,7 @@ namespace ScheduSquad.DataAccess
 
         public IEnumerable<Member> GetAll()
         {
-            //SqlCommand cmd = new SqlCommand("Get_AllMembers");
-            SqlCommand cmd = new SqlCommand(@"SELECT UserPk As Id, FirstName, LastName, Email FROM Users WHERE IsDeleted = 0");
-            cmd.CommandType = System.Data.CommandType.Text;
+            SqlCommand cmd = new SqlCommand("Get_AllMembers");
             return ExecuteGetAllMembers(cmd);
         }
 
@@ -62,10 +60,9 @@ namespace ScheduSquad.DataAccess
 
         public Member GetById(Guid id)
         {
-            // Running the Get_Membesr proc with a specified Id will return a single member
-            SqlCommand cmd = new SqlCommand("Select UserPk As Id, FirstName, LastName, Email From Users WHERE UserPK = @Id");
+            // Running the Get_Member proc with a specified Id will return a single member
+            SqlCommand cmd = new SqlCommand("Get_Member");
             cmd.Parameters.Add("@Id", System.Data.SqlDbType.UniqueIdentifier).Value = id;
-            cmd.CommandType = System.Data.CommandType.Text;
             return ExecuteGetMember(cmd);
         }
 
@@ -113,9 +110,10 @@ namespace ScheduSquad.DataAccess
 
         private void ExecuteLogic(SqlCommand cmd)
         {
-            using (SqlConnection con = new SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=ScheduSquad;Integrated Security=true"))
+            using (SqlConnection con = new SqlConnection(_dbConfiguration.GetConnectionString()))
             {
                 cmd.Connection = con;
+
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
                 con.Open();
@@ -131,10 +129,12 @@ namespace ScheduSquad.DataAccess
 
             var member = new Member();
 
-            using (SqlConnection con = new SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=ScheduSquad;Integrated Security=true"))
+            using (SqlConnection con = new SqlConnection(_dbConfiguration.GetConnectionString()))
             {
 
                 cmd.Connection = con;
+
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
                 con.Open();
 
@@ -154,10 +154,12 @@ namespace ScheduSquad.DataAccess
         {
             List<Member> memberList = new List<Member>();
 
-            using (SqlConnection con = new SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=ScheduSquad;Integrated Security=true"))
+            using (SqlConnection con = new SqlConnection(_dbConfiguration.GetConnectionString()))
             {
 
                 cmd.Connection = con;
+                
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
                 con.Open();
 

@@ -6,7 +6,7 @@
 -- ================================================
 
 
-CREATE PROCEDURE Get_Availability
+CREATE OR ALTER PROCEDURE Get_Availability
 	@Id uniqueidentifier
 
 AS

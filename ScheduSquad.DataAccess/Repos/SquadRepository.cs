@@ -77,8 +77,9 @@ namespace ScheduSquad.DataAccess
                 // Open connection
                 connection.Open();
                 // Create & using command
-                using (SqlCommand command = new SqlCommand("UPDATE SquadMembers SET IsDeleted = 1 WHERE SquadFK = @squadId AND UserFK = @userId", connection))
+                using (SqlCommand command = new SqlCommand("Delete_Member_from_Squad", connection))
                 {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
                     // Set a parameter for memberId
                     command.Parameters.Add("@squadId", System.Data.SqlDbType.UniqueIdentifier).Value = squadId;
                     command.Parameters.Add("@userId", System.Data.SqlDbType.UniqueIdentifier).Value = memberId;
@@ -105,7 +106,7 @@ namespace ScheduSquad.DataAccess
 
         public void ExecuteLogic(SqlCommand cmd)
         {
-            using (SqlConnection con = new SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=ScheduSquad;Integrated Security=true"))
+            using (SqlConnection con = new SqlConnection(_dbConfiguration.GetConnectionString()))
             {
 
                 cmd.Connection = con;
@@ -124,7 +125,7 @@ namespace ScheduSquad.DataAccess
 
             var squad = new Squad();
 
-            using (SqlConnection con = new SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=ScheduSquad;Integrated Security=true"))
+            using (SqlConnection con = new SqlConnection(_dbConfiguration.GetConnectionString()))
             {
 
                 cmd.Connection = con;
@@ -148,7 +149,7 @@ namespace ScheduSquad.DataAccess
         {
             List<Squad> squadList = new List<Squad>();
 
-            using (SqlConnection con = new SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=ScheduSquad;Integrated Security=true"))
+            using (SqlConnection con = new SqlConnection(_dbConfiguration.GetConnectionString()))
             {
 
                 cmd.Connection = con;

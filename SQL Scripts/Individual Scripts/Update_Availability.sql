@@ -6,7 +6,7 @@
 -- ================================================
 
 
-CREATE PROCEDURE Update_Availability
+CREATE OR ALTER PROCEDURE Update_Availability
 	@Id uniqueidentifier,
 	@DayEnum int,
 	@StartTime time,

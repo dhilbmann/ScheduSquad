@@ -1,18 +1,18 @@
 -- ================================================
 -- 
--- This procedure will delete a member from 
--- the Member table
+-- This procedure will delete a Squad from 
+-- the Squad table
 -- 
 -- ================================================
 
 
-CREATE PROCEDURE Delete_Member
+CREATE OR ALTER PROCEDURE Delete_Squad
 	@Id uniqueidentifier
 
 AS
 BEGIN
 
-DECLARE @Exists bit = (SELECT COUNT(1) from Users WHERE UserPk = @Id)
+DECLARE @Exists bit = (SELECT COUNT(1) from Squads WHERE SquadPK = @Id)
 
 IF @Exists = 0
 	BEGIN
@@ -20,7 +20,7 @@ IF @Exists = 0
 	END
 ELSE
 	BEGIN
-	UPDATE Users SET IsDeleted = 1 WHERE UserPk = @Id
+	UPDATE Squads SET IsDeleted = 1 WHERE SquadPK = @Id
 	RETURN 1
 	END
 END

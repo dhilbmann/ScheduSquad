@@ -6,7 +6,7 @@
 -- ================================================
 
 
-CREATE PROCEDURE Add_Member
+CREATE OR ALTER PROCEDURE Add_Member
 	@Id uniqueidentifier,
 	@FirstName nvarchar(35),
 	@LastName nvarchar(35),

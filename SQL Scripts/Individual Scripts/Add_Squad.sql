@@ -6,7 +6,7 @@
 -- ================================================
 
 
-CREATE PROCEDURE Add_Squad
+CREATE OR ALTER PROCEDURE Add_Squad
 	@Id uniqueidentifier,
 	@SquadName nvarchar(50),
 	@SquadDesc nvarchar(500),

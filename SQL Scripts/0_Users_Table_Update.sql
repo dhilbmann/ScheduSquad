@@ -1,6 +1,0 @@
-ALTER TABLE Users DROP COLUMN PwHash
-
-ALTER TABLE Users DROP COLUMN PwSalt
-
-ALTER TABLE Users ADD PwHash varchar(128)
-ALTER TABLE Users ADD PwSalt varchar(128)

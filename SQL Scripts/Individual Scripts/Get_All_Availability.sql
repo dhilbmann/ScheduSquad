@@ -6,7 +6,7 @@
 -- ================================================
 
 
-CREATE PROCEDURE [dbo].[Get_All_Availability]
+CREATE OR ALTER PROCEDURE [dbo].[Get_All_Availability]
 
 AS
 BEGIN
@@ -20,3 +20,4 @@ FROM UserAvailability
 WHERE IsDeleted = 0
 
 END
+GO

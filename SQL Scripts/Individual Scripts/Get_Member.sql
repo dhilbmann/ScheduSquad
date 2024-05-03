@@ -6,7 +6,7 @@
 -- ================================================
 
 
-CREATE PROCEDURE Get_Member
+CREATE OR ALTER PROCEDURE Get_Member
 	@Id uniqueidentifier
 
 AS

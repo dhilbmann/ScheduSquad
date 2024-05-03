@@ -6,7 +6,7 @@
 -- ================================================
 
 
-CREATE PROCEDURE Get_All_Availability_By_Id
+CREATE OR ALTER PROCEDURE Get_All_Availability_By_Id
 	@Id uniqueidentifier --UserId if a certain user's availability is requested
 
 AS

@@ -72,10 +72,11 @@ public class AvailabilityRepository : IRepository<Availability>, IAvailabilityRe
 
     public void ExecuteLogic(SqlCommand cmd)
     {
-        using (SqlConnection con = new SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=ScheduSquad;Integrated Security=true"))
+        using (SqlConnection con = new SqlConnection(_dbConfiguration.GetConnectionString()))
         {
 
             cmd.Connection = con;
+
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
             con.Open();
@@ -94,6 +95,7 @@ public class AvailabilityRepository : IRepository<Availability>, IAvailabilityRe
         {
 
             cmd.Connection = con;
+            
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
             con.Open();
@@ -114,7 +116,7 @@ public class AvailabilityRepository : IRepository<Availability>, IAvailabilityRe
     {
         List<Availability> availabilityList = new List<Availability>();
 
-        using (SqlConnection con = new SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=ScheduSquad;Integrated Security=true"))
+        using (SqlConnection con = new SqlConnection(_dbConfiguration.GetConnectionString()))
         {
 
             cmd.Connection = con;

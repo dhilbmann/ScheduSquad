@@ -1,12 +1,12 @@
 -- ================================================
 -- 
--- This procedure will return details for an 
--- individual squad or all squads if no Id is given
+-- This procedure will return details for  
+-- all squads 
 -- 
 -- ================================================
 
 
-CREATE PROCEDURE Get_Squads
+CREATE OR ALTER PROCEDURE Get_Squads
 
 AS
 BEGIN

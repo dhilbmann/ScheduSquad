@@ -6,7 +6,7 @@
 -- ================================================
 
 
-CREATE PROCEDURE [dbo].[Add_Availability]
+CREATE OR ALTER PROCEDURE [dbo].[Add_Availability]
 	@Id uniqueidentifier,
 	@UserId uniqueidentifier,
 	@DayEnum int,

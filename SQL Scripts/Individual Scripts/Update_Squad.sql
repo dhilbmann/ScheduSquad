@@ -6,7 +6,7 @@
 -- ================================================
 
 
-CREATE PROCEDURE Update_Squad
+CREATE OR ALTER PROCEDURE Update_Squad
 	@Id uniqueidentifier,
 	@SquadName nvarchar(50),
 	@SquadDesc nvarchar(500),

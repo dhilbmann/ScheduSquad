@@ -6,7 +6,7 @@
 -- ================================================
 
 
-CREATE PROCEDURE Get_SquadsByMember
+CREATE OR ALTER PROCEDURE Get_SquadsByMember
 	@Id uniqueidentifier
 
 AS
