@@ -179,8 +179,7 @@ namespace ScheduSquad.DataAccess
 
         public Member getMemberData(SqlDataReader rdr)
         {
-            Guid g;
-            var member = new Member(
+                var member = new Member(
                 new Guid(rdr["Id"].ToString()), // Id
                 rdr["FirstName"].ToString() ?? string.Empty, //name
                 rdr["LastName"].ToString() ?? string.Empty,        //description  
