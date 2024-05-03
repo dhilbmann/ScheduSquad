@@ -41,41 +41,43 @@
                 <label for="confirmPassword" class="form-label">Confirm Password</label>
                 <input type="password" class="form-control" id="confirmPassword" name="ConfirmPassword" required>
             </div>
-            <div>
-                <div data-mdb-alert-init class="alert d-none" role="alert" data-mdb-color="warning" id="password-alert">
-                    <ul class="list-unstyled">
-                        <li class="requirements length">
-                            <i class="fas fa-check text-success"></i>
-                            <i class="fas fa-times text-danger"></i>
-                            Your password must be at least 8 characters long.
-                        </li>
-                        <li class="requirements capital-letter">
-                            <i class="fas fa-check text-success"></i>
-                            <i class="fas fa-times text-danger"></i>
-                            Your password must contain at least one capital letter.
-                        </li>
-                        <li class="requirements little-letter">
-                            <i class="fas fa-check text-success"></i>
-                            <i class="fas fa-times text-danger"></i>
-                            Your password must contain at least one lowercase letter.
-                        </li>
-                        <li class="requirements number">
-                            <i class="fas fa-check text-success"></i>
-                            <i class="fas fa-times text-danger"></i>
-                            Your password must contain at least one number.
-                        </li>
-                        <li class="requirements special-character">
-                            <i class="fas fa-check text-success"></i>
-                            <i class="fas fa-times text-danger"></i>
-                            Your password must contain at least one special character (?!#$%&).
-                        </li>
-                        <li class="requirements match">
-                            <i class="fas fa-check text-success"></i>
-                            <i class="fas fa-times text-danger"></i>
-                            Your passwords must be identical.
-                        </li>
-                    </ul>
-                </div>
+            <div data-mdb-alert-init class="alert d-none" role="alert" data-mdb-color="warning" id="password-alert">
+                <ul class="list-unstyled">
+                    <li class="requirements length">
+                        <i class="fas fa-check text-success"></i>
+                        <i class="fas fa-times text-danger"></i>
+                        Your password must be at least 8 characters long.
+                    </li>
+                    <li class="requirements capital-letter">
+                        <i class="fas fa-check text-success"></i>
+                        <i class="fas fa-times text-danger"></i>
+                        Your password must contain at least one capital letter.
+                    </li>
+                    <li class="requirements little-letter">
+                        <i class="fas fa-check text-success"></i>
+                        <i class="fas fa-times text-danger"></i>
+                        Your password must contain at least one lowercase letter.
+                    </li>
+                    <li class="requirements number">
+                        <i class="fas fa-check text-success"></i>
+                        <i class="fas fa-times text-danger"></i>
+                        Your password must contain at least one number.
+                    </li>
+                    <li class="requirements special-character">
+                        <i class="fas fa-check text-success"></i>
+                        <i class="fas fa-times text-danger"></i>
+                        Your password must contain at least one special character (?!#$%&).
+                    </li>
+                </ul>
+            </div>
+            <div data-mdb-alert-init class="alert d-none" role="alert" data-mdb-color="warning" id="confirm-password-alert">
+                <ul class="list-unstyled">
+                    <li class="match-requirement">
+                        <i class="fas fa-check text-success"></i>
+                        <i class="fas fa-times text-danger"></i>
+                        Your passwords must be identical.
+                    </li>
+                </ul>
             </div>
             <button type="submit" class="btn btn-primary">Create Account</button>
         </form>
@@ -88,13 +90,16 @@
             const password = document.getElementById("password");
             const confirmPassword = document.getElementById("confirmPassword");
             const passwordAlert = document.getElementById("password-alert");
+            const confirmPasswordAlert = document.getElementById("confirmed-password-alert");
             const requirements = document.querySelectorAll(".requirements");
             const length = document.querySelector(".length");
             const capitalLetter = document.querySelector(".capital-letter");
             const lowercaseLetter = document.querySelector(".little-letter");
             const number = document.querySelector(".number");
             const specialCharacter = document.querySelector(".special-character");
-            const match = document.querySelector(".match");
+            const matchRequirement = document.querySelector(".match-requirement");
+            let isPasswordValid = false;
+            let value = "";
 
             requirements.forEach((element) => element.classList.add("wrong"));
 
@@ -106,14 +111,12 @@
             });
 
             password.addEventListener("input", () => {
-                const value = password.value;
-                const confirmValue = confirmPassword.value;
+                value = password.value;
                 const isLengthValid = value.length >= 8;
                 const hasUpperCase = /[A-Z]/.test(value);
                 const hasLowerCase = /[a-z]/.test(value);
                 const hasNumber = /\d/.test(value);
                 const hasSpecialChar = /[?!#$%&]/.test(value);
-                const matches = value == confirmValue;
 
                 length.classList.toggle("good", isLengthValid);
                 length.classList.toggle("wrong", !isLengthValid);
@@ -125,10 +128,8 @@
                 number.classList.toggle("wrong", !hasNumber);
                 specialCharacter.classList.toggle("good", hasSpecialChar);
                 specialCharacter.classList.toggle("wrong", !hasSpecialChar);
-                match.classList.toggle("good", matches);
-                match.classList.toggle("wrong", !matches);
 
-                const isPasswordValid = isLengthValid && hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar && matches;
+                isPasswordValid = isLengthValid && hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar;
 
                 if (isPasswordValid) {
                     password.classList.remove("is-invalid");
@@ -152,6 +153,42 @@
 
             password.addEventListener("blur", () => {
                 passwordAlert.classList.add("d-none");
+            });
+
+            confirmPassword.addEventListener("focus", () => {
+                confirmPasswordAlert.classList.remove("d-none");
+                if (!confirmPassword.classList.contains("is-valid")) {
+                    confirmPassword.classList.add("is-invalid");
+                }
+            });
+
+            confirmPassword.addEventListener("input", () => {
+                const confirmedValue = confirmPassword.value;
+                const match = value == confirmedValue;
+
+                matchRequirement.classList.toggle("good", match);
+                matchRequirement.classList.toggle("wrong", !match);
+
+                if (isPasswordValid && match) {
+                    confirmPassword.classList.remove("is-invalid");
+                    confirmPassword.classList.add("is-valid");
+
+                    matchRequirement.classList.remove("wrong");
+                    matchRequirement.classList.add("good");
+
+                    confirmPsswordAlert.classList.remove("alert-warning");
+                    confirmPasswordAlert.classList.add("alert-success");
+                } else {
+                    confirmPassword.classList.remove("is-valid");
+                    confirmPassword.classList.add("is-invalid");
+
+                    confirmPasswordAlert.classList.add("alert-warning");
+                    confirmPasswordAlert.classList.remove("alert-success");
+                }
+            });
+
+            confirmPassword.addEventListener("blur", () => {
+                confirmPasswordAlert.classList.add("d-none");
             });
         });
     </script>
