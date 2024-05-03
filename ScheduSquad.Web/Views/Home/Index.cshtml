@@ -5,3 +5,83 @@
     ViewData["Title"] = "Home Page";
 }
 
+<div class="container">
+    <!-- Warm greeting -->
+    <h2>Hello, @Model.Name! Welcome to ScheduSquad</h2>
+
+    <!-- Description area -->
+    <div class="form-group">
+        <p>ScheduSquad is your ultimate scheduling assistant, designed to simplify the process of organizing gatherings, meetings, outings, and parties. With ScheduSquad, creating plans becomes effortless as it seamlessly integrates a unique squad-based approach.</p>
+        <p>At its core, ScheduSquad enables users to form squads tailored to their interests, friend or family groups, or location, fostering a sense of community and shared experiences. Each member contributes by entering their availability, providing vital information for squad coordination.</p>
+        <p>Once squads are formed and availability is established, ScheduSquad works its magic by displaying the common availability of all squad members. This intuitive feature empowers users to efficiently plan events, ensuring maximum participation and enjoyment.</p>
+        <p>Whether it's coordinating a casual hangout, scheduling a crucial meeting, or organizing a memorable outing, ScheduSquad streamlines the entire process, making scheduling a breeze for everyone involved. Say goodbye to the hassle of endless back-and-forth messages and hello to effortless planning with ScheduSquad.</p>
+    </div>
+
+
+    <div class="row">
+        <!-- Squads panel -->
+        <div class="col-sm-6">
+            <div class="panel panel-@GetPanelStyle(Model.MySquads.Count)">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fas fa-users"></i> Squads</h3>
+                </div>
+                <div class="panel-body text-center">
+                    @if (Model.MySquads.Count == 0)
+                    {
+                        <div class="alert alert-warning" role="alert">
+                            <i class="fas fa-exclamation-triangle fa-3x"></i>
+                            <p class="lead">You haven't joined any squads yet.</p>
+                            <p>Join a Squad now to start planning your next adventure!</p>
+                            <p>To find or create squads, click the <span class="fa-solid fa-bars mr-1 ml-1"></span> on the left!</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-success" role="alert">
+                            <i class="fas fa-check-circle fa-3x"></i>
+                            <p class="lead">You're part of @Model.MySquads.Count squads!</p>
+                            <p>Start planning your next adventure with your squad members.</p>
+                            <p>To find or create squads, click the <span class="fa-solid fa-bars mr-1 ml-1"></span> on the left!</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Availability panel -->
+        <div class="col-sm-6">
+            <div class="panel panel-@GetPanelStyle(Model.MyAvailabilities.Count)">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="far fa-calendar-alt"></i> Availability</h3>
+                </div>
+                <div class="panel-body text-center">
+                        @if (Model.MyAvailabilities.Count == 0)
+                        {
+                            <div class="alert alert-warning" role="alert">
+                                <i class="fas fa-exclamation-triangle fa-3x"></i>
+                                <p class="lead">You haven't set your availability yet.</p>
+                                <p>Update your Availability now so your squad can plan events accordingly.</p>
+                                <p>To update availability, click the <span class="fas fa-user-circle mr-1 ml-1"></span> on the right!</p>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-success" role="alert">
+                                <i class="fas fa-check-circle fa-3x"></i>
+                                <p class="lead">Your availability is set!</p>
+                                <p>Now your squad can easily plan events based on your schedule.</p>
+                                <p>To update availability, click the <span class="fas fa-user-circle mr-1 ml-1"></span> on the right!</p>
+                            </div>
+                        }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@functions {
+    public string GetPanelStyle(int count)
+    {
+        return count == 0 ? "warning" : "success";
+    }
+}

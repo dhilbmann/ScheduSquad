@@ -25,14 +25,14 @@ namespace ScheduSquad.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login(string returnUrl = "/Availability")
+        public IActionResult Login(string returnUrl = "/")
         {
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = "/Availability")
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = "/")
         {
             Member member = null;
             try

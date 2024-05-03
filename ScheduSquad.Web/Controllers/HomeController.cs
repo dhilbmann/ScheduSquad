@@ -4,6 +4,8 @@ using ScheduSquad.Web.Models;
 using ScheduSquad.Models;
 using ScheduSquad.Service;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace ScheduSquad.Web.Controllers;
 
@@ -25,8 +27,12 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        Guid userId = Guid.Parse(HttpContext.User.FindFirstValue(ClaimTypes.Sid));
         HomeViewModel vm = new HomeViewModel();
-        var user = HttpContext.User;
+        Member m = _memberService.GetMemberById(userId);
+        vm.Name = String.Format("{0} {1}", m.FirstName, m.LastName);
+        vm.MyAvailabilities = _availabilityService.GetAllAvailabilitiesBelongingToMember(userId);
+        vm.MySquads = _squadService.GetAllSquadsBelongingToMember(userId);
         return View(vm);
     }
 

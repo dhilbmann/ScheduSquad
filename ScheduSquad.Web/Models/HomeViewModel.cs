@@ -4,22 +4,14 @@ namespace ScheduSquad.Web.Models;
 
 public class HomeViewModel
 {
-    public Squad Squad {get; set;} 
-    public string SquadServiceTest {get; set;}
-    public string AvailabilityServiceTest {get; set;}
-    public string MemberServiceTest {get; set;}
+    public string Name { get; set; }
 
-    public List<Availability> availabilities{get; set;}
+    public List<Squad> MySquads { get; set; }
+    public List<Availability> MyAvailabilities{ get; set; }
     public HomeViewModel() {
-        Squad = new Squad();
-        member = new Member();
-        members = new List<Member>();
-        squad = new Squad();
-        squads = new List<Squad>();
+        MySquads = new List<Squad>();
+        MyAvailabilities = new List<Availability>();
+        Name = String.Empty;
     }
-    public List<Member> members {get; set;}
-    public Member member {get; set;}
-    public Squad squad {get; set;}
-    public List<Squad> squads {get; set;}
 
 }
