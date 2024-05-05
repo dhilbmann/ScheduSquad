@@ -113,7 +113,7 @@ namespace ScheduSquad.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditAvailability(Guid id)
+        public IActionResult EditAvailability(Guid id)
         {
             //await HttpContext.
             return RedirectToAction("Index","Availability");

@@ -25,28 +25,28 @@ namespace ScheduSquad.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login(string returnUrl = "/Availability")
+        public IActionResult Login(string? returnUrl = "/")
         {
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = "/Availability")
+        public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = "/")
         {
-            Member member = null;
+            Member member = new Member();
             try
             {
                 // Attempt to get the user from the database
                 member = _memberService.GetMemberByEmail(model.Email);
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
                  // TODO: Handle this better than swallowing the error.
             }
                                     
-            // if the user is not null and if the password checks out fine... 
-            if (member != null && _authService.CheckPassword(model.Password, member.Id))
+            // if the user id is not empty and if the password checks out fine... 
+            if (member.Id != Guid.Empty && _authService.CheckPassword(model.Password, member.Id))
             {
 
                 // Create claims for the user
@@ -76,11 +76,14 @@ namespace ScheduSquad.Web.Controllers
                     authProperties);
 
                 // Redirect the user to the return URL or home page
+                #pragma warning disable CS8604 // Possible null reference argument.
                 return LocalRedirect(returnUrl);
+                #pragma warning restore CS8604 // Possible null reference argument.
             }
 
             // If login fails, return to the login page with an error message
             ModelState.AddModelError(string.Empty, "Invalid username or password");
+            ViewData["ReturnUrl"] = returnUrl;
             return View(model);
 
         }

@@ -107,7 +107,7 @@
                         var userId = $(this).data('user-id');
                         $.post('/SquadManagement/RemoveMember', { squadId: squadId, memberId: userId }, function (data) {
                             if (data.success) {
-                                window.location.reload();
+                                window.location.href = "/";
                             } else {
                                 alert('Failed to remove from squad. Please try again.');
                             }

@@ -17,9 +17,9 @@ namespace ScheduSquad.Web.Models
 
         public ManageSquadMembersViewModel()
         {
-            // this.MembersInSquad = new List<MemberDetailsForSquad>();
-            // this.MembersNotInSquad = new List<MemberDetailsForSquad>();
-            // this.SquadMaster = new Member();
+            this.MembersInSquad = new List<MemberDetailsForSquad>();
+            this.MembersNotInSquad = new List<MemberDetailsForSquad>();
+            this.SquadMaster = new Member();
         }
     }
 

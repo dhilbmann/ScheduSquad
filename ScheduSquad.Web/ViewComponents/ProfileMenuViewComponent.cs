@@ -15,8 +15,7 @@ namespace ScheduSquad.Web.ViewComponents
         } 
 
         public IViewComponentResult Invoke() {
-            Guid userGuid; // Id of LoggedIn User
-            if (Guid.TryParse(HttpContext.User.FindFirstValue(ClaimTypes.Sid), out userGuid));
+            Guid userGuid = Guid.Parse(HttpContext.User.FindFirstValue(ClaimTypes.Sid));
             
             Member loggedInUser = _memberService.GetMemberById(userGuid);
 
