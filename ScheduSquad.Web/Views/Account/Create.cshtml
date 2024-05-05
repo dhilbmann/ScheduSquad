@@ -44,28 +44,18 @@
             <div data-mdb-alert-init class="alert d-none" role="alert" data-mdb-color="warning" id="password-alert">
                 <ul class="list-unstyled">
                     <li class="requirements length">
-                        <i class="fas fa-check text-success"></i>
-                        <i class="fas fa-times text-danger"></i>
                         Your password must be at least 8 characters long.
                     </li>
                     <li class="requirements capital-letter">
-                        <i class="fas fa-check text-success"></i>
-                        <i class="fas fa-times text-danger"></i>
                         Your password must contain at least one capital letter.
                     </li>
                     <li class="requirements little-letter">
-                        <i class="fas fa-check text-success"></i>
-                        <i class="fas fa-times text-danger"></i>
                         Your password must contain at least one lowercase letter.
                     </li>
                     <li class="requirements number">
-                        <i class="fas fa-check text-success"></i>
-                        <i class="fas fa-times text-danger"></i>
                         Your password must contain at least one number.
                     </li>
                     <li class="requirements special-character">
-                        <i class="fas fa-check text-success"></i>
-                        <i class="fas fa-times text-danger"></i>
                         Your password must contain at least one special character (?!#$%&).
                     </li>
                 </ul>
@@ -73,13 +63,11 @@
             <div data-mdb-alert-init class="alert d-none" role="alert" data-mdb-color="warning" id="confirm-password-alert">
                 <ul class="list-unstyled">
                     <li class="match-requirement">
-                        <i class="fas fa-check text-success"></i>
-                        <i class="fas fa-times text-danger"></i>
                         Your passwords must be identical.
                     </li>
                 </ul>
             </div>
-            <button type="submit" class="btn btn-primary">Create Account</button>
+            <button type="submit" class="btn btn-primary d-none" id="create-button">Create Account</button>
         </form>
     </div>
 </div>
@@ -90,7 +78,8 @@
             const password = document.getElementById("password");
             const confirmPassword = document.getElementById("confirmPassword");
             const passwordAlert = document.getElementById("password-alert");
-            const confirmPasswordAlert = document.getElementById("confirmed-password-alert");
+            const confirmPasswordAlert = document.getElementById("confirm-password-alert");
+            const createButton = document.getElementById("create-button");
             const requirements = document.querySelectorAll(".requirements");
             const length = document.querySelector(".length");
             const capitalLetter = document.querySelector(".capital-letter");
@@ -99,46 +88,33 @@
             const specialCharacter = document.querySelector(".special-character");
             const matchRequirement = document.querySelector(".match-requirement");
             let isPasswordValid = false;
-            let value = "";
-
-            requirements.forEach((element) => element.classList.add("wrong"));
 
             password.addEventListener("focus", () => {
                 passwordAlert.classList.remove("d-none");
-                if (!password.classList.contains("is-valid")) {
+                /*if (!password.classList.contains("is-valid")) {
                     password.classList.add("is-invalid");
-                }
+                }*/
             });
 
             password.addEventListener("input", () => {
-                value = password.value;
+                const value = password.value;
                 const isLengthValid = value.length >= 8;
                 const hasUpperCase = /[A-Z]/.test(value);
                 const hasLowerCase = /[a-z]/.test(value);
                 const hasNumber = /\d/.test(value);
                 const hasSpecialChar = /[?!#$%&]/.test(value);
 
-                length.classList.toggle("good", isLengthValid);
-                length.classList.toggle("wrong", !isLengthValid);
-                capitalLetter.classList.toggle("good", hasUpperCase);
-                capitalLetter.classList.toggle("wrong", !hasUpperCase);
-                lowercaseLetter.classList.toggle("good", hasLowerCase);
-                lowercaseLetter.classList.toggle("wrong", !hasLowerCase);
-                number.classList.toggle("good", hasNumber);
-                number.classList.toggle("wrong", !hasNumber);
-                specialCharacter.classList.toggle("good", hasSpecialChar);
-                specialCharacter.classList.toggle("wrong", !hasSpecialChar);
+                length.classList.toggle("d-none", isLengthValid);
+                capitalLetter.classList.toggle("d-none", hasUpperCase);
+                lowercaseLetter.classList.toggle("d-none", hasLowerCase);
+                number.classList.toggle("d-none", hasNumber);
+                specialCharacter.classList.toggle("d-none", hasSpecialChar);
 
                 isPasswordValid = isLengthValid && hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar;
 
-                if (isPasswordValid) {
+                /*if (isPasswordValid) {
                     password.classList.remove("is-invalid");
                     password.classList.add("is-valid");
-
-                    requirements.forEach((element) => {
-                        element.classList.remove("wrong");
-                        element.classList.add("good");
-                    });
 
                     passwordAlert.classList.remove("alert-warning");
                     passwordAlert.classList.add("alert-success");
@@ -148,7 +124,7 @@
 
                     passwordAlert.classList.add("alert-warning");
                     passwordAlert.classList.remove("alert-success");
-                }
+                }*/
             });
 
             password.addEventListener("blur", () => {
@@ -157,24 +133,22 @@
 
             confirmPassword.addEventListener("focus", () => {
                 confirmPasswordAlert.classList.remove("d-none");
-                if (!confirmPassword.classList.contains("is-valid")) {
+                /*if (!confirmPassword.classList.contains("is-valid")) {
                     confirmPassword.classList.add("is-invalid");
-                }
+                }*/
             });
 
             confirmPassword.addEventListener("input", () => {
+                const value = password.value;
                 const confirmedValue = confirmPassword.value;
-                const match = value == confirmedValue;
+                const match = (value === confirmedValue);
 
-                matchRequirement.classList.toggle("good", match);
-                matchRequirement.classList.toggle("wrong", !match);
+                matchRequirement.classList.toggle("d-none", match);
+                createButton.classList.toggle("d-none", !(match && isPasswordValid));
 
-                if (isPasswordValid && match) {
+                /*if (isPasswordValid && match) {
                     confirmPassword.classList.remove("is-invalid");
                     confirmPassword.classList.add("is-valid");
-
-                    matchRequirement.classList.remove("wrong");
-                    matchRequirement.classList.add("good");
 
                     confirmPsswordAlert.classList.remove("alert-warning");
                     confirmPasswordAlert.classList.add("alert-success");
@@ -184,7 +158,7 @@
 
                     confirmPasswordAlert.classList.add("alert-warning");
                     confirmPasswordAlert.classList.remove("alert-success");
-                }
+                }*/
             });
 
             confirmPassword.addEventListener("blur", () => {

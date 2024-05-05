@@ -146,7 +146,7 @@ namespace ScheduSquad.Service
             DayOfWeek availableDay = (DayOfWeek)((startCode - startTimeCode) / 100 - 1);
 
             int startInterval = startTimeCode * 15;
-            int endInterval = endTimeCode * 15;
+            int endInterval = (endTimeCode + 1) * 15;
 
             int startHours = startInterval / 60;
             int endHours = endInterval / 60;
@@ -155,14 +155,23 @@ namespace ScheduSquad.Service
             int endMinutes = endInterval % 60;
 
             TimeOnly startTime = new TimeOnly(startHours, startMinutes);
-            TimeOnly endTime = new TimeOnly(endHours, endMinutes);
+            String endTime;
+            if (endHours == 24)
+            {
+                endTime = "midnight";
+            }
+            else
+            {
+                TimeOnly notMidnightEnd = new TimeOnly(endHours, endMinutes);
+                endTime = notMidnightEnd.ToShortTimeString();
+            }
 
             String humanReadable = String.Format
             (
                 "On {0} from {1} to {2}.",
                 availableDay.ToString(),
                 startTime.ToShortTimeString(),
-                endTime.ToShortTimeString()
+                endTime
             );
 
             return humanReadable;
