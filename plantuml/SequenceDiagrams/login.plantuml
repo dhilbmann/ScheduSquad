@@ -21,6 +21,7 @@ else credentials invalid
         end note
     else user registration
         user -> app : Register New Account
+        app --> user : Load Account Registration Screen
     end
 end
 @enduml

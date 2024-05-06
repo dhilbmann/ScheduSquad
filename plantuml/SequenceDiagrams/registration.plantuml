@@ -17,7 +17,7 @@ alt valid credentials
     app -> user : Load Login Screen
 else invalid credentials
     app -> user : Display Error Message
-    app -> user : Reload Registration Screen
+    app -> user : Request New Account Information
     user -> app : Proide Different Credentials
     note right
     Resume flow from

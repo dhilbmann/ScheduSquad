@@ -12,14 +12,13 @@ user -> app : Select Hamburger Icon
 app -> db : Request List of User's Squads
 db --> app : Return List of User's Squads
 app --> user : Display User Squad Menu
-user -> app : Select "Or Find an Existing Squad" Button
+user -> app : Select "Find a Squad" Button
 app -> db : Request List of Existing Squads
 db --> app : Return List of Existing Squads
 app --> user : Load Find Squad Screen
 
 user -> app : Select a Squad to Join
 app -> db : Add Current User to Selected Squad
-db --> app : Return Selected Squad ID
-app --> user : Load Selected Squad's Squad Screen
+app --> user : Reload Find Squad Screen
 
 @enduml
