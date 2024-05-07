@@ -15,30 +15,20 @@ user -> app : Select Hamburger Icon
 app -> db : Request List of User's Squads
 db --> app : Return List of User's Squads
 app --> user : Display User Squad Menu
-user -> app : Select a Squad from the User Squad Menu
-app -> db : Request Selected Squad's Member List and Availabilities
-db --> app : Return Selected Squad's Details
-app --> user : Load Selected Squad's Squad Screen
-
-loop until user selects "Leave the Squad"
-    user -> app : Select "Manage Members" Button
-    app --> app : Remove "Manage Members" Button
-    app --> app : Display "Back to SQUADNAME" Button
-    app --> app : Display "Leave the Squad" Button
-
-    alt user selects "Back to SQUADNAME" button
-        user -> app : Select "Back to SQUADNAME" Button
-        app --> user : Reload Selected Squad's Squad Screen
-    else user selects "Leave the Squad" button
-        user -> app : Selects "Leave the Squad" Button
-        note over user, app
-        Exit loop.
-        end note
-    end
+alt user selects Squad from User Squad Menu
+    user -> app : Select a Squad from the User Squad Menu
+    app -> db : Request Selected Squad's Member List and Availabilities
+    db --> app : Return Selected Squad's Details
+    app --> user : Load Selected Squad's Squad Screen
+    user -> app : Select "Leave the Squad" Button
+else user leaves Squad from User Squad Menu
+    user -> app : Select Cog Icon next to Squad
+    app --> user : Displays "Leave Squad" Context Menu
+    user -> app : Select "Leave Squad" Option 
 end
 
 app -> db : Remove Logged In User from Selected Squad
 db --> app : Return Current User's Availability
-app --> user : Load User's Availability Screen
+app --> user : Load Landing Screen
 
 @enduml

@@ -22,8 +22,7 @@ loop until user provides valid new squad information
         app -> user : Display error message
     else validation succeeds
         app -> db : Store New Squad Information in Database
-        db --> app : Returns New Squad ID
-        app -> user : Load New Squad's Member Management Screen
+        app -> user : Load Landing Screen
     end
 end
 @enduml

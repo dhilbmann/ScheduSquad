@@ -15,15 +15,21 @@ user -> app : Select Hamburger Icon
 app -> db : Request List of User's Squads
 db --> app : Return List of User's Squads
 app --> user : Display User Squad Menu
-user -> app : Select a Squad from the User Squad Menu
-app -> db : Request Selected Squad's Member List and Availabilities
-db --> app : Return Selected Squad's Details
-app --> user : Load Selected Squad's Squad Screen
-user -> app : Select The "Manage Members" Button
-app --> app : Remove "Manage Members" Button
-app --> app : Display "Back to SQUADNAME" Button
+alt user navigates from Squad screen
+    user -> app : Select a Squad from the User Squad Menu
+    app -> db : Request Selected Squad's Member List and Availabilities
+    db --> app : Return Selected Squad's Details
+    app --> user : Load Selected Squad's Squad Screen
+    user -> app : Select The "Manage Members" Button
+    app --> user : Load Squad Management Screen
+else user navigates from User Squad Menu
+    user -> app : Select Cog Icon next to Squad
+    app --> user : Display "Manage Members" Context Menu
+    user -> app : Select "Manage Members" Option
+    app --> user : Load Squad Management Screen
+end
 
-loop until user selects "Back to SQUADNAME" Button
+loop until user leaves Squad management screen
     app -> db : Request List of Selected Squad's Members
     db --> app : Return List of Selected Squad's Members
     app -> db : Request List of All Users, Excluding Members of Selected Squad
