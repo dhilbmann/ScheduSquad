@@ -1,19 +1,71 @@
 @startuml ServiceClassDiagram
 
+left to right direction
 skin rose
 
-class Service.AccountService {
+interface ISquadService {
+    +GetSquadById(Guid squadId) : Squad
+    +GetAllSquads() : List<Squad> 
+    +GetAllSquadsBelongingToMember(Guid memberId) : List<Squad> 
+    +GetAllSquadsNotBelongingToMember(Guid memberId) : List<Squad> 
+    +AddSquad(Guid squadMasterId, string name, string description, string location) : void
+    +UpdateSquad(Squad squad) : void
+    +DeleteSquad(Squad squad) : void
+    +AddMemberToSquad(Member member, Squad squad, bool isSquadMaster) : void
+    +AddMemberToSquad(Guid memberId, Guid squadId, bool isSquadMaster) : void
+    +RemoveMemberFromSquad(Member member, Squad squad) : void
+    +RemoveMemberFromSquad(Guid memberId, Guid squadId) : void
+}
+
+interface IAvailabilityService {
+    +GetAvailabilityById(Guid availabilityId) : Availability 
+    +GetAllAvailabilities() : List<Availability> 
+    +GetAllAvailabilitiesBelongingToMember(Guid memberId) : List<Availability> 
+    +AddAvailability(Availability availability) : void
+    +AddAvailability(Availability availability, Guid id) : void
+    +UpdateAvailability(Availability availability) : void
+    +DeleteAvailability(Availability availability) : void
+    +GetCommonAvailabilityCodes(Squad squad) : List<int> 
+    +GetCommonAvailabilityCodes(List<List<int>> lists) : List<int> 
+    +SplitAvailabilities(List<int> availability) : List<List<int>> 
+    +GetHumanReadableAvailabilityString(List<int> availability) : string
+}
+
+interface ILoginAuthenticationService {
+    +CheckPassword(string password, Guid memberId) : bool
+    +UpdatePassword(string password, Guid memberId) : void
+}
+
+interface IMemberService {
+    +GetMemberById(Guid memberId) : Member
+    +GetMemberByEmail(string email) : Member
+    +GetAllMembers() : List<Member> 
+    +GetAllMembersNotInSquad(Guid squadId) : List<Member> 
+    +GetAllMembersInSquad(Guid squadId) : List<Member> 
+    +AddMember(string firstName, string lastName, string email, string password) : Guid
+    +UpdateMember(Member member) : void
+    +DeleteMember(Member member) : void
+    +GetJoinedDateForSquadMember (Guid memberId, Guid squadId) : DateTime
+}
+
+class MemberService {
     ~_memberRepository
-    +AccountService(memberRepo : IRepository<Member>)
+    ~_authenticationService
+    ~_memberForSquadRepo
+    ~_availabilityService
+    +MemberService(memberRepo : IRepository<Member>)
     +GetMemberById(memberId : Guid) : Member
+    +GetMemberByEmail(email : string) : Member
     +GetAllMembers() : List<Member>
+    +GetAllMembersInSquad(squadId : Guid) List<Member>
     +GetAllMembersNotInSquad(squadId : Guid) List<Member>
     +AddMember(member : Member) : void
     +UpdateMember(member : Member) : void
     +DeleteMember(member : Member) : void
+    +GetJoinedDateForSquadMember(memberId : Guid, squadId : Guid)
 }
 
-class Service.AvailabilityService {
+class AvailabilityService {
     ~_availabilityRepository
     +AvailabilityService(availabilityRepo : IRepository<Availability>)
     +GetAvailabilityById(memberId : Guid) : Availability
@@ -26,17 +78,47 @@ class Service.AvailabilityService {
     +GetCommonAvailabilityCodes(lists : List<List<int>>) : List<int>
 }
 
-class Service.SquadService {
+class SquadService {
     ~_squadRepository
+    ~_squadMemberRepo
+    ~_memberService
     +AvailabilityService(squadRepo : IRepository<Squad>)
     +GetSquadById(squadId : Guid) : Squad
     +GetAllSquads() : List<Squad>
     +GetAllSquadsBelongingToMember(memberId : Guid) List<Squad>
+    +GetAllSquadsNotBelongingToMember(memberId : Guid) List<Squad>
     +AddSquad(squad : Squad) : void
     +UpdateSquad(squad : Squad) : void
     +DeleteSquad(squad : Squad) : void
+    +AddMemberToSquad(memberId : Guid, squadId : Guid, isSquadMaster : bool) : void
     +AddMemberToSquad(member: Member, squad : Squad) : void
+    +RemoveMemberFromSquad(memberId : Guid, squadId : Guid) : void
     +RemoveMemberFromSquad(member: Member, squad : Squad) : void
 }
+
+class AuthenticationService {
+ ~_IPasswordRepository
+ +LoginAuthenticationService(passwordRepo : IPasswordRepository)
+ +CheckPassword(password: string, memberId : Guid) : bool
+ +UpdatePassword(password : string, memberId : Guid) : void
+ ~GenerateSalt() : string
+ ~HashPassword(password: string, salt: string) : string
+}
+
+interface ISquadMemberRepository {}
+interface IRepository{}
+interface IMemberForSquadRepo{}
+
+ISquadService <-- SquadService
+ISquadMemberRepository <-- SquadService
+IMemberService <-- SquadService
+IRepository <-- SquadService
+IAvailabilityService <-- AvailabilityService
+IAvailabilityService <-- MemberService
+IRepository <-- AvailabilityService
+ILoginAuthenticationService <-- MemberService
+IMemberForSquadRepo <-- MemberService
+IRepository <-- MemberService
+ILoginAuthenticationService <-- AuthenticationService
 
 @enduml

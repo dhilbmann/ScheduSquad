@@ -7,7 +7,7 @@ namespace ScheduSquad.Service
     {
         public Member GetMemberById(Guid memberId);
         public Member GetMemberByEmail(string email);
-       public List<Member> GetAllMembers();
+        public List<Member> GetAllMembers();
         public List<Member> GetAllMembersNotInSquad(Guid squadId) ;
         public List<Member> GetAllMembersInSquad(Guid squadId);
         public Guid AddMember(string firstName, string lastName, string email, string password);

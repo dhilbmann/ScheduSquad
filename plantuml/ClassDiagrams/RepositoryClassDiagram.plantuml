@@ -1,8 +1,9 @@
 @startuml RepositoryClassDiagram
 
 skin rose
+left to right direction
 
-interface DataAccess.IRepository<T> {
+interface IRepository<T> {
     +GetById(id : Guid) : T
     +GetAll() : IEnumerable<T>
     +GetAllByParentId(id : Guid) : IEnumerable<T>
@@ -11,35 +12,107 @@ interface DataAccess.IRepository<T> {
     +Delete(entity : T) : void
 }
 
-class DataAccess.AvailabilityRepository<T> {
+interface IPasswordRepository {
+    +UpdatePassword(Guid memberId, string password, string salt) : void
+    +GetPassword(Guid memberId) : string?
+    +GetSalt(Guid memberId) : string? 
+}
+
+interface IDbConfiguration {
+    +Connection : IDbConnection
+    +OpenConnection() : void
+    +CloseConnection() : void
+    +GetConnectionString() : string
+    +GetDbConnection() : IDbConnection
+    +CreateCommand() : IDbCommand
+    +CreateStoredProcedureCommand(string procedureName) : IDbCommand
+    +AddParameter(IDbCommand command, string parameterName, object value) : void
+    +ExecuteReader(IDbCommand command) : IDataReader
+    +ExecuteNonQuery(IDbCommand command) : int
+}
+
+interface IAvailabilityRepository {
+    +Add(Availability entity, Guid userId) : void
+}
+
+interface IMembersForSquadRepository {
+    +GetMembersNotInSquad(Guid squadId) : IEnumerable<Member>
+    +GetJoinedDateForSquadMember(Guid memberId, Guid squadId) : DateTime
+}
+
+interface ISquadMemberRepository {
+    +AddMemberToSquad(Guid memberId, Guid squadId, bool isSquadMaster) : void
+    +RemoveMemberFromSquad(Guid memberId, Guid squadId) : void
+}
+
+class AvailabilityRepository<T> {
+    +_DbConfiguration : IDbConfiguration
+    +AvailabilityRepository(IDbConfiguration dbConfiguration)
     +GetById(id : Guid) : T
     +GetAll() : IEnumerable<T>
     +GetAllByParentId(id : Guid) : IEnumerable<T>
     +Add(entity : T) : void
     +Update(entity : T) : void
     +Delete(entity : T) : void
+    +ExecuteLogic(SqlCommand cmd) : void
+    +ExecuteGetAvailability(SqlCommand cmd) : Availability
+    +ExecuteGetAllAvailability(SqlCommand cmd) : IEnumerable<Availability>
+    +getAvailabilityData(SqlDataReader rdr)
 }
 
-class DataAccess.MemberRepository<T> {
+class MemberRepository<T> {
+    +_DbConfiguration : IDbConfiguration
+    +MemberRepository(IDbConfiguration dbConfiguration)
     +GetById(id : Guid) : T
     +GetAll() : IEnumerable<T>
     +GetAllByParentId(id : Guid) : IEnumerable<T>
     +Add(entity : T) : void
     +Update(entity : T) : void
     +Delete(entity : T) : void
+    +GetMembersNotInSquad(Guid squadId) : IEnumerable<Member>
+    +GetJoinedDateForSquadMember(Guid memberId, Guid squadId) : DateTime
+    +ExecuteLogic(SqlCommand cmd) : void
+    +ExecuteGetSquad(SqlCommand cmd) : Squad
+    +ExecuteGetAllSquads(SqlCommand cmd) : IEnumerable<Squad>
+
 }
 
-class DataAccess.SquadRepository<T> {
+class SquadRepository<T> {
+    +_DbConfiguration : IDbConfiguration
+    +SquadRepository(IDbConfiguration dbConfiguration, IRepository<Member> memberRepo)
     +GetById(id : Guid) : T
     +GetAll() : IEnumerable<T>
     +GetAllByParentId(id : Guid) : IEnumerable<T>
     +Add(entity : T) : void
     +Update(entity : T) : void
     +Delete(entity : T) : void
+    +RemoveMemberFromSquad(Guid memberId, Guid squadId) : void
+    +AddMemberToSquad(Guid memberId, Guid squadId) : void
+    +ExecuteLogic(SqlCommand cmd) : void
+    +ExecuteGetMember(SqlCommand cmd) : Member
+    +ExecuteGetAllMembers(SqlCommand cmd) : IEnumerable<Member>
+    +getMemberData(SqlDataReader rdr) : Member
 }
 
-DataAccess.IRepository <|-- DataAccess.SquadRepository
-DataAccess.IRepository <|-- DataAccess.MemberRepository
-DataAccess.IRepository <|-- DataAccess.AvailabilityRepository
+class PasswordRepository {
+    +_DbConfiguration : IDbConfiguration
+    +PasswordRepository(IDbConfiguration dbConfiguration)
+    +GetPassword(Guid memberId) : string?
+    +GetSalt(Guid memberId) : string?
+    +UpdatePassword(Guid memberId, string password, string salt) : void
+}
+
+IRepository <|-l- SquadRepository
+IRepository <|-l- MemberRepository
+IRepository <|-l- AvailabilityRepository
+IRepository <|-l- PasswordRepository
+IDbConfiguration <|-d- MemberRepository
+IDbConfiguration <|-d- PasswordRepository
+IDbConfiguration <|-d- AvailabilityRepository
+IDbConfiguration <|-d- SquadRepository
+PasswordRepository -u-|> IPasswordRepository
+IAvailabilityRepository -u-|> AvailabilityRepository
+IMembersForSquadRepository -u-|> MemberRepository
+ISquadMemberRepository -u-|> SquadRepository
 
 @enduml

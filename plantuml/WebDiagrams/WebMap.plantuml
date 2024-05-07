@@ -1,51 +1,90 @@
 @startuml RepositoryClassDiagram
 
+left to right direction
+
 skin rose
 
+class SquadService {}
+class AvailabilityService {}
+class MemberService {}
+class AuthenticationService {}
+
+
 class SquadController {
-    -_logger : ILogger<SquadController>
-    +SquadController(logger : ILogger<SquadController>)
-    +Index() : IActionResult
+    -_logger : Logger<SquadController>
+    -_squadService : SquadService
+    -_memberService : MemberService
+    -_availabilityService : AvailabilityService
+    +SquadController(logger : Logger<SquadController>)
+    +Create() : IActionResult
+    +Create(CreateSquadViewModel model) : IActionResult
+    +Find() : IActionResult
+    +Join(Guid squadId) : IActionResult
+    +Leave(Guid squadId) : IActionResult
     +Details(squadId : Guid) : IActionResult
-    +SquadMemberList(squadId : Guid) : IActionResult
-    +SquadAvailabilityList(squadId : Guid) : IActionResult
-    +AddMemberToSquad(squadId : Guid, memberId : Guid) : JsonResult
-    +RemoveMemberFromSquad(squadId : Guid, memberId : Guid) : JsonResult
+    -MapToViewModels(List<Squad> squads) : List<FindSquadModel>
+    -MapToViewModels(List<Member> members, Guid squadId) : List<SquadDetailModel>
+}
+
+class SquadManagementController {
+    -_logger : Logger<SquadController>
+    -_squadService : SquadService
+    -_memberService : MemberService
+    -_availabilityService : AvailabilityService
+    +Members(Guid squadId) : IActionResult
+    -MapToViewModels(List<Member> members, Guid squadId, bool inSquad) : List<MemberDetailsForSquad>
+    +AddMember(Guid memberId, Guid squadId) : IActionResult
+    +RemoveMember(Guid memberId, Guid squadId) : IActionResult
 }
 
 class AccountController {
-    -_logger : ILogger<AccountController>
-    +HomeController(logger : ILogger<AccountController>)
+    -_logger : Logger<AccountController>
+    -_memberService : MemberService
+    -_authenticationService : AuthenticationService
+    +HomeController(logger : Logger<AccountController>)
     +Login() : IActionResult
-    +Login(username : string, password : string) : IActionResult
+    +Login(LoginViewModel model, string? returnUrl) : Task<IActionResult>
     +Create() : IActionResult
-    +Create(firstName : string, lastname : string, email : string, password : string) : IActionResult
-    +Logout() : IActionResult
+    +Create(CreateAccountViewModel model) : IActionResult
+    +Logout() : Task<IActionResult>
 }
 
 class AvailabilityController {
-    -_logger : ILogger<AvailabilityController>
-    +AvailabilityController(logger : ILogger<AvailabilityController>)
-    +Index() : IActionResult
+    -_logger : Logger<AvailabilityController>
+    -_availabilityService : AvailabilityService
+    +AvailabilityController(logger : Logger<AvailabilityController>)
+    +Index(Guid id) : IActionResult
     +GetAvailabilityTable(memberId : Guid) : IActionResult
+    +GetAvailabilityReadRow(availabilityId: Guid) : IActionResult
+    +GetAvailabilityEditRow(availabilityId: Guid) : IActionResult
     +GetMemberAvailabilities(memberId : Guid) : IActionResult
-    +SaveAvailability(availability : Availability) : JsonResult
-    +UpdateAvailability(availability : Availability) : JsonResult
-    +DeleteAvailability(availability : Availability) : JsonResult
+    +SaveAvailability(availability : Availability) : IActionResult
+    +UpdateAvailability(availability : Availability) : IActionResult
+    +DeleteAvailability(availability : Availability) : IActionResult
+    +EditAvailability(availability : Availability) : IActionResult
 }
 
-class MenuController {
-    -_logger : ILogger<MenuController>
-    +MenuController(logger : ILogger<MenuController>)
+class HomeController {
+    -_logger : Logger<SquadController>
+    -_squadService : SquadService
+    -_memberService : MemberService
+    -_availabilityService : AvailabilityService
+    +HomeController(logger : Logger<MenuController>)
     +Index() : IActionResult
     +Menu() : IActionResult
-    +ProfileMenu() : IActionResult
-    +SquadMenu() : IActionResult
 }
 
-Controller <|-up- SquadController
-Controller <|-down- AccountController
-Controller <|-left- AvailabilityController
-Controller <|-right- MenuController
+SquadService <-- SquadController
+MemberService <-- SquadController
+AvailabilityService <-- SquadController
+SquadService <-- SquadManagementController
+MemberService <-- SquadManagementController
+AvailabilityService <-- SquadManagementController
+MemberService <-- AccountController
+AuthenticationService <-- AccountController
+AvailabilityService <-- AvailabilityController
+SquadService <-- HomeController
+MemberService <-- HomeController
+AvailabilityService <-- HomeController
 
 @enduml

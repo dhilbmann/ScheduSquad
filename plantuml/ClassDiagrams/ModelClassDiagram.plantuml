@@ -11,7 +11,6 @@ class Models.Member {
     +FirstName
     +LastName
     +Email
-    +Password
     +Availabilities
 
     +Member() : void
@@ -25,15 +24,14 @@ class Models.Availability {
     +DayOfWeek
     +StartTime
     +EndTime
-    +Availability
-
+    
     +Availability() : void
     +Availability(dayOfWeek : DayOfWeek, startTime : TimeSpan, endTime : TimeSpan) : void
     +Availability(id : Guid, dayOfWeek : DayOfWeek, startTime : TimeSpan, endTime : TimeSpan) : void
     +GetAvailabilityCodes() : List<string>
     +AreMinutesValid(time : TimeSpan) : bool
 }
-Models.PersistedEntityBase <|-- Models.Squad
+
 class Models.Squad {
     +Members
     +Name
